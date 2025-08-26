@@ -1,0 +1,164 @@
+﻿@using ControlService.ControlApplication.Services.MaintenanceLogs.Queries.GetDataForEditOrAddML
+@model GetDataForEditOrAddMLDto
+<div class="card card-default">
+    <input id="MLid" type="hidden" value="@Model.MLId" />
+    <input type="hidden" id="MLCompanyId" value="@Model.CompanyId" />
+    <input type="hidden" id="MLStatusId" value="@Model.StatusId" />
+    <input type="hidden" id="MLMTypeId" value="@Model.MaintenanceTypeId" />
+    <input type="hidden" id="MLMachineId" value="@Model.MachineId" />
+    <input type="hidden" id="MLPersonId" value="@Model.PersonId" />
+    <div class="card-body">
+        <div class="row">
+            <div class="col-lg-4  col-md-4 col-sm-12">
+                <label style="float:left">تاریخ و زمان انجام نگهداری :  </label>
+            </div>
+            <div class="col-lg-8  col-md-8 col-sm-12">
+                <input style="width: 100%;" class="form-control" type="text" id="MLDateShamsi" value="@Model.MLDate?.ToString("yyyy/MM/dd")" />
+                <input type="hidden" id="MLDateMiladi" value="@Model.MLDate" />
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-4  col-md-4 col-sm-12">
+                <label style="float:left">شرکت : </label>
+            </div>
+            <div class="col-lg-8  col-md-8 col-sm-12">
+                <div class="dropdown-search">
+                    <select id="MLSelectCompany" class="form-control rtl-select2" style="width: 100%;">
+                        <option></option> <!-- برای placeholder و فعال شدن سرچ -->
+                        @foreach (var item in Model.companies)
+                        {
+                            <option value="@item.CompanyId" onclick="selectOption(this, 'categoryInput')">@item.CompanyName</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-4  col-md-4 col-sm-12">
+                <label style="float:left">دستگاه :  </label>
+            </div>
+            <div class="col-lg-8  col-md-8 col-sm-12">
+                <div class="dropdown-search">
+                    <select id="MLSelectMachines" class="form-control rtl-select2" style="width: 100%;">
+                        <option></option> <!-- برای placeholder و فعال شدن سرچ -->
+                        @foreach (var item in Model.machines)
+                        {
+                            <option value="@item.MachineId" onclick="selectOption(this, 'categoryInput')">@item.MachineName</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-4  col-md-4 col-sm-12">
+                <label style="float:left">تکنسین :  </label>
+            </div>
+            <div class="col-lg-8  col-md-8 col-sm-12">
+                <div class="dropdown-search">
+                    <select id="MLSelectPersons" class="form-control rtl-select2" style="width: 100%;">
+                        <option></option> <!-- برای placeholder و فعال شدن سرچ -->
+                        @* @foreach (var item in Model.persons)
+                        {
+                            <option value="@item.PersonId" onclick="selectOption(this, 'categoryInput')">@item.FirstName @item.LastName</option>
+                        } *@
+                    </select>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-4  col-md-4 col-sm-12">
+                <label style="float:left">نوع نگهداری :  </label>
+            </div>
+            <div class="col-lg-8  col-md-8 col-sm-12">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4  col-md-4 col-sm-12">
+            </div>
+            <div class="col-lg-8  col-md-8 col-sm-12">
+                <div class="btn-group" role="group" aria-label="MaintenanceType group">
+                    @foreach (var item in Model.maintenanceTypes)
+                    {
+                        var isChecked = item.MaintenanceId == Model.MaintenanceTypeId;
+                        <input type="radio"
+                               class="hidden-radio"
+                               name="mtRadio"
+                               id="mt_@item.MaintenanceId"
+                               value="@item.MaintenanceId"
+                               autocomplete="off"
+                               @(isChecked ? "checked" : "") />
+
+                        <label style="font-size:small" class="btn btn-outline-primary btn-toggle @(isChecked ? "active" : "")"
+                               for="mt_@item.MaintenanceId">
+                            @item.MaintenanceTypeName
+                        </label>
+                    }
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-4  col-md-4 col-sm-12">
+                <label style="float:left">وضعیت :  </label>
+            </div>
+            <div class="col-lg-8  col-md-8 col-sm-12">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4  col-md-4 col-sm-12">
+            </div>
+            <div class="col-lg-8  col-md-8 col-sm-12">
+                <div class="btn-group" role="group" aria-label="Status group">
+                    @foreach (var item in Model.statuses)
+                    {
+                        var isChecked = item.StatusId == Model.StatusId;
+                        <input type="radio"
+                               class="hidden-radio"
+                               name="mstatusRadio"
+                               id="mstatus_@item.StatusId"
+                               value="@item.StatusId"
+                               autocomplete="off"
+                               @(isChecked ? "checked" : "") />
+
+                        <label style="font-size:small" class="btn btn-outline-primary btn-toggle @(isChecked ? "active" : "")"
+                               for="mstatus_@item.StatusId">
+                            @item.Status
+                        </label>
+                    }
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-4  col-md-4 col-sm-12">
+                <label style="float:left">مدت زمان صرف شده برای نگهداری (ساعت) :  </label>
+            </div>
+            <div class="col-lg-8  col-md-8 col-sm-12">
+                <input style="width: 100%;" class="form-control" type="number" step="0.00" min="0.00" id="MLHoursSpent" value="@(@Model.HoursSpent ?? 0)" />
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-4  col-md-4 col-sm-12">
+                <label style="float:left">شرح کارهای انجام شده :  </label>
+            </div>
+            <div class="col-lg-8  col-md-8 col-sm-12">
+                <textarea placeholder="شرح کارها" style="width: 100%;" class="form-control" id="MLDescription">@Model.Description</textarea>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-4  col-md-4 col-sm-12">
+                <label style="float:left">تاریخ نگهداری پیشگیرانه بعدی :  </label>
+            </div>
+            <div class="col-lg-8  col-md-8 col-sm-12">
+                <input style="width: 100%;" class="form-control" type="text" id="MLNextScheduledDateShamsi" value="@Model.NextScheduleDate?.ToString("yyyy/MM/dd")" />
+                <input type="hidden" id="MLNextScheduledDateMiladi" value="@Model.NextScheduleDate" />
+            </div>
+        </div>
+    </div>
+</div>

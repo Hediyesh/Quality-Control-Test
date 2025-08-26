@@ -1,0 +1,15 @@
+C:\Users\Os\source\repos\msControl\Application\bin\Debug\net9.0\ControlApplication.deps.json
+C:\Users\Os\source\repos\msControl\Application\bin\Debug\net9.0\ControlApplication.dll
+C:\Users\Os\source\repos\msControl\Application\bin\Debug\net9.0\ControlApplication.pdb
+C:\Users\Os\source\repos\msControl\Application\bin\Debug\net9.0\ControlDomain.dll
+C:\Users\Os\source\repos\msControl\Application\bin\Debug\net9.0\ControlDomain.pdb
+C:\Users\Os\source\repos\msControl\Application\obj\Debug\net9.0\ControlApplication.csproj.AssemblyReference.cache
+C:\Users\Os\source\repos\msControl\Application\obj\Debug\net9.0\ControlApplication.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Os\source\repos\msControl\Application\obj\Debug\net9.0\ControlApplication.AssemblyInfoInputs.cache
+C:\Users\Os\source\repos\msControl\Application\obj\Debug\net9.0\ControlApplication.AssemblyInfo.cs
+C:\Users\Os\source\repos\msControl\Application\obj\Debug\net9.0\ControlApplication.csproj.CoreCompileInputs.cache
+C:\Users\Os\source\repos\msControl\Application\obj\Debug\net9.0\ControlA.790EC199.Up2Date
+C:\Users\Os\source\repos\msControl\Application\obj\Debug\net9.0\ControlApplication.dll
+C:\Users\Os\source\repos\msControl\Application\obj\Debug\net9.0\refint\ControlApplication.dll
+C:\Users\Os\source\repos\msControl\Application\obj\Debug\net9.0\ControlApplication.pdb
+C:\Users\Os\source\repos\msControl\Application\obj\Debug\net9.0\ref\ControlApplication.dll

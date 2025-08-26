@@ -1,0 +1,6 @@
+@UserEndPoint_HostAddress = http://localhost:5085
+
+GET {{UserEndPoint_HostAddress}}/login/
+Accept: application/json
+
+###

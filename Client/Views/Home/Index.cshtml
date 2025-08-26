@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<div class="row">
+    <h4 style="text-align:right">فرم‌ها</h4>
+</div>
+<hr />
+<div class="row">
+    @* GetAllQualityControlEntries,  *@
+    <div class="col-lg-4 col-md-4 col-sm-12">
+        <a style="float:right" href="~/QualityControlEntries/Index" class="btn btn-primary btn-sm">کنترل کیفیت</a>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12">
+        <a style="float:right" href="~/MaintenanceLogs/GetAllMaintenanceLogs" class="btn btn-primary btn-sm">نگهداری و تعمیرات پیشگیرانه</a>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12">
+        <a style="float:right" href="~/Products/GetAllProducts" class="btn btn-primary btn-sm">محصولات</a>
+    </div>
+</div>

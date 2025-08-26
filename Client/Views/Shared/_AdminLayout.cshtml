@@ -1,0 +1,440 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>پنل مدیریت</title>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="~/AdminTemplate/plugins/font-awesome/css/font-awesome.min.css">
+    <!-- IonIcons -->
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/AdminTemplate/dist/css/adminlte.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <!-- bootstrap rtl -->
+    <link rel="stylesheet" href="~/AdminTemplate/dist/css/bootstrap-rtl.min.css">
+    <!-- template rtl version -->
+    <link rel="stylesheet" href="~/AdminTemplate/dist/css/custom-style.css">
+
+    <!-- Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+    <!-- Bootstrap (اختیاری فقط برای ظاهر بهتر) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    @* <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" /> *@
+
+
+    <style>
+
+        /*for search drop down */
+        /* فقط select2هایی که داخل rtl-select2-wrapper هستن */
+        .rtl-select2-wrapper .select2-container--default.select2-container--rtl {
+            direction: rtl !important;
+        }
+
+        .rtl-select2-wrapper .select2-selection--single {
+            text-align: right !important;
+        }
+
+        .rtl-select2-wrapper .select2-dropdown--below {
+            direction: rtl !important;
+            text-align: right;
+        }
+
+        .rtl-select2-wrapper .select2-results__option {
+            text-align: right !important;
+        }
+
+        /* یا فقط اونهایی که کلاس rtl-select2 دارن */
+        .rtl-select2.select2-container--default.select2-container--rtl {
+            direction: rtl !important;
+        }
+
+        .rtl-select2 ~ .select2 .select2-selection--single {
+            text-align: right !important;
+        }
+
+        /* for category select */
+        .dropdown-search {
+            position: relative;
+            width: 100%;
+        }
+
+            .dropdown-search input {
+                width: 100%;
+                padding: 6px 10px;
+                font-size: 14px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+
+        .dropdown-options {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            max-height: 200px;
+            overflow-y: auto;
+            background: white;
+            border: 1px solid #ccc;
+            border-top: none;
+            z-index: 1000;
+            display: none;
+        }
+
+            .dropdown-options div {
+                padding: 8px 12px;
+                cursor: pointer;
+            }
+
+                .dropdown-options div:hover {
+                    background-color: #f0f0f0;
+                }
+        /* for machine select */
+        .multi-dropdown {
+            position: relative;
+            width: 100%;
+        }
+
+            .multi-dropdown input[type="text"] {
+                width: 100%;
+                padding: 6px 10px;
+                font-size: 14px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+
+        .multi-options {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            max-height: 200px;
+            overflow-y: auto;
+            background: white;
+            border: 1px solid #ccc;
+            border-top: none;
+            z-index: 1000;
+            display: none;
+        }
+
+            .multi-options div {
+                padding: 8px 12px;
+                cursor: pointer;
+            }
+
+                .multi-options div:hover {
+                    background-color: #f0f0f0;
+                }
+
+        .selected-items {
+            margin-top: 5px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .selected-item {
+            background-color: #d1ecf1;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+        }
+
+            .selected-item span {
+                margin-left: 8px;
+                cursor: pointer;
+                color: red;
+            }
+
+        .rtl {
+            direction: rtl;
+            text-align: right;
+        }
+
+            .rtl input,
+            .rtl select,
+            .rtl label,
+            .rtl textarea {
+                direction: rtl;
+                text-align: right;
+            }
+
+        .hidden-radio {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* .btn-toggle.active {
+            background-color: darkgray !important;
+            color: white !important;
+        }
+
+        .btn-toggle:hover {
+            background-color: #a9a9a9 !important; /* یکم روشن‌تر از darkgray */
+            color: white !important;
+        } */
+
+
+    </style>
+</head>
+<!--
+BODY TAG OPTIONS:
+=================
+Apply one or more of the following classes to to the body tag
+to get the desired effect
+|---------------------------------------------------------|
+|LAYOUT OPTIONS | sidebar-collapse                        |
+|               | sidebar-mini                            |
+|---------------------------------------------------------|
+-->
+<body class="hold-transition sidebar-mini rtl">
+    <div class="wrapper">
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+
+            <!-- SEARCH FORM -->
+            <form class="form-inline ml-3">
+                <div class="input-group input-group-sm">
+                    <input class="form-control form-control-navbar" type="search" placeholder="جستجو" aria-label="Search">
+                    <div class="input-group-append">
+                        <button class="btn btn-navbar" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+
+        </nav>
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <!-- Brand Logo -->
+            <a href="index3.html" class="brand-link">
+                <span class="brand-text font-weight-light">پنل مدیریت</span>
+            </a>
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div>
+                    <!-- Sidebar user panel (optional) -->
+                    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                        @* <div class="image">
+                            <img src="https://www.gravatar.com/avatar/52f0fbcbedee04a121cba8dad1174462?s=200&d=mm&r=g" class="img-circle elevation-2" alt="User Image">
+                        </div> *@
+                        <div class="info">
+                            <a href="#" class="d-block">ادمین: نام</a>
+                        </div>
+                    </div>
+                    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                        <a href="~/Admin/Home/Index">صفحه‌ی اصلی</a>
+                    </div>
+                    @* <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                        <button id="logoutBtn" class="btn btn-link p-0 m-0">خروج</button>
+                    </div> *@
+
+                    <!-- Left navbar links -->
+                    <!-- Sidebar Menu -->
+                    <nav class="mt-2">
+                        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                            <!-- Add icons to the links using the .nav-icon class
+                                 with font-awesome or any other icon font library -->
+                            <li class="nav-item has-treeview">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fa fa-edit"></i>
+                                    <p>
+                                        فرم‌ها
+                                        <i class="fa fa-angle-left right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="/Admin/Products/GetAllProducts" class="nav-link">
+                                            <i class="fa fa-circle-o nav-icon"></i>
+                                            <p>مدیریت ‌محصولات</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/Admin/QualityControlEntries/GetAllQualityControlEntries" class="nav-link">
+                                            <i class="fa fa-circle-o nav-icon"></i>
+                                            <p>کنترل کیفیت</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/Admin/MaintenanceLogs/GetAllMaintenanceLogs" class="nav-link">
+                                            <i class="fa fa-circle-o nav-icon"></i>
+                                            <p>نگهداری و تعمیرات پیشگیرانه</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            @* <li class="nav-item has-treeview">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fa fa-table"></i>
+                                    <p>
+                                        جداول
+                                        <i class="fa fa-angle-left right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="pages/tables/simple.html" class="nav-link">
+                                            <i class="fa fa-circle-o nav-icon"></i>
+                                            <p>لیست شرکت‌ها</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="~/admin/Users/Index" class="nav-link">
+                                            <i class="fa fa-circle-o nav-icon"></i>
+                                            <p>لیست کاربران</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="~/admin/Products/Index" class="nav-link">
+                                            <i class="fa fa-circle-o nav-icon"></i>
+                                            <p>لیست کالاها</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li> *@
+                            @* <li class="nav-header">برچسب‌ها</li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fa fa-circle-o text-danger"></i>
+                                    <p class="text">مهم</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fa fa-circle-o text-warning"></i>
+                                    <p>هشدار</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fa fa-circle-o text-info"></i>
+                                    <p>اطلاعات</p>
+                                </a>
+                            </li> *@
+                        </ul>
+                    </nav>
+                    <!-- /.sidebar-menu -->
+                </div>
+            </div>
+            <!-- /.sidebar -->
+        </aside>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            @* <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0 text-dark">داشبورد سوم</h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-left">
+                                <li class="breadcrumb-item"><a href="#">خانه</a></li>
+                                <li class="breadcrumb-item active">داشبورد سوم</li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div> *@
+            <!-- /.content-header -->
+            <!-- Main content -->
+            <div class="content">
+                <div class="container-fluid">
+                    <div id="partialContainer">
+                        <br>
+                        @RenderBody()
+                    </div>
+                </div>
+                <!-- /.container-fluid -->
+            </div>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
+        <!-- Main Footer -->
+        <footer class="main-footer">
+            <!-- To the right -->
+            <div class="float-right d-none d-sm-block-down">
+                Anything you want
+            </div>
+            <!-- Default to the left -->
+            @* <strong>CopyLeft &copy; 2018 <a href="http://github.com/hesammousavi/">حسام موسوی</a>.</strong> *@
+        </footer>
+    </div>
+    <!-- ./wrapper -->
+    <!-- REQUIRED SCRIPTS -->
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="~/AdminTemplate/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    @* <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> *@
+
+    <!-- AdminLTE -->
+    <script src="~/AdminTemplate/dist/js/adminlte.js"></script>
+
+    <!-- OPTIONAL SCRIPTS -->
+    <script src="~/AdminTemplate/plugins/chart.js/Chart.min.js"></script>
+    <script src="~/AdminTemplate/dist/js/demo.js"></script>
+    <script src="~/AdminTemplate/dist/js/pages/dashboard3.js"></script>
+    <!-- تقویم شمسی -->
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/md.bootstrappersiandatetimepicker@latest/dist/jquery.md.bootstrap.datetimepicker.style.css">
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/md.bootstrappersiandatetimepicker@latest/dist/jquery.md.bootstrap.datetimepicker.js"></script>
+    <script>
+        function RadioButtonsQCE(radio) {
+          $('input[name="'+ radio +'"]').on('change', function () {
+            $('input[name="'+ radio +'"]').each(function () {
+              $('label[for="' + this.id + '"]').removeClass('active');
+            });
+
+            $('label[for="' + this.id + '"]').addClass('active');
+          });
+        }
+        function shamsiMiladi(shamsi, miladi){
+            $('#'+shamsi).MdPersianDateTimePicker({
+                targetTextSelector: '#'+shamsi,
+                targetDateSelector: '#'+miladi, // اینجا مقدار میلادی می‌ره
+                englishNumber: true,
+                dateFormat: 'yyyy/MM/dd'
+            });
+            $('#'+miladi).on('change', function () {
+            let val = $(this).val();
+            if (val) {
+                // اطمینان از فرمت درست
+                let iso = val.replace(/\//g, '-') + 'T00:00:00';
+                $(this).val(iso);
+            }
+            });
+        }
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+

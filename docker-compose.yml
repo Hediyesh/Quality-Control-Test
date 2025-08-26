@@ -1,0 +1,101 @@
+﻿# version: '3.8'
+
+# services:
+#   -------------------------------
+#   API Gateway (Ocelot)
+#   -------------------------------
+#   gateway:
+#     image: gateway:latest
+#     build:
+#       context: ./msControl/Gateway
+#       dockerfile: Dockerfile
+#     ports:
+#       - "5000:80"
+#     environment:
+#       - ASPNETCORE_ENVIRONMENT=Development
+#     depends_on:
+#       - controlservice
+#       - userservice
+#       - sendemailservice
+#       - toolsservice
+#     networks:
+#       - app-network
+
+#   -------------------------------
+#   Control Service
+#   -------------------------------
+#   controlservice:
+#     image: controlservice:latest
+#     build:
+#       context: ./msControl/MicroServices/ControlService/src/Presentation
+#       dockerfile: Dockerfile
+#     environment:
+#       - ASPNETCORE_ENVIRONMENT=Development
+#       - RABBITMQ__HOST=rabbitmq
+#     depends_on:
+#       - rabbitmq
+#     networks:
+#       - app-network
+
+#   -------------------------------
+#   User Service
+#   -------------------------------
+#   userservice:
+#     image: userservice:latest
+#     build:
+#       context: ./msControl/MicroServices/UserService/src/Presentation
+#       dockerfile: Dockerfile
+#     environment:
+#       - ASPNETCORE_ENVIRONMENT=Development
+#       - RABBITMQ__HOST=rabbitmq
+#     depends_on:
+#       - rabbitmq
+#     networks:
+#       - app-network
+
+#   -------------------------------
+#   Send Email Service
+#   -------------------------------
+#   sendemailservice:
+#     image: sendemailservice:latest
+#     build:
+#       context: ./msControl/MicroServices/SendEmailService/src/Presentation
+#       dockerfile: Dockerfile
+#     environment:
+#       - ASPNETCORE_ENVIRONMENT=Development
+#       - RABBITMQ__HOST=rabbitmq
+#     depends_on:
+#       - rabbitmq
+#     networks:
+#       - app-network
+
+#   -------------------------------
+#   Tools Service
+#   -------------------------------
+#   toolsservice:
+#     image: toolsservice:latest
+#     build:
+#       context: ./msControl/MicroServices/ToolsService
+#       dockerfile: Dockerfile
+#     environment:
+#       - ASPNETCORE_ENVIRONMENT=Development
+#     networks:
+#       - app-network
+
+#   -------------------------------
+#   RabbitMQ
+#   -------------------------------
+#   rabbitmq:
+#     image: rabbitmq:3-management
+#     ports:
+#       - "15672:15672"
+#       - "5672:5672"
+#     environment:
+#       - RABBITMQ_DEFAULT_USER=admin
+#       - RABBITMQ_DEFAULT_PASS=admin123
+#     networks:
+#       - app-network
+
+# networks:
+#   app-network:
+#     driver: bridge

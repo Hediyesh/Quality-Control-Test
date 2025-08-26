@@ -1,0 +1,18 @@
+[
+  {
+    "ContainingType": "SendEmailEndPoint.Controllers.EmailController",
+    "Method": "SendLoginEmail",
+    "RelativePath": "api/Email/send-login-email",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "SendEmailEndPoint.Controllers.LoginEmailRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

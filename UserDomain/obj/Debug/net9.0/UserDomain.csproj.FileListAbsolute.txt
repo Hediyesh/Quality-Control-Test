@@ -1,0 +1,12 @@
+C:\Users\Os\source\repos\msControl\UserDomain\bin\Debug\net9.0\UserDomain.deps.json
+C:\Users\Os\source\repos\msControl\UserDomain\bin\Debug\net9.0\UserDomain.dll
+C:\Users\Os\source\repos\msControl\UserDomain\bin\Debug\net9.0\UserDomain.pdb
+C:\Users\Os\source\repos\msControl\UserDomain\obj\Debug\net9.0\UserDomain.csproj.AssemblyReference.cache
+C:\Users\Os\source\repos\msControl\UserDomain\obj\Debug\net9.0\UserDomain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Os\source\repos\msControl\UserDomain\obj\Debug\net9.0\UserDomain.AssemblyInfoInputs.cache
+C:\Users\Os\source\repos\msControl\UserDomain\obj\Debug\net9.0\UserDomain.AssemblyInfo.cs
+C:\Users\Os\source\repos\msControl\UserDomain\obj\Debug\net9.0\UserDomain.csproj.CoreCompileInputs.cache
+C:\Users\Os\source\repos\msControl\UserDomain\obj\Debug\net9.0\UserDomain.dll
+C:\Users\Os\source\repos\msControl\UserDomain\obj\Debug\net9.0\refint\UserDomain.dll
+C:\Users\Os\source\repos\msControl\UserDomain\obj\Debug\net9.0\UserDomain.pdb
+C:\Users\Os\source\repos\msControl\UserDomain\obj\Debug\net9.0\ref\UserDomain.dll

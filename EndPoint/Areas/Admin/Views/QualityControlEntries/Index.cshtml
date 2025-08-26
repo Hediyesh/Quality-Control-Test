@@ -1,0 +1,77 @@
+﻿@* @using Control.Application.Services.QualityControlEntries.Queries.Get.QualityControlEntries
+@model ResultGetQualityControlEntriesDto
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card-body">
+    <div id="example1_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+        <div class="row">
+            <div class="col-lg-2  col-md-2 col-sm-4">
+                <button onclick="CreateQCE()" class="btn btn-success">اضافه کردن کنترل کیفیت جدید</button>
+            </div>
+            <div class="col-lg-1  col-md-6 col-sm-4">
+            </div>
+            <div class="col-lg-6"></div>
+            <div class="col-lg-1  col-md-2 col-sm-4">
+                <label>جستجو : </label>
+            </div>
+            <div class="col-lg-2  col-md-2 col-sm-4">
+                <div id="example1_filter" class="dataTables_filter">
+                    <input type="search" class="form-control form-control-sm" placeholder="" aria-controls="example1" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <table id="example1" class="table table-bordered table-striped dataTable" role="grid">
+                    <thead style="background-color:lightblue">
+                        <tr role="row">
+                            <th>تاریخ و زمان بازرسی</th>
+                            <th>سری ساخت‌</th>
+                            <th>شرکت</th>
+                            <th>دستگاه</th>
+                            <th>محصول</th>
+                            <th>بازرس</th>
+                            <th>شرح نقص</th>
+                            <th>تعداد واحد بازرسی شده</th>
+                            <th>تعداد واحد معیوب یافت شده</th>
+                            <th>علت ریشه‌ای احتمالی</th>
+                            <th>اقدام اصلاحی انجام شده</th>
+                            <th>نوع عیب</th>
+                            <th>شدت عیب</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.qualityControlEntriesDtos)
+                        {
+                            <tr role="row" class="" id="@item.QCEId">
+                                <td>@item.InspectionDate</td>
+                                <td>@item.BatchNumber</td>
+                                <td>@item.CompanyName</td>
+                                <td>@item.MachineName</td>
+                                <td>@item.ProductName</td>
+                                <td>@item.UserName</td>
+                                <td>@item.DefectDescription</td>
+                                <td>@item.QuantityInspected</td>
+                                <td>@item.QualityDefective</td>
+                                <td>@item.RootCause</td>
+                                <td>@item.CorrectiveAction</td>
+                                <td>@item.DefectType</td>
+                                <td>@item.Severity</td>
+                                <td>
+                                    <button onclick="EditQCE(@item.QCEId)" class="btn btn-info">ویرایش</button>
+                                    <button onclick="DeleteQCE()" class="btn btn-danger">حذف</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div><div class="row"><div class="col-sm-12 col-md-5"></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="example1_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="example1_previous"><a href="#" aria-controls="example1" data-dt-idx="0" tabindex="0" class="page-link">قبلی</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="example1" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item "><a href="#" aria-controls="example1" data-dt-idx="3" tabindex="0" class="page-link">3</a></li><li class="paginate_button page-item "><a href="#" aria-controls="example1" data-dt-idx="4" tabindex="0" class="page-link">4</a></li><li class="paginate_button page-item "><a href="#" aria-controls="example1" data-dt-idx="5" tabindex="0" class="page-link">5</a></li><li class="paginate_button page-item "><a href="#" aria-controls="example1" data-dt-idx="6" tabindex="0" class="page-link">6</a></li><li class="paginate_button page-item next" id="example1_next"><a href="#" aria-controls="example1" data-dt-idx="7" tabindex="0" class="page-link">بعدی</a></li></ul></div></div></div>
+    </div>
+</div>
+
+ *@

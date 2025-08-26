@@ -1,0 +1,17 @@
+C:\Users\Os\source\repos\msControl\SendEmailApplication\bin\Debug\net9.0\SendEmailApplication.deps.json
+C:\Users\Os\source\repos\msControl\SendEmailApplication\bin\Debug\net9.0\SendEmailApplication.dll
+C:\Users\Os\source\repos\msControl\SendEmailApplication\bin\Debug\net9.0\SendEmailApplication.pdb
+C:\Users\Os\source\repos\msControl\SendEmailApplication\bin\Debug\net9.0\SendEmailDomain.dll
+C:\Users\Os\source\repos\msControl\SendEmailApplication\bin\Debug\net9.0\SendEmailDomain.pdb
+C:\Users\Os\source\repos\msControl\SendEmailApplication\obj\Debug\net9.0\SendEmailApplication.csproj.AssemblyReference.cache
+C:\Users\Os\source\repos\msControl\SendEmailApplication\obj\Debug\net9.0\SendEmailApplication.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Os\source\repos\msControl\SendEmailApplication\obj\Debug\net9.0\SendEmailApplication.AssemblyInfoInputs.cache
+C:\Users\Os\source\repos\msControl\SendEmailApplication\obj\Debug\net9.0\SendEmailApplication.AssemblyInfo.cs
+C:\Users\Os\source\repos\msControl\SendEmailApplication\obj\Debug\net9.0\SendEmailApplication.csproj.CoreCompileInputs.cache
+C:\Users\Os\source\repos\msControl\SendEmailApplication\obj\Debug\net9.0\SendEmai.F6CBEB41.Up2Date
+C:\Users\Os\source\repos\msControl\SendEmailApplication\obj\Debug\net9.0\SendEmailApplication.dll
+C:\Users\Os\source\repos\msControl\SendEmailApplication\obj\Debug\net9.0\refint\SendEmailApplication.dll
+C:\Users\Os\source\repos\msControl\SendEmailApplication\obj\Debug\net9.0\SendEmailApplication.pdb
+C:\Users\Os\source\repos\msControl\SendEmailApplication\obj\Debug\net9.0\ref\SendEmailApplication.dll
+C:\Users\Os\source\repos\msControl\SendEmailApplication\bin\Debug\net9.0\Contracts.dll
+C:\Users\Os\source\repos\msControl\SendEmailApplication\bin\Debug\net9.0\Contracts.pdb

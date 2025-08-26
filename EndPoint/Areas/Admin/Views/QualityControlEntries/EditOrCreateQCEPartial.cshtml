@@ -1,0 +1,216 @@
+﻿@using ControlService.ControlApplication.Services.QualityControlEntries.Queries.GetDropDownForEditOrAddQCE
+@model GetDropDownForEditOrAddQCEDto
+<div class="card card-default">
+    <input id="qceProductId" type="hidden" value="@Model.ProductId" />
+    <input id="qceid" type="hidden" value="@Model.qceId" />
+    <input type="hidden" id="qceCompanyId" value="@Model.CompanyId" />
+    <input type="hidden" id="qceBatchId" value="@Model.BatchId" />
+    <input type="hidden" id="qceMachineId" value="@Model.MachineId" />
+    <input type="hidden" id="qcePersonId" value="@Model.PersonId" />
+    <input type="hidden" name="miladiDate" value="@Model.InspectionDate" id="miladiDate" />
+    <div class="card-body">
+        <div class="row">
+            <div class="col-lg-4  col-md-4 col-sm-12">
+                <label style="float:left">تاریخ و زمان بازرسی : </label>
+            </div>
+            <div class="col-lg-8  col-md-8 col-sm-12">
+                <input type="text" id="shamsiDate" value="@Model.InspectionDate?.ToString("yyyy/MM/dd")" class="form-control" autocomplete="off" />
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-4  col-md-4 col-sm-12">
+                <label style="float:left">شرکت : </label>
+            </div>
+            <div class="col-lg-8  col-md-8 col-sm-12">
+                <div class="dropdown-search">
+                    <select id="qceSelectCompany" class="form-control rtl-select2" style="width: 100%;">
+                        <option></option> <!-- برای placeholder و فعال شدن سرچ -->
+                        @foreach (var item in Model.Companies)
+                        {
+                            <option value="@item.CompanyId" onclick="selectOption(this, 'categoryInput')">@item.CompanyName</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-4  col-md-4 col-sm-12">
+                <label style="float:left">محصول : </label>
+            </div>
+            <div class="col-lg-8  col-md-8 col-sm-12">
+                <div class="dropdown-search">
+                    <select id="qceSelectProduct" class="form-control rtl-select2" style="width: 100%;">
+                        <option></option> <!-- برای placeholder و فعال شدن سرچ -->
+                        @foreach (var item in Model.Products)
+                        {
+                            <option value="@item.ProductId" onclick="selectOption(this, 'categoryInput')">@item.ProductName</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-4  col-md-4 col-sm-12">
+                <label style="float:left">سری ساخت محصول : </label>
+            </div>
+            <div class="col-lg-8  col-md-8 col-sm-12">
+                <div class="dropdown-search">
+                    <select id="qceSelectBatch" class="form-control rtl-select2" style="width: 100%;">
+                        <option></option> <!-- برای placeholder و فعال شدن سرچ -->
+                        @foreach (var item in Model.Batches)
+                        {
+                            <option value="@item.BatchId" onclick="selectOption(this, 'categoryInput')">@item.BatchNumber</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-4  col-md-4 col-sm-12">
+                <label style="float:left">دستگاه :  </label>
+            </div>
+            <div class="col-lg-8  col-md-8 col-sm-12">
+                <div class="dropdown-search">
+                    <select id="qceSelectMachines" class="form-control rtl-select2" style="width: 100%;">
+                        <option></option> <!-- برای placeholder و فعال شدن سرچ -->
+                        @foreach (var item in Model.Machines)
+                        {
+                            <option value="@item.MachineId" onclick="selectOption(this, 'categoryInput')">@item.MachineName</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-4  col-md-4 col-sm-12">
+                <label style="float:left">بازرس :  </label>
+            </div>
+            <div class="col-lg-8  col-md-8 col-sm-12">
+                <div class="dropdown-search">
+                    <select id="qceSelectPersons" class="form-control rtl-select2" style="width: 100%;">
+                        <option></option> <!-- برای placeholder و فعال شدن سرچ -->
+                        @foreach (var item in Model.Persons)
+                        {
+                            <option value="@item.PersonId" onclick="selectOption(this, 'categoryInput')">@item.FirstName @item.LastName</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-4  col-md-4 col-sm-12">
+                <label style="float:left">تعداد واحد بازرسی شده :  </label>
+            </div>
+            <div class="col-lg-8  col-md-8 col-sm-12">
+                <input style="width: 100%;" class="form-control" type="number" min="0" id="qceQuantityinspected" value="@(@Model.QuantityInspected ?? 0)" />
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-4  col-md-4 col-sm-12">
+                <label style="float:left">تعداد واحد معیوب یافت شده :  </label>
+            </div>
+            <div class="col-lg-8  col-md-8 col-sm-12">
+                <input style="width: 100%;" class="form-control" type="number" min="0" id="qceQuantitydefective" value="@(@Model.QualityDefective ?? 0)" />
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-4  col-md-4 col-sm-12">
+                <label style="float:left">نوع عیب :  </label>
+            </div>
+            <div class="col-lg-8  col-md-8 col-sm-12">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4  col-md-4 col-sm-12">
+            </div>
+            <div class="col-lg-8  col-md-8 col-sm-12">
+                <div class="btn-group" role="group" aria-label="Defect group">
+                    @foreach (var item in Model.Defects)
+                    {
+                        var isChecked = item.DefectId == Model.DefectId;
+                        <input type="radio"
+                               class="hidden-radio"
+                               name="defectRadio"
+                               id="defect_@item.DefectId"
+                               value="@item.DefectId"
+                               autocomplete="off"
+                               @(isChecked ? "checked" : "") />
+
+                        <label style="font-size:small;" class="btn btn-outline-primary btn-toggle @(isChecked ? "active" : "")"
+                               for="defect_@item.DefectId">
+                            @item.DefectType
+                        </label>
+                    }
+                </div>
+
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-4  col-md-4 col-sm-12">
+                <label style="float:left">شدت عیب :  </label>
+            </div>
+            <div class="col-lg-8  col-md-8 col-sm-12">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4  col-md-4 col-sm-12">
+            </div>
+            <div class="col-lg-8  col-md-8 col-sm-12">
+                <div class="btn-group" role="group" aria-label="Severity group">
+                    @foreach (var item in Model.Severities)
+                    {
+                        var isChecked = item.SeverityId == Model.SeverityId;
+                        <input type="radio"
+                               class="hidden-radio"
+                               name="severityRadio"
+                               id="severity_@item.SeverityId"
+                               value="@item.SeverityId"
+                               autocomplete="off"
+                               @(isChecked ? "checked" : "") />
+
+                        <label style="font-size:small" class="btn btn-outline-primary btn-toggle @(isChecked ? "active" : "")"
+                               for="severity_@item.SeverityId">
+                            @item.SeverityDescription
+                        </label>
+                    }
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-4  col-md-4 col-sm-12">
+                <label style="float:left">شرح نقص :  </label>
+            </div>
+            <div class="col-lg-8  col-md-8 col-sm-12">
+                <textarea placeholder="شرح نقص" style="width: 100%;" class="form-control" id="qceDefectDescription">@Model.DefectDescription</textarea>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-4  col-md-4 col-sm-12">
+                <label style="float:left">علت ریشه‌ای احتمالی :  </label>
+            </div>
+            <div class="col-lg-8  col-md-8 col-sm-12">
+                <input placeholder="شرح علت احتمالی" style="width: 100%;" class="form-control" type="text" id="qceRootCause" value="@Model.RootCause" />
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-4  col-md-4 col-sm-12">
+                <label style="float:left">اقدام اصلاحی انجام شده :  </label>
+            </div>
+            <div class="col-lg-8  col-md-8 col-sm-12">
+                <input placeholder="شرح اقدام اصلاحی" style="width: 100%;" class="form-control" type="text" id="qceCorrectiveAction" value="@Model.CorrectiveAction" />
+            </div>
+        </div>
+    </div>
+</div>

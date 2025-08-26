@@ -1,0 +1,40 @@
+﻿# استیج ۱: ساخت
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+
+# کپی فایل‌های پروژه
+COPY MicroServices/ControlService/ControlService.sln ./ControlService.sln
+COPY MicroServices/ControlService/src/*.csproj ./src/
+COPY MicroServices/ControlService/src/Application/*.csproj ./src/Application/
+COPY MicroServices/ControlService/src/Domain/*.csproj ./src/Domain/
+COPY MicroServices/ControlService/src/Infrastructure/*.csproj ./src/Infrastructure/
+COPY MicroServices/ControlService/src/Presentation/*.csproj ./src/Presentation/
+
+# ریستور
+RUN dotnet restore ControlService.sln
+
+# کپی بقیه کدها
+COPY MicroServices/ControlService/ ./MicroServices/ControlService/
+
+# بیلد
+RUN dotnet build "MicroServices/ControlService/src/Presentation/ControlWebAPI.csproj" -c Release -o /app/build
+
+# استیج ۲: پابلیش
+FROM build AS publish
+RUN dotnet publish "MicroServices/ControlService/src/Presentation/ControlWebAPI.csproj" -c Release -o /app/publish
+
+# استیج ۳: اجرا
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+
+# نصب netcat + کپی اسکریپت
+RUN apt-get update && apt-get install -y netcat && rm -rf /var/lib/apt/lists/*
+COPY scripts/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+# تنظیم متغیر محیطی
+ENV ASPNETCORE_URLS=http://+:80
+
+# نقطه ورود
+ENTRYPOINT ["/entrypoint.sh"]

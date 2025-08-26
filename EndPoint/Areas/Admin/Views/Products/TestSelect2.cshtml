@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>تست Select2</title>
+
+    <!-- Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+    <!-- Bootstrap (اختیاری فقط برای ظاهر بهتر) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <style>
+        body {
+            padding: 30px;
+            font-family: sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <label for="mySelect">شهر خود را انتخاب کنید:</label>
+        <select id="mySelect" class="form-control" style="width: 100%;">
+            <option></option> <!-- برای placeholder و فعال شدن سرچ -->
+            <option value="1">تهران</option>
+            <option value="2">اصفهان</option>
+            <option value="3">شیراز</option>
+            <option value="4">تبریز</option>
+            <option value="5">مشهد</option>
+        </select>
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+          $('#mySelect').select2({
+            placeholder: "انتخاب کنید",
+            dir: "rtl",                      // برای راست‌چین بودن
+            minimumResultsForSearch: 0      // نمایش دائم سرچ
+          });
+        });
+    </script>
+
+</body>
+</html>

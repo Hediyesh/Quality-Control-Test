@@ -1,0 +1,132 @@
+﻿@* @using ControlService.ControlApplication.Services.UserCompanyCategoryMachine.GetUserCompanyCategoryMachine
+@model GetUserCompanyCategoryMachineDto *@
+@* <div class="card card-default"> *@
+    @* <input id="ProductId" type="hidden" value="@Model.Product?.ProductId" />
+    <input id="userCompany" type="hidden" value="@Model.CompanyId" />
+    <input type="hidden" id="proCategoryInput" value="@Model.Product?.CategoryId" />
+    <input type="hidden" id="proCompanyInput" value="@Model.Product?.CompanyId" /> *@
+
+    @* <div class="card-body">
+        <div class="row"> *@
+            @* <input id="userCompanyName" type="hidden" value="@userCompanyText" />
+            <input id="userCompanyId" type="hidden" value="@userCompanyId" /> *@
+
+            @* <div class="col-lg-4  col-md-4 col-sm-12">
+                <label>‌شرکت : </label>
+            </div>
+            <div class="col-lg-8  col-md-8 col-sm-12">
+                <div class="dropdown-search"> *@
+                    @* @if (Model.CompanyId == 1)
+                    {
+                        <select id="mySelectCompany" class="form-control rtl-select2" style="width: 100%;">
+                            <option></option>
+                            @foreach (var item in Model.companies)
+                            {
+                                <option value="@item.CompanyId">@item.CompanyName</option>
+                            }
+                        </select>
+
+                    }
+                    @if (Model.CompanyId != 1)
+                    {
+                        <input type="text" id="userCompanyNameInput" value="@Model.CompanyName" disabled />
+
+                    } *@
+        @*         </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-4  col-md-4 col-sm-12">
+                <label>نام محصول : </label>
+            </div>
+            <div class="col-lg-8  col-md-8 col-sm-12">
+                <div class="dataTables_filter"> *@
+                    @* <input type="text" id="productName" value="@Model.Product?.ProductName" class="form-control form-control-sm" placeholder="نام محصول را وارد کنید" aria-controls="example1" /> *@
+        @*         </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-4  col-md-4 col-sm-12">
+                <label>دسته‌بندی : </label>
+            </div>
+            <div class="col-lg-8  col-md-8 col-sm-12">
+                <div class="dropdown-search"> *@
+                    @* <input type="text" id="categoryName" placeholder="انتخاب دسته‌بندی..." oninput="filterDropdown(this)" value="@Model.Product?.Category.CategoryName" onclick="showDropdown(this)" data-dropdown-id="dropdown-category" /> *@
+                    @* <select id="mySelectCategory" class="form-control rtl-select2" style="width: 100%;">
+                        <option></option> <!-- برای placeholder و فعال شدن سرچ -->
+                        @foreach (var item in Model.categories)
+                        {
+                            <option value="@item.CategoryId" onclick="selectOption(this, 'categoryInput')">@item.CategoryName</option>
+                        }
+                    </select> *@
+                    @* <input type="hidden" name="Product.CategoryId" id="categoryInput" value="@Model.Product?.CategoryId" /> *@
+        @*         </div>
+            </div>
+        </div>
+
+        <br />
+        <div class="row">
+            <div class="col-lg-4  col-md-4 col-sm-12">
+                <label>دستگاه :  </label>
+            </div>
+            <div class="col-lg-8  col-md-8 col-sm-12">
+                <div class="multi-dropdown"> *@
+                    @* <input type="text" placeholder="انتخاب دستگاه‌..." oninput="filterMultiDropdown(this)" onclick="showMultiDropdown(this)" data-dropdown-id="dropdown-machines" /> *@
+                    @* <select id="mySelectMachines" class="form-control rtl-select2" multiple="multiple"
+                            data-placeholder="انتخاب دستگاه‌ها"
+                            style="width: 100%;">
+                        @foreach (var item in Model.machines)
+                        {
+                            var isSelected = Model.selectedMachines != null &&
+                            Model.selectedMachines.Any(m => m.id == item.id);
+                            <option value="@item.id" @(isSelected ? "selected=\"selected\"" : "")>
+                                @item.Name
+                            </option>
+                        }
+                    </select> *@
+                    @* <input type="hidden" id="selectedCategoryId" value="@Model.Product?.CategoryId" />
+                    <input type="hidden" id="SelectedMachineIds" value="@string.Join(",", Model.selectedMachines?.Select(m => m.id) ?? new List<int>())" />
+                    <input type="hidden" id="selectedCompanyId" value="@Model.Product?.CompanyId" /> *@
+                    @* <div class="multi-options" id="dropdown-machines">
+                        @foreach (var item in Model.machines)
+                        {
+                            <div data-value="@item.MachineId" data-text="@item.MachineName"
+                                 onclick="selectMultiOption(this, 'selectedMachinesTableBody', 'machineHiddenInput')">
+                                @item.MachineName
+                            </div>
+                        }
+                    </div> *@
+                @* </div> *@
+                @* <input type="hidden" id="SelectedMachineIds" name="SelectedMachineIds" /> *@
+                @* <input type="hidden" id="machineHiddenInput" name="SelectedMachineIds" value="" /> *@
+
+        @*     </div>
+        </div>
+        <br /> *@
+        @* <table class="table table-bordered mt-3">
+            <thead style="background-color:lightblue">
+                <tr>
+                    <th>دستگاه‌های منتسب</th>
+                    <th>عملیات</th>
+                </tr>
+            </thead>
+            <tbody id="selectedMachinesTableBody">
+                @if (Model.selectedMachines != null)
+                {
+                    foreach (var machine in Model.selectedMachines)
+                    {
+                        <tr data-id="@machine.MachineId">
+                            <td>@machine.MachineName</td>
+                            <td>
+                                <button type="button" class="btn btn-danger btn-sm" onclick="removeMachineRow('@machine.MachineId', 'selectedMachinesTableBody', 'machineHiddenInput')">حذف</button>
+                            </td>
+                        </tr>
+                    }
+
+                }
+            </tbody>
+        </table> *@
+    @* </div> *@
+@* </div> *@

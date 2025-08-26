@@ -1,0 +1,6 @@
+@ToolsWebApi_HostAddress = http://localhost:5105
+
+GET {{ToolsWebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

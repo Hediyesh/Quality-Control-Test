@@ -1,0 +1,347 @@
+﻿@using ControlService.ControlApplication.Services.Products.Queries.GetAllProducts
+@model List<GetProductsDto>;
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card-body">
+    <div id="example1_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+        <div class="row">
+            <div class="col-lg-2  col-md-2 col-sm-4">
+                <button onclick="CreateProduct()" class="btn btn-success">اضافه کردن محصول جدید</button>
+            </div>
+            <div class="col-lg-1  col-md-6 col-sm-4">
+            </div>
+            <div class="col-lg-6"></div>
+            <div class="col-lg-1  col-md-2 col-sm-4">
+                <label>جستجو : </label>
+            </div>
+            <div class="col-lg-2  col-md-2 col-sm-4">
+                <div id="example1_filter" class="dataTables_filter">
+                    <input type="search" class="form-control form-control-sm" placeholder="" aria-controls="example1" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <table id="example1" class="table table-bordered table-striped dataTable" role="grid">
+                    <thead style="background-color:lightblue">
+                        <tr role="row"><th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="موتور رندر: activate to sort column descending" style="">نام محصول</th><th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="مرورگر: activate to sort column ascending" style="">دسته‌بندی</th><th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="سیستم عامل: activate to sort column ascending" style="">نام شرکت سازنده</th><th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label=" ماشین‌های سازنده: activate to sort column ascending" style="">دستگاه سازنده</th><th></th></tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr role="row" class="" id="@item.ProductId">
+                                <td class="sorting_1">@item.ProductName</td>
+                                <td>@item.CategoryId</td>
+                                <td>@item.CompanyId</td>
+                                <td>
+                                    @string.Join("، ", item.Machines.Select(m => m.Name))
+                                </td>
+                                <td>
+                                    <button onclick="EditProduct(@item.ProductId)" class="btn btn-info">ویرایش</button>
+                                    <button onclick="DeleteProduct()" class="btn btn-danger">حذف</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div><div class="row">
+            <div class="col-sm-12 col-md-5"></div>
+            <div class="col-sm-12 col-md-7">
+                <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+                    @* <ul class="pagination">
+                        <li class="paginate_button page-item previous disabled" id="example1_previous"><a href="#" aria-controls="example1" data-dt-idx="0" tabindex="0" class="page-link">قبلی</a></li>
+                        <li class="paginate_button page-item active"><a href="#" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
+                        <li class="paginate_button page-item "><a href="#" aria-controls="example1" data-dt-idx="2" tabindex="0" class="page-link">2</a></li>
+                        <li class="paginate_button page-item "><a href="#" aria-controls="example1" data-dt-idx="3" tabindex="0" class="page-link">3</a></li>
+                        <li class="paginate_button page-item "><a href="#" aria-controls="example1" data-dt-idx="4" tabindex="0" class="page-link">4</a></li>
+                        <li class="paginate_button page-item "><a href="#" aria-controls="example1" data-dt-idx="5" tabindex="0" class="page-link">5</a></li>
+                        <li class="paginate_button page-item "><a href="#" aria-controls="example1" data-dt-idx="6" tabindex="0" class="page-link">6</a></li>
+                        <li class="paginate_button page-item next" id="example1_next"><a href="#" aria-controls="example1" data-dt-idx="7" tabindex="0" class="page-link">بعدی</a></li>
+                    </ul> *@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" style="margin-top:30px" role="dialog" id="ProductModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 id="ModalHead"></h6>
+                @* <button type="button" class="close" data-dismiss="modal">&times;</button> *@
+            </div>
+            <div class="modal-body" id="ModalBody">
+            </div>
+            <div class="modal-footer" style="display:flex;justify-content:space-between">
+                <button class="btn btn-success" onclick="EditOrCreateProduct()" id="DoBtn"></button>
+                <button class="btn btn-danger" onclick="CloseProductModal()" id="CancelBtn">انصراف</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" style="margin-top:30px" role="dialog" id="DeleteModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h6>آیا از حذف اطمینان دارید؟</h6>
+            </div>
+            <div class="modal-footer" style="display:flex;justify-content:space-between">
+                <button class="btn btn-success" id="yesBtn">بله</button>
+                <button class="btn btn-danger" onclick="CloseDeleteModal()" id="noBtn">انصراف</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script type="text/javascript">
+        // if(document.getElementById()
+                                    document.addEventListener("DOMContentLoaded", function () {
+                            updateHiddenInput("selectedMachinesTableBody", "machineHiddenInput");
+                      
+                                    const companyInput = document.getElementById("userCompanyId");
+            const categoryInput = document.getElementById("categoryName");
+
+            const companyId = companyInput?.value;
+
+            if (companyId) {
+                categoryInput.disabled = false;
+                fetchCategoriesByCompanyId(companyId);
+            } else {
+                categoryInput.disabled = true;
+            }
+
+            // همچنین اگه شرکت انتخاب شد بعداً (مثلاً تو دراپ‌دان بود)، اینم اضافه کن:
+            companyInput.addEventListener('change', function () {
+                const selectedCompanyId = this.value;
+                if (selectedCompanyId) {
+                    categoryInput.disabled = false;
+                    fetchCategoriesByCompanyId(selectedCompanyId);
+                } else {
+                    categoryInput.disabled = true;
+                }
+            });
+                                    });
+
+                    //for cat select
+                    function filterDropdown(input) {
+                        const dropdownId = input.getAttribute('data-dropdown-id');
+                        const dropdown = document.getElementById(dropdownId);
+                        const filter = input.value.toLowerCase();
+
+                        Array.from(dropdown.children).forEach(option => {
+                            const text = option.textContent.toLowerCase();
+                            option.style.display = text.includes(filter) ? 'block' : 'none';
+                        });
+
+                        dropdown.style.display = 'block';
+                    }
+                    function showDropdown(input) {
+                        const dropdownId = input.getAttribute('data-dropdown-id');
+                        document.getElementById(dropdownId).style.display = 'block';
+                    }
+                    function selectOption(element, hiddenInputId) {
+                        const value = element.getAttribute("data-value");
+                        const text = element.textContent;
+                        const input = document.querySelector(`input[data-dropdown-id="${element.parentElement.id}"]`);
+                        const hiddenInput = document.getElementById(hiddenInputId);
+
+                        input.value = text;
+                        hiddenInput.value = value;
+
+                        // اگر شرکت انتخاب شد، دسته‌بندی‌ها را واکشی کن
+                        if (hiddenInputId === 'companyInput') {
+                            fetchCategoriesByCompanyId(value);
+                        }
+
+                        // بستن منو
+                        element.parentElement.style.display = 'none';
+                    }
+
+                    function fetchCategoriesByCompanyId(companyId) {
+                        // $.ajax({
+                        //         url : '/Admin/Products/GetCategoriesByCompanyId/' + companyId,
+                        //         type : 'GET',
+                        //         dataType : 'Json',
+                        //         data: {"companyId" : companyId},
+                        //         success : function(res){
+                        //         const dropdown = document.getElementById('dropdown-category');
+                        //         dropdown.innerHTML = ""; پاک کردن گزینه‌های قبلی
+                        //             console.log(res);
+                        //             for(i=0; i < res.length; i++){
+                        //                 const div = document.createElement("div");
+                        //             div.setAttribute("data-value", res[i].value);
+                        //             div.setAttribute("onclick", "selectOption(this, 'categoryInput')");
+                        //             div.textContent = res[i].text;
+                        //             dropdown.appendChild(div);
+                        //             }
+                        //         }
+                        //         });
+                    }
+                        document.addEventListener('click', function (event) {
+                            // بستن تمام .dropdown-options
+                            document.querySelectorAll('.dropdown-search').forEach(function (dropdown) {
+                                const options = dropdown.querySelector('.dropdown-options');
+                                if (!dropdown.contains(event.target)) {
+                                    options.style.display = 'none';
+                                }
+                            });
+
+                            // بستن تمام .multi-options
+                            document.querySelectorAll('.multi-dropdown').forEach(function (dropdown) {
+                                const options = dropdown.querySelector('.multi-options');
+                                if (!dropdown.contains(event.target)) {
+                                    options.style.display = 'none';
+                                }
+                            });
+                        });
+
+                        //for machine select
+                            function showMultiDropdown(input) {
+                            const dropdownId = input.getAttribute("data-dropdown-id");
+                            document.getElementById(dropdownId).style.display = "block";
+                        }
+
+                        function filterMultiDropdown(input) {
+                            const value = input.value.toLowerCase();
+                            const dropdownId = input.getAttribute("data-dropdown-id");
+                            const options = document.getElementById(dropdownId).children;
+
+                            Array.from(options).forEach(opt => {
+                                const text = opt.getAttribute("data-text").toLowerCase();
+                                opt.style.display = text.includes(value) ? "block" : "none";
+                            });
+                        }
+
+                        function selectMultiOption(option, tableBodyId, hiddenInputId) {
+                            const machineId = option.getAttribute("data-value");
+                            const machineName = option.getAttribute("data-text");
+                            const tableBody = document.getElementById(tableBodyId);
+                            const hiddenInput = document.getElementById(hiddenInputId);
+
+                            // جلوگیری از تکرار
+                            if (document.querySelector(`#${tableBodyId} tr[data-id="${machineId}"]`)) return;
+
+                            // اضافه کردن سطر
+                            const row = document.createElement("tr");
+                            row.setAttribute("data-id", machineId);
+                            row.innerHTML = `
+                <td>${machineName}</td>
+                <td><button type="button" class="btn btn-danger btn-sm" onclick="removeMachineRow('${machineId}', '${tableBodyId}', '${hiddenInputId}')">حذف</button></td>
+                            `;
+                            tableBody.appendChild(row);
+
+                            // به‌روزرسانی hidden input
+                            updateHiddenInput(tableBodyId, hiddenInputId);
+
+                            // بستن dropdown
+                            option.parentElement.style.display = "none";
+                        }
+
+                        function removeMachineRow(machineId, tableBodyId, hiddenInputId) {
+                            const row = document.querySelector(`#${tableBodyId} tr[data-id="${machineId}"]`);
+                            if (row) row.remove();
+                            updateHiddenInput(tableBodyId, hiddenInputId);
+                        }
+
+                        function updateHiddenInput(tableBodyId, hiddenInputId) {
+                            const rows = document.querySelectorAll(`#${tableBodyId} tr`);
+                            const ids = Array.from(rows).map(row => row.getAttribute("data-id"));
+                            document.getElementById(hiddenInputId).value = ids.join(",");
+                        }
+
+                        function showDropdown(input) {
+                            const dropdownId = input.getAttribute('data-dropdown-id');
+                            const dropdown = document.getElementById(dropdownId);
+                            dropdown.style.display = 'block';
+                        }
+
+                        function filterDropdown(input) {
+                            const dropdownId = input.getAttribute('data-dropdown-id');
+                            const filter = input.value.toLowerCase();
+                            const dropdown = document.getElementById(dropdownId);
+                            const items = dropdown.querySelectorAll('div');
+
+                            items.forEach(function (item) {
+                                const text = item.textContent.toLowerCase();
+                                item.style.display = text.includes(filter) ? 'block' : 'none';
+                            });
+                        }
+
+                        // function selectOption(div, hiddenInputId) {
+                        //     const value = div.getAttribute('data-value');
+                        //     const text = div.textContent;
+
+                        //     پیدا کردن input مربوطه
+                        //     const wrapper = div.closest('.dropdown-search');
+                        //     const input = wrapper.querySelector('input[type="text"]');
+                        //     const hiddenInput = document.getElementById(hiddenInputId);
+
+                        //     input.value = text;
+                        //     hiddenInput.value = value;
+
+                        //     بستن منو
+                        //     wrapper.querySelector('.dropdown-options').style.display = 'none';
+                        // }
+
+
+                        function DeleteProduct(){
+                             $("#DeleteModal").modal('show');
+                        }
+                        function EditProduct(id) {
+                            $("#ModalBody").load("/Admin/Products/EditOrCreatePartial?id=" + id, function () {
+                                $("#ProductModal").modal("show");
+                                document.getElementById("DoBtn").innerHTML = "اعمال تغییرات";
+                                document.getElementById("ModalHead").innerHTML = "ویرایش محصول";
+                            });
+                        }
+
+                        function CreateProduct() {
+                            $("#ModalBody").load("/Admin/Products/EditOrCreatePartial", function () {
+                                $("#ProductModal").modal("show");
+                                document.getElementById("DoBtn").innerHTML = "ایجاد";
+                                document.getElementById("ModalHead").innerHTML = "ایجاد محصول جدید";
+                            });
+                        }
+                        function CloseProductModal(){
+                            $("#ProductModal").modal('hide');
+                        }
+                        function CloseDeleteModal(){
+                            $("#DeleteModal").modal('hide');
+                        }
+                        function EditOrCreateProduct(){
+                            let pid = document.getElementById("ProductId").value;
+                            let productName = document.getElementById("productName").value;
+                            let categoryName = document.getElementById("categoryName").value;
+                            let companyName = document.getElementById("companyName").value;
+                            // if(pid.length == 0){
+                            //      $.ajax({
+                            //             url : '/Admin/Products/OnPostProduct/',
+                            //         type : 'post',
+                            //         dataType : 'Json',
+                            //         data: {"id" : pid, "productName":productName, "categoryName": categoryName, "companyName":companyName},
+                            //         success : function(res){
+                            //             alert(res)
+                            //         }
+                            //     })
+                            // }
+                            // else{
+                            //     $.ajax({
+                            //             url : '/Admin/Products/OnPostProduct/'+ pid,
+                            //         type : 'post',
+                            //         dataType : 'Json',
+                            //         data: {"id" : pid, "productName":productName, "categoryName": categoryName, "companyName": companyName},
+                            //         success : function(res){
+                            //             alert(res)
+                            //         }
+                            //     })
+                            // }
+                        }
+    </script>
+}

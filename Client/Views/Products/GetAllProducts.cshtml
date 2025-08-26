@@ -1,0 +1,586 @@
+﻿@* @using ControlService.ControlApplication.Services.Products.Queries.GetAllProducts
+@model List<GetProductsDto>;
+@{
+    ViewData["Title"] = "GetAllProducts";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+} *@
+
+@* <div class="card-body">
+    <div id="example1_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+        <div class="row">
+            <div class="col-lg-2  col-md-2 col-sm-4">
+                <button onclick="CreateProduct()" class="btn btn-success">اضافه کردن محصول جدید</button>
+            </div>
+            <div class="col-lg-1  col-md-6 col-sm-4">
+            </div>
+            <div class="col-lg-6"></div>
+            <div class="col-lg-1  col-md-2 col-sm-4">
+                <label>جستجو : </label>
+            </div>
+            <div class="col-lg-2  col-md-2 col-sm-4">
+                <div class="dropdown-search">
+                    <select id="mySelectProduct" class="form-control rtl-select2" style="width: 100%;">
+                        <option></option> <!-- برای placeholder و فعال شدن سرچ -->
+                        @foreach (var item in Model)
+                        {
+                            <option value="@item.ProductId">@item.ProductName</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <table id="example1" class="table table-bordered table-striped dataTable" role="grid">
+                    <thead style="background-color:lightblue">
+                        <tr role="row"><th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="موتور رندر: activate to sort column descending" style="">نام محصول</th><th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="مرورگر: activate to sort column ascending" style="">دسته‌بندی</th><th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="سیستم عامل: activate to sort column ascending" style="">نام شرکت سازنده</th><th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label=" ماشین‌های سازنده: activate to sort column ascending" style="">دستگاه سازنده</th><th></th></tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr role="row" class="" id="@item.ProductId">
+                                <td class="sorting_1">@item.ProductName</td>
+                                <td>@item.CategoryName</td>
+                                <td>@item.CompanyName</td>
+                                <td>
+                                    @(item.Machines != null ? string.Join("، ", item.Machines.Select(m => m.Name)) : "")
+                                </td>
+                                <td>
+                                    <button onclick="EditProduct(@item.ProductId)" class="btn btn-info">ویرایش</button>
+                                    <button onclick="DeleteProduct(@item.ProductId)" class="btn btn-danger">حذف</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <input type="hidden" id="productCreateEdit" value="" />
+            </div>
+        </div><div class="row">
+            <div class="col-sm-12 col-md-5"></div>
+            <div class="col-sm-12 col-md-7">
+                <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" style="margin-top:30px" role="dialog" id="ProductModal"> *@
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 id="ModalHead"></h6>
+            </div>
+            <div class="modal-body" id="ModalBody">
+            </div>
+            <div class="modal-footer" id="productmodalfooter" style="display:flex;justify-content:space-between">
+                <button class="btn btn-success" onclick="EditOrCreateProduct()" id="DoBtn"></button>
+                <button class="btn btn-danger" onclick="CloseProductModal()" id="CancelBtn">انصراف</button>
+            </div>
+        </div>
+    </div>
+</div>
+@* <div class="modal fade" style="margin-top:30px" role="dialog" id="DeleteModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h6>آیا از حذف اطمینان دارید؟</h6>
+            </div>
+            <div class="modal-footer" style="display:flex;justify-content:space-between">
+                <button class="btn btn-success" id="yesBtn">بله</button>
+                <button class="btn btn-danger" onclick="CloseDeleteModal()" id="noBtn">انصراف</button>
+            </div>
+        </div>
+    </div>
+</div> *@
+@* @section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#mySelectProduct').select2({
+                placeholder: "انتخاب محصول",
+                minimumResultsForSearch: 0,
+                allowClear: true,
+                width: '100%',
+                dir: 'rtl'        });
+
+                $('#mySelectProduct').on('change', function () {
+            var selectedId = $(this).val();
+
+            if (!selectedId) {
+                // اگر انتخاب خالی شد، همه ردیف‌ها رو نمایش بده
+                $('#example1 tbody tr').show();
+                return;
+            }
+
+            // مخفی کردن همه ردیف‌ها
+            $('#example1 tbody tr').hide();
+
+            // فقط ردیفی که ProductId ش برابر با مقدار انتخابی هست رو نشون بده
+            $('#example1 tbody tr').each(function () {
+                if ($(this).attr('id') === selectedId) {
+                    $(this).show();
+                }
+            });
+        });
+        $('#mySelectProduct').val(null).trigger('change');
+
+
+            $(document).on('change', '#mySelectCompany', function () {
+                const companyId = $(this).val();
+                getCompanyCatsMachines(companyId);
+            });
+        });
+
+                                document.addEventListener("DOMContentLoaded", function () {
+                        updateHiddenInput("selectedMachinesTableBody", "machineHiddenInput");
+
+                                const companyInput = document.getElementById("userCompanyId");
+        const categoryInput = document.getElementById("categoryName");
+
+        const companyId = companyInput?.value;
+
+        if (companyId) {
+            categoryInput.disabled = false;
+            fetchCategoriesByCompanyId(companyId);
+        } else {
+            categoryInput.disabled = true;
+        }
+
+        // همچنین اگه شرکت انتخاب شد بعداً (مثلاً تو دراپ‌دان بود)، اینم اضافه کن:
+        companyInput.addEventListener('change', function () {
+            const selectedCompanyId = this.value;
+            if (selectedCompanyId) {
+                categoryInput.disabled = false;
+                fetchCategoriesByCompanyId(selectedCompanyId);
+            } else {
+                categoryInput.disabled = true;
+            }
+        });
+                                });
+
+                //for cat select
+                function filterDropdown(input) {
+                    const dropdownId = input.getAttribute('data-dropdown-id');
+                    const dropdown = document.getElementById(dropdownId);
+                    const filter = input.value.toLowerCase();
+
+                    Array.from(dropdown.children).forEach(option => {
+                        const text = option.textContent.toLowerCase();
+                        option.style.display = text.includes(filter) ? 'block' : 'none';
+                    });
+
+                    dropdown.style.display = 'block';
+                }
+                function showDropdown(input) {
+                    const dropdownId = input.getAttribute('data-dropdown-id');
+                    document.getElementById(dropdownId).style.display = 'block';
+                }
+                function selectOption(element, hiddenInputId) {
+                    const value = element.getAttribute("data-value");
+                    const text = element.textContent;
+                    const input = document.querySelector(`input[data-dropdown-id="${element.parentElement.id}"]`);
+                    const hiddenInput = document.getElementById(hiddenInputId);
+
+                    input.value = text;
+                    hiddenInput.value = value;
+
+                    // اگر شرکت انتخاب شد، دسته‌بندی‌ها را واکشی کن
+                    if (hiddenInputId === 'companyInput') {
+                        fetchCategoriesByCompanyId(value);
+                    }
+
+                    // بستن منو
+                    element.parentElement.style.display = 'none';
+                }
+
+                    document.addEventListener('click', function (event) {
+                        // بستن تمام .dropdown-options
+                        document.querySelectorAll('.dropdown-search').forEach(function (dropdown) {
+                            const options = dropdown.querySelector('.dropdown-options');
+                            if (!dropdown.contains(event.target)) {
+                                options.style.display = 'none';
+                            }
+                        });
+
+                        // بستن تمام .multi-options
+                        document.querySelectorAll('.multi-dropdown').forEach(function (dropdown) {
+                            const options = dropdown.querySelector('.multi-options');
+                            if (!dropdown.contains(event.target)) {
+                                options.style.display = 'none';
+                            }
+                        });
+                    });
+
+                    //for machine select
+                        function showMultiDropdown(input) {
+                        const dropdownId = input.getAttribute("data-dropdown-id");
+                        document.getElementById(dropdownId).style.display = "block";
+                    }
+
+                    function filterMultiDropdown(input) {
+                        const value = input.value.toLowerCase();
+                        const dropdownId = input.getAttribute("data-dropdown-id");
+                        const options = document.getElementById(dropdownId).children;
+
+                        Array.from(options).forEach(opt => {
+                            const text = opt.getAttribute("data-text").toLowerCase();
+                            opt.style.display = text.includes(value) ? "block" : "none";
+                        });
+                    }
+
+                    function selectMultiOption(option, tableBodyId, hiddenInputId) {
+                        const machineId = option.getAttribute("data-value");
+                        const machineName = option.getAttribute("data-text");
+                        const tableBody = document.getElementById(tableBodyId);
+                        const hiddenInput = document.getElementById(hiddenInputId);
+
+                        // جلوگیری از تکرار
+                        if (document.querySelector(`#${tableBodyId} tr[data-id="${machineId}"]`)) return;
+
+                        // اضافه کردن سطر
+                        const row = document.createElement("tr");
+                        row.setAttribute("data-id", machineId);
+                        row.innerHTML = `
+            <td>${machineName}</td>
+            <td><button type="button" class="btn btn-danger btn-sm" onclick="removeMachineRow('${machineId}', '${tableBodyId}', '${hiddenInputId}')">حذف</button></td>
+                        `;
+                        tableBody.appendChild(row);
+
+                        // به‌روزرسانی hidden input
+                        updateHiddenInput(tableBodyId, hiddenInputId);
+
+                        // بستن dropdown
+                        option.parentElement.style.display = "none";
+                    }
+
+                    function removeMachineRow(machineId, tableBodyId, hiddenInputId) {
+                        const row = document.querySelector(`#${tableBodyId} tr[data-id="${machineId}"]`);
+                        if (row) row.remove();
+                        updateHiddenInput(tableBodyId, hiddenInputId);
+                    }
+
+                    function updateHiddenInput(tableBodyId, hiddenInputId) {
+                        const rows = document.querySelectorAll(`#${tableBodyId} tr`);
+                        const ids = Array.from(rows).map(row => row.getAttribute("data-id"));
+                        document.getElementById(hiddenInputId).value = ids.join(",");
+                    }
+
+                    function showDropdown(input) {
+                        const dropdownId = input.getAttribute('data-dropdown-id');
+                        const dropdown = document.getElementById(dropdownId);
+                        dropdown.style.display = 'block';
+                    }
+
+                    function filterDropdown(input) {
+                        const dropdownId = input.getAttribute('data-dropdown-id');
+                        const filter = input.value.toLowerCase();
+                        const dropdown = document.getElementById(dropdownId);
+                        const items = dropdown.querySelectorAll('div');
+
+                        items.forEach(function (item) {
+                            const text = item.textContent.toLowerCase();
+                            item.style.display = text.includes(filter) ? 'block' : 'none';
+                        });
+                    }
+
+                    // function DeleteProduct(id){
+                    //      $("#DeleteModal").modal('show');
+                    // }
+        function DeleteProduct(id) {
+            if (!confirm("آیا از حذف این محصول اطمینان دارید؟")) return;
+
+            $.ajax({
+                url: '/Admin/Products/DeleteProduct/' + id,
+                type: 'DELETE',
+                success: function (res) {
+                    alert("✅ " + res);
+                    $("#" + id).remove(); // حذف ردیف از جدول
+                },
+                error: function (xhr) {
+                    alert("❌ خطا در حذف: " + xhr.responseText);
+                }
+            });
+        }
+
+                             function EditProduct(id) {
+            $("#ModalBody").load("/Admin/Products/EditOrCreatePartial?id=" + id, function () {
+                $("#ProductModal").modal("show");
+
+                // خواندن مقادیر اولیه از hidden input ها
+                let categoryId = $('#proCategoryInput').val();
+                let companyId = $('#proCompanyInput').val();
+                let selectedMachineIdsStr = $('#SelectedMachineIds').val();
+                let selectedMachineIds = selectedMachineIdsStr ? selectedMachineIdsStr.split(',') : [];
+
+                // مقداردهی اولیه شرکت و ساخت select2 شرکت
+                $('#mySelectCompany').val(companyId).select2({
+                    placeholder: 'انتخاب شرکت',
+                    minimumResultsForSearch: 0,
+                    width: '100%',
+                    dir: 'rtl'
+                });
+
+                // وقتی شرکت تغییر کرد، دسته‌بندی و ماشین‌ها را با مقداردهی اولیه صفر بارگذاری کن (پاک کن)
+                $('#mySelectCompany').on('change', function () {
+                    const newCompanyId = $(this).val();
+                    if (newCompanyId) {
+                        getCompanyCatsMachines(newCompanyId, null, []);
+                    } else {
+                        updateCategoryDropdown([], null);
+                        updateMachinesDropdown([], []);
+                    }
+                });
+
+                // بارگذاری دسته‌بندی‌ها و ماشین‌ها بر اساس شرکت و مقداردهی اولیه دسته‌بندی و ماشین‌ها
+                if (companyId) {
+                    getCompanyCatsMachines(companyId, categoryId, selectedMachineIds);
+                } else {
+                    updateCategoryDropdown([], null);
+                    updateMachinesDropdown([], []);
+                            console.log("SelectedMachineIds before setting:", selectedMachineIds);
+        console.log("Current options:", $('#mySelectMachines').find('option').map((i, el) => [el.value, el.text]).get());
+        console.log("Set val to:", $('#mySelectMachines').val());
+
+                }
+
+                // ساخت select2 دسته‌بندی (گزینه‌ها بعداً با AJAX بارگذاری می‌شوند)
+                $('#mySelectCategory').select2({
+                    placeholder: 'انتخاب دسته‌بندی',
+                    minimumResultsForSearch: 0,
+                    width: '100%',
+                    dir: 'rtl'
+                });
+
+                // ساخت select2 ماشین‌ها (گزینه‌ها بعداً با AJAX بارگذاری می‌شوند)
+                $('#mySelectMachines').select2({
+                    placeholder: 'انتخاب دستگاه',
+                    minimumResultsForSearch: 0,
+                    allowClear: true,
+                    width: '100%',
+                    dir: 'rtl'
+                });
+
+                // به‌روزرسانی hidden input ماشین‌ها هنگام تغییر انتخاب‌ها
+                $('#mySelectMachines').off('change').on('change', function () {
+                    var selectedIds = $(this).val();
+                    $('#SelectedMachineIds').val(selectedIds ? selectedIds.join(',') : '');
+                });
+
+                $("#DoBtn").text("اعمال تغییرات");
+                $("#ModalHead").text("ویرایش محصول");
+
+            });
+
+            document.getElementById("productCreateEdit").value = id;
+        }
+
+        // فانکشن‌های کمکی:
+
+        function getCompanyCatsMachines(companyId, selectedCategoryId = null, selectedMachineIds = []) {
+            $.ajax({
+                url: '/Admin/Products/UpdateMachinesCategoriesByCompany',
+                type: 'GET',
+                data: { id: companyId },
+                success: function (response) {
+                    updateCategoryDropdown(response.categories, selectedCategoryId);
+                    updateMachinesDropdown(response.machines, selectedMachineIds);
+                },
+                error: function () {
+                    alert('خطا در واکشی اطلاعات دسته‌بندی و دستگاه‌ها');
+                    updateCategoryDropdown([], null);
+                    updateMachinesDropdown([], []);
+                }
+            });
+        }
+
+        function updateCategoryDropdown(categories, selectedCategoryId = null) {
+            const $categorySelect = $('#mySelectCategory');
+            $categorySelect.empty();
+            $categorySelect.append($('<option></option>')); // placeholder
+
+            if (categories && categories.length > 0) {
+                categories.forEach(item => {
+                    $categorySelect.append(
+                        $('<option></option>').val(item.categoryId).text(item.categoryName)
+                    );
+                });
+            }
+
+            if (selectedCategoryId) {
+                $categorySelect.val(selectedCategoryId);
+            } else {
+                $categorySelect.val(null);
+            }
+
+            $categorySelect.trigger('change.select2');
+        }
+
+                function updateMachinesDropdown(machines, selectedMachineIds = []) {
+            const $machineSelect = $('#mySelectMachines');
+
+            // ابتدا select2 قبلی را از بین ببر
+            if ($machineSelect.hasClass("select2-hidden-accessible")) {
+                $machineSelect.select2('destroy');
+            }
+
+            $machineSelect.empty();
+
+            if (machines && machines.length > 0) {
+                machines.forEach(item => {
+                    $machineSelect.append(
+                        $('<option></option>').val(item.machineId).text(item.machineName)
+                    );
+                });
+            }
+
+            // مقداردهی selected
+            if (selectedMachineIds.length > 0) {
+                $machineSelect.val(selectedMachineIds);
+            }
+
+            // دوباره select2 بساز
+            $machineSelect.select2({
+                placeholder: 'انتخاب دستگاه',
+                minimumResultsForSearch: 0,
+                allowClear: true,
+                width: '100%',
+                dir: 'rtl'
+            });
+
+            // trigger change برای اینکه select2 مقدار رو نمایش بده
+            $machineSelect.trigger('change');
+        }
+
+
+
+                    function CreateProduct() {
+                        $("#ModalBody").load("/Admin/Products/EditOrCreatePartial", function () {
+                            $("#ProductModal").modal("show");
+                            document.getElementById("DoBtn").innerHTML = "ایجاد";
+                            document.getElementById("ModalHead").innerHTML = "ایجاد محصول جدید";
+                                    $('#mySelectCompany').select2({
+            placeholder: 'انتخاب شرکت',
+            minimumResultsForSearch: 0,
+            width: '100%',
+            dir: 'rtl'
+        });
+        $('#mySelectCategory').select2({
+            placeholder: 'انتخاب دسته‌بندی',
+            minimumResultsForSearch: 0,
+            width: '100%',
+            dir: 'rtl'
+        });
+        if ($('#mySelectMachines').hasClass("select2-hidden-accessible")) {
+            $('#mySelectMachines').select2('destroy');
+        }
+        $('#mySelectMachines').select2({
+            placeholder: 'انتخاب دستگاه',
+            minimumResultsForSearch: 0,
+            allowClear: true,
+            width: '100%',
+            dir: 'rtl'
+        });
+                // مقدار اولیه‌ی hidden input بعد از لود کامل select2
+        $('#SelectedMachineIds').val($('#mySelectMachines').val().join(','));
+
+                // موقع تغییر انتخاب‌ها، آی‌دی‌ها رو توی input hidden بریز
+        $('#mySelectMachines').on('change', function () {
+            var selectedIds = $(this).val(); // این میشه یه آرایه از value های انتخاب شده
+            $('#SelectedMachineIds').val(selectedIds ? selectedIds.join(',') : '');
+        });
+                        });
+                        document.getElementById("productCreateEdit").value = "";
+                    }
+                    function CloseProductModal(){
+                        $("#ProductModal").modal('hide');
+                    }
+                    function CloseDeleteModal(){
+                        $("#DeleteModal").modal('hide');
+                    }
+                            function EditOrCreateProduct() {
+            const pid = document.getElementById("ProductId").value;
+            const productName = $('#productName').val();//document.getElementById("productName").value;
+            const categoryId = $('#mySelectCategory').val();
+            const companyId = $('#mySelectCompany').val() || document.getElementById("userCompanyNameInput")?.value;
+            const selectedMachineIds = $('#mySelectMachines').val() || [];
+            const data = {
+                productName: productName,
+                categoryId: parseInt(categoryId),
+                companyId: parseInt(companyId),
+                machines: selectedMachineIds.map(id => parseInt(id))
+            };
+            const dataEdit = {
+                ProductName: productName,
+                CategoryId: parseInt(categoryId),
+                CompanyId: parseInt(companyId),
+                Machines: selectedMachineIds.map(id => parseInt(id))
+            };
+            if (!pid) {
+                // Create
+                        $.ajax({
+            url: '/Admin/Products/AddProduct/',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function (res) {
+                    $('#ModalBody').html(
+            '<div class="alert alert-success text-center" role="alert">' +
+            '✅ عملیات با موفقیت انجام شد. ' +
+            '</div>'
+        );
+
+        // جایگزینی محتوای فوتر مدال با فقط یک دکمه تأیید
+        $('#productmodalfooter').html(`
+            <button class="btn btn-primary" id="productConfirmSuccessBtn">تأیید</button>
+        `);
+
+        // هندل کلیک دکمه تأیید برای بستن مدال
+        $('#productConfirmSuccessBtn').on('click', function () {
+            // $('#ProductModal').modal('hide');
+            $("#productConfirmSuccessBtn").prop("disabled", true);
+                            window.location.reload();
+
+        });
+            },
+            error: function (xhr) {
+                alert("❌ خطا: " + xhr.responseText); // پیام خطا از BadRequest
+            }
+        });
+            } else {
+                // Edit
+                    $.ajax({
+            url: '/Admin/Products/EditProduct/' + pid,
+            type: 'PUT',
+            contentType: 'application/json',
+            data: JSON.stringify(dataEdit),
+            success: function (res) {
+                // alert("✅ " + res);
+        $('#ModalBody').html(
+                    '<div class="alert alert-success text-center" role="alert">' +
+                    '✅ عملیات با موفقیت انجام شد. ' +
+                    '</div>'
+                );
+
+                // جایگزینی محتوای فوتر مدال با فقط یک دکمه تأیید
+                $('#productmodalfooter').html(`
+                    <button class="btn btn-primary" id="productConfirmSuccessBtn">تأیید</button>
+                `);
+
+                // هندل کلیک دکمه تأیید برای بستن مدال
+                $('#productConfirmSuccessBtn').on('click', function () {
+                    // $('#ProductModal').modal('hide');
+                    $("#productConfirmSuccessBtn").prop("disabled", true);
+                                    window.location.reload();
+
+                });            },
+            error: function (xhr) {
+                alert("❌ خطا: " + xhr.responseText);
+            }
+        });
+            }
+        }
+
+    </script>
+} *@

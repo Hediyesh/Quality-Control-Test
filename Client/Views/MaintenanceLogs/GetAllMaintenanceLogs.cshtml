@@ -1,0 +1,354 @@
+﻿@* @using ControlService.ControlApplication.Services.MaintenanceLogs.Queries.GetAllMaintenanceLogs
+@model List<GetMaintenanceLogsDto>
+@{
+    ViewData["Title"] = "GetAllMaintenanceLogs";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="card-body">
+    <div id="example1_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+        <div class="row">
+            <div class="col-lg-2  col-md-2 col-sm-4">
+                <button onclick="CreateML()" class="btn btn-success">اضافه کردن نگهداری و تعمیرات پیشگیرانه</button>
+            </div>
+            <div class="col-lg-1  col-md-6 col-sm-4">
+            </div>
+            <div class="col-lg-6"></div>
+            <div class="col-lg-1  col-md-2 col-sm-4">
+                <label>جستجو : </label>
+            </div>
+            <div class="col-lg-2  col-md-2 col-sm-4">
+                <div class="dropdown-search">
+                    <select id="mySelectML" class="form-control rtl-select2" style="width: 100%;">
+                        <option></option> <!-- برای placeholder و فعال شدن سرچ -->
+                        @foreach (var date in Model.Select(x => x.MaintenanceDate).Distinct())
+                        {
+                            <option value="@date">@date</option>
+                        }
+
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <table style="font-size:small" id="example3" class="table table-bordered table-striped dataTable" role="grid">
+                    <thead style="background-color:lightblue">
+                        <tr role="row">
+                            <th>تاریخ و زمان انجام نگهداری</th>
+                            <th>دستگاه‌</th>
+                            <th>نوع نگهداری</th>
+                            <th>شرح کار انجام شده</th>
+                            <th>مدت زمان صرف شده برای نگهداری (ساعت)</th>
+                            <th>تکنسین انجام دهنده</th>
+                            <th>تاریخ نگهداری پیشگیرانه بعدی</th>
+                            <th>وضعیت</th>
+                            <th>عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr role="row" class="" id="@item.MLId" data-date="@item.MaintenanceDate">
+                                <td>@item.MaintenanceDate</td>
+                                <td>@item.MachineName</td>
+                                <td>@item.MaintenanceTypeName</td>
+                                <td>@item.Description</td>
+                                <td>@item.HoursSpent</td>
+                                <td>@item.PersonName</td>
+                                <td>@item.NextScheduleDate</td>
+                                <td>@item.MaintenanceLogStatusName</td>
+                                <td>
+                                    <button style="font-size:smaller;width:90%" onclick="EditML(@item.MLId)" class="btn btn-info btn-sm">ویرایش</button>
+                                    <br />
+                                    <br />
+                                    <button style="font-size:smaller;width:90%" onclick="DeleteML(@item.MLId)" class="btn btn-danger btn-sm">حذف</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" style="margin-top:30px;" role="dialog" id="MLModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 id="MLModalHead"></h6>
+            </div>
+            <div class="modal-body" id="MLModalBody">
+            </div>
+            <div class="modal-footer" id="mlmodalfooter" style="display:flex;justify-content:space-between">
+                <button class="btn btn-success" onclick="EditOrCreateML()" id="MLDoBtn"></button>
+                <button class="btn btn-danger" onclick="CloseMLModal()" id="MLCancelBtn">انصراف</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#mySelectML').select2({
+                placeholder: "انتخاب کنید",
+                minimumResultsForSearch: 0,
+                allowClear: true,
+                width: '100%',
+                dir: 'rtl'        });
+
+            $('#mySelectML').on('change', function () {
+            var selectedDate = $(this).val();
+
+            if (!selectedDate) {
+                $('#example3 tbody tr').show();
+                return;
+            }
+
+            $('#example3 tbody tr').hide();
+
+            $('#example3 tbody tr').each(function () {
+                var rowDate = $(this).data('date'); // گرفتن مقدار data-date
+                if (rowDate === selectedDate) {
+                    $(this).show();
+                }
+            });
+        });
+        $('#MLSelectCompany').val(null).trigger('change');
+            $(document).on('change', '#MLSelectCompany', function () {
+                const companyId = $(this).val();
+                getMachinesByCompany(companyId);
+            });
+        });
+        function getMachinesByCompany(companyId){
+            $.ajax({
+                url: '/Admin/MaintenanceLogs/UpdateMLMachinesByCompany',
+                type: 'GET',
+                data: { id: companyId },
+                success: function (response) {
+                    updateMLMachinesDropdown(response.machines);
+                },
+                error: function () {
+                    alert('خطا در واکشی اطلاعات');
+                }
+            });
+        }
+        function updateMLMachinesDropdown(machines) {
+            const $machineSelect = $('#MLSelectMachines');
+            $machineSelect.empty();
+            $machineSelect.append($('<option></option>')); // placeholder
+
+            if (machines && machines.length > 0) {
+                machines.forEach(item => {
+                    $machineSelect.append(
+                        $('<option></option>').val(item.machineId).text(item.machineName)
+                    );
+                });
+            }
+            $machineSelect.trigger('change.select2');
+        }
+        function CreateML() {
+         $("#MLModalBody").load("/Admin/MaintenanceLogs/EditOrCreateMLPartial", function () {
+             $("#MLModal").modal("show");
+             document.getElementById("MLDoBtn").innerHTML = "ایجاد";
+             document.getElementById("MLModalHead").innerHTML = "ایجاد فرم نگهداری و تعمیرات پیشگیرانه جدید";
+             document.getElementById("MLid").value = "";
+             RadioButtonsQCE("mtRadio");
+             RadioButtonsQCE("mstatusRadio");
+            shamsiMiladi("MLNextScheduledDateShamsi", "MLNextScheduledDateMiladi");
+            shamsiMiladi("MLDateShamsi", "MLDateMiladi");
+        $('#MLSelectMachines').select2({
+            placeholder: 'انتخاب دستگاه',
+            minimumResultsForSearch: 0,
+            allowClear: true,
+            width: '100%',
+            dir: 'rtl'
+        });
+        $('#MLSelectCompany').select2({
+            placeholder: 'انتخاب شرکت',
+            minimumResultsForSearch: 0,
+            width: '100%',
+            dir: 'rtl'
+        });
+        $('#MLSelectPersons').select2({
+            placeholder: 'انتخاب بازرس',
+            minimumResultsForSearch: 0,
+            allowClear: true,
+            width: '100%',
+            dir: 'rtl'
+        });
+        });
+        $('#MLSelectCompany').on('change', function () {
+            const newCompanyId = $(this).val();
+            if (newCompanyId) {
+                getMachinesByCompany(newCompanyId);
+            }
+        });
+        }
+        function CloseMLModal(){
+            $("#MLModal").modal('hide');
+        }
+        function EditML(id){
+            $("#MLModalBody").load("/Admin/MaintenanceLogs/EditOrCreateMLPartial/" + id, function () {
+             $("#MLModal").modal("show");
+             document.getElementById("MLDoBtn").innerHTML = "اعمال تغییرات";
+             document.getElementById("MLModalHead").innerHTML = "ویرایش فرم نگهداری و تعمیرات پیشگیرانه";
+             document.getElementById("MLid").value = id;
+             RadioButtonsQCE("mtRadio");
+             RadioButtonsQCE("mstatusRadio");
+            shamsiMiladi("MLNextScheduledDateShamsi", "MLNextScheduledDateMiladi");
+            shamsiMiladi("MLDateShamsi", "MLDateMiladi");
+             let machineId = $('#MLMachineId').val();
+             let personId = $('#MLPersonId').val();
+             let companyId = $('#MLCompanyId').val();
+        $('#MLSelectMachines').val(machineId).select2({
+            placeholder: 'انتخاب دستگاه',
+            minimumResultsForSearch: 0,
+            allowClear: true,
+            width: '100%',
+            dir: 'rtl'
+        });
+        $('#MLSelectCompany').val(companyId).select2({
+            placeholder: 'انتخاب شرکت',
+            minimumResultsForSearch: 0,
+            width: '100%',
+            dir: 'rtl'
+        });
+        $('#MLSelectPersons').val(personId).select2({
+            placeholder: 'انتخاب بازرس',
+            minimumResultsForSearch: 0,
+            allowClear: true,
+            width: '100%',
+            dir: 'rtl'
+        });  
+        });
+        $('#MLSelectCompany').on('change', function () {
+            const newCompanyId = $(this).val();
+            if (newCompanyId) {
+                getMachinesByCompany(newCompanyId);
+            }
+        });
+        }
+        function EditOrCreateML(){
+            const MLid = document.getElementById("MLid").value;
+            const  PersonId = $('#MLSelectPersons').val();
+            const  MachineId = $('#MLSelectMachines').val();
+            const  StatusId = $('input[name="mstatusRadio"]:checked').val();
+            const  MaintenanceType = $('input[name="mtRadio"]:checked').val();
+            const  Description = document.getElementById("MLDescription").value;
+            const  HoursSpent = document.getElementById("MLHoursSpent").value;
+            const CompanyId = $('#MLSelectCompany').val();
+            let NextScheduledDateMiladi = $('#MLNextScheduledDateMiladi').val();
+            let miladinext = null;
+            if (NextScheduledDateMiladi) {
+                let parts = NextScheduledDateMiladi.split(' ');
+                if (parts.length == 1) {
+                    let partsSlash = NextScheduledDateMiladi.split('/');
+                    if(partsSlash.length == 3){
+                        let iso = NextScheduledDateMiladi.replace(/\//g, '-') + 'T00:00:00';
+                        document.getElementById('MLNextScheduledDateMiladi').value = iso;
+                    }
+                } else {
+                    $('#MLNextScheduledDateMiladi').val(NextScheduledDateMiladi.replace(/\//g, '-'));
+                }
+                miladinext = document.getElementById('MLNextScheduledDateMiladi').value;
+            }
+            // miladinext = document.getElementById('MLNextScheduledDateMiladi').value;
+            let MLDate = $('#MLDateMiladi').val();
+            if (MLDate) {
+                let parts = MLDate.split(' ');
+                if (parts.length == 1) {
+                    let partsSlash = MLDate.split('/');
+                    if(partsSlash.length == 3){
+                        let iso = MLDate.replace(/\//g, '-') + 'T00:00:00';
+                        document.getElementById('MLDateMiladi').value = iso;
+                    }
+                } else {
+                    $('#MLDateMiladi').val(MLDate.replace(/\//g, '-'));
+                }
+            }
+            const miladiml= document.getElementById('MLDateMiladi').value;
+            const data = {
+                PersonId : parseInt(PersonId),
+                MaintenanceDate : miladiml,
+                MachineId : parseInt(MachineId),
+                MaintenanceLogStatusId : parseInt(StatusId),
+                CompanyId : parseInt(CompanyId),
+                MaintenanceId : parseInt(MaintenanceType),
+                HoursSpent : parseFloat(HoursSpent),
+                Description :Description,
+                NextScheduleDate : miladinext,
+            }
+            if(!MLid){
+                // create
+                $.ajax({
+                    url : '/Admin/MaintenanceLogs/AddMaintenanceLog/',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data : JSON.stringify(data),
+                    success: function(result){
+                        $('#MLModalBody').html('<div class="alert alert-success text-center" role="alert">' +
+                            '✅ عملیات با موفقیت انجام شد. ' +
+                            '</div>');
+                                    // جایگزینی محتوای فوتر مدال با فقط یک دکمه تأیید
+                        $('#mlmodalfooter').html(`
+                            <button class="btn btn-primary" id="MLConfirmSuccessBtn">تأیید</button>
+                        `);
+                        // هندل کلیک دکمه تأیید برای بستن مدال
+                        $('#MLConfirmSuccessBtn').on('click', function () {
+                            $("#MLConfirmSuccessBtn").prop("disabled", true);
+                                            window.location.reload();
+
+                        });
+                    },
+                    error: function(xhr){
+                        alert("❌ خطا: " + xhr.responseText);
+                    }
+                });
+            }
+            else{
+                //edit
+                $.ajax({
+                    url : '/Admin/MaintenanceLogs/EditMaintenanceLog/' + MLid,
+                    type: 'PUT',
+                    contentType: 'application/json',
+                    data : JSON.stringify(data),
+                    success: function(result){
+                        $('#MLModalBody').html('<div class="alert alert-success text-center" role="alert">' +
+                            '✅ عملیات با موفقیت انجام شد. ' +
+                            '</div>');
+                        $('#mlmodalfooter').html(`
+                            <button class="btn btn-primary" id="MLConfirmSuccessBtn">تأیید</button>
+                        `);
+                        $('#MLConfirmSuccessBtn').on('click', function () {
+                            $("#MLConfirmSuccessBtn").prop("disabled", true);
+                                            window.location.reload();
+
+                        });
+                    },
+                    error: function(xhr){
+                        alert("❌ خطا: " + xhr.responseText);
+                    }
+                });
+            }
+        }
+        function DeleteML(id){
+            if(!confirm("آیا از حذف اطمینان دارید؟")) return;
+            $.ajax({
+                url: "/Admin/MaintenanceLogs/DeleteMaintenanceLog/" + id,
+                type: "DELETE",
+                success: function(result){
+                    alert("✅ " + result);
+                    $('#'+id).remove();
+                },
+                error: function(xhr){
+                    alert("❌ خطا در حذف: " + xhr.responseText);
+                }
+            });
+        }
+    </script>
+}
+
+
+
+
+ *@

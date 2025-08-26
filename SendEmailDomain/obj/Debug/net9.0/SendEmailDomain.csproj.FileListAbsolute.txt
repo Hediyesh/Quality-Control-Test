@@ -1,0 +1,11 @@
+C:\Users\Os\source\repos\msControl\SendEmailDomain\bin\Debug\net9.0\SendEmailDomain.deps.json
+C:\Users\Os\source\repos\msControl\SendEmailDomain\bin\Debug\net9.0\SendEmailDomain.dll
+C:\Users\Os\source\repos\msControl\SendEmailDomain\bin\Debug\net9.0\SendEmailDomain.pdb
+C:\Users\Os\source\repos\msControl\SendEmailDomain\obj\Debug\net9.0\SendEmailDomain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Os\source\repos\msControl\SendEmailDomain\obj\Debug\net9.0\SendEmailDomain.AssemblyInfoInputs.cache
+C:\Users\Os\source\repos\msControl\SendEmailDomain\obj\Debug\net9.0\SendEmailDomain.AssemblyInfo.cs
+C:\Users\Os\source\repos\msControl\SendEmailDomain\obj\Debug\net9.0\SendEmailDomain.csproj.CoreCompileInputs.cache
+C:\Users\Os\source\repos\msControl\SendEmailDomain\obj\Debug\net9.0\SendEmailDomain.dll
+C:\Users\Os\source\repos\msControl\SendEmailDomain\obj\Debug\net9.0\refint\SendEmailDomain.dll
+C:\Users\Os\source\repos\msControl\SendEmailDomain\obj\Debug\net9.0\SendEmailDomain.pdb
+C:\Users\Os\source\repos\msControl\SendEmailDomain\obj\Debug\net9.0\ref\SendEmailDomain.dll

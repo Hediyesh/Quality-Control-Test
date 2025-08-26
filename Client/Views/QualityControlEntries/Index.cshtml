@@ -1,0 +1,395 @@
+﻿@using Client.Models
+@model List<QualityControlEntriesViewModel>
+@{
+    ViewData["Title"] = "GetAllQualityControlEntries";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card-body">
+    <div id="example1_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+        <div class="row">
+            <div class="col-lg-2  col-md-2 col-sm-4">
+                <button onclick="CreateQCEModal()" class="btn btn-success">ایجاد فرم کنترل کیفیت جدید</button>
+            </div>
+            <div class="col-lg-1  col-md-6 col-sm-4">
+            </div>
+            <div class="col-lg-6"></div>
+            <div class="col-lg-1  col-md-2 col-sm-4">
+                <label>جستجو : </label>
+            </div>
+            <div class="col-lg-2  col-md-2 col-sm-4">
+                <div class="dropdown-search">
+                    <select id="mySelectQCE" class="form-control rtl-select2" style="width: 100%;">
+                        <option></option> <!-- برای placeholder و فعال شدن سرچ -->
+                        @foreach (var date in Model.Select(x => x.InspectionDate).Distinct())
+                        {
+                            <option value="@date">@date</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <table style="font-size: small" id="example2" class="table table-bordered table-striped dataTable" role="grid">
+                    <thead>
+                        <tr role="row" style="background-color:lightblue">
+                            <th>تاریخ و زمان بازرسی</th>
+                            <th>محصول</th>
+                            <th>سری ساخت‌</th>
+                            <th>شرکت</th>
+                            <th>دستگاه</th>
+                            <th>بازرس</th>
+                            <th>تعداد واحد بازرسی شده</th>
+                            <th>تعداد واحد معیوب یافت شده</th>
+                            <th>شرح عیب</th>
+                            <th>علت ریشه‌ای احتمالی</th>
+                            <th>اقدام اصلاحی انجام شده</th>
+                            <th>نوع عیب</th>
+                            <th>شدت عیب</th>
+                            <th>عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr role="row" class="" id="@item.QCEId" data-date="@item.InspectionDate">
+                                <td>@item.InspectionDate</td>
+                                <td>@item.ProductName</td>
+                                <td>@item.BatchNumber</td>
+                                <td>@item.CompanyName</td>
+                                <td>@item.MachineName</td>
+                                <td>@item.PersonName</td>
+                                <td>@item.QuantityInspected</td>
+                                <td>@item.QualityDefective</td>
+                                <td>@item.DefectDescription</td>
+                                <td>@item.RootCause</td>
+                                <td>@item.CorrectiveAction</td>
+                                <td>@item.Defect</td>
+                                <td>@item.Severity</td>
+                                <td>
+                                    <button style="font-size:smaller;width:90%" onclick="EditQCE(@item.QCEId)" class="btn btn-info btn-sm">ویرایش</button>
+                                    <br />
+                                    <br />
+                                    <button style="font-size:smaller;width:90%" onclick="DeleteQCE(@item.QCEId)" class="btn btn-danger btn-sm">حذف</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" style="margin-top:30px;" role="dialog" id="QCEModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 id="QCEModalHead"></h6>
+            </div>
+            <div class="modal-body" id="QCEModalBody">
+            </div>
+            <div class="modal-footer" id="qcemodalfooter" style="display:flex;justify-content:space-between">
+                <button class="btn btn-success" onclick="EditOrCreateQCE()" id="QCEDoBtn"></button>
+                <button class="btn btn-danger" onclick="CloseQCEModal()" id="QCECancelBtn">انصراف</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#mySelectQCE').select2({
+                placeholder: "انتخاب کنید",
+                minimumResultsForSearch: 0,
+                allowClear: true,
+                width: '100%',
+                dir: 'rtl'        });
+
+            $('#mySelectQCE').on('change', function () {
+            var selectedDate = $(this).val();
+
+            if (!selectedDate) {
+                $('#example2 tbody tr').show();
+                return;
+            }
+
+            $('#example2 tbody tr').hide();
+
+            $('#example2 tbody tr').each(function () {
+                var rowDate = $(this).data('date'); // گرفتن مقدار data-date
+                if (rowDate === selectedDate) {
+                    $(this).show();
+                }
+            });
+
+        });
+
+        $('#qceSelectCompany').val(null).trigger('change');
+            $(document).on('change', '#qceSelectCompany', function () {
+                const companyId = $(this).val();
+                getProductsMachinesByCompany(companyId);
+            });
+        });
+        function getProductsMachinesByCompany(companyId){
+            $.ajax({
+                url: '/QualityControlEntries/UpdateQCEMachinesCategoriesByCompany',
+                type: 'GET',
+                data: { id: companyId },
+                success: function (response) {
+                    updateProductsDropdown(response.products);
+                    updateMachinesDropdown(response.machines);
+                },
+                error: function () {
+                    alert('خطا در واکشی اطلاعات');
+                }
+            });
+        }
+        function updateProductsDropdown(products) {
+            const $productSelect = $('#qceSelectProduct');
+            $productSelect.empty();
+            $productSelect.append($('<option></option>')); // placeholder
+            if (products && products.length > 0) {
+                products.forEach(item => {
+                    $productSelect.append(
+                        $('<option></option>').val(item.productId).text(item.productName)
+                    );
+                });
+            }
+            $productSelect.trigger('change.select2');
+        }
+        function updateMachinesDropdown(machines) {
+            const $machineSelect = $('#qceSelectMachines');
+            $machineSelect.empty();
+            $machineSelect.append($('<option></option>')); // placeholder
+
+            if (machines && machines.length > 0) {
+                machines.forEach(item => {
+                    $machineSelect.append(
+                        $('<option></option>').val(item.machineId).text(item.machineName)
+                    );
+                });
+            }
+            $machineSelect.trigger('change.select2');
+        }
+
+        function CreateQCEModal() {
+         $("#QCEModalBody").load("/QualityControlEntries/EditOrCreateQCEPartial", function () {
+        $("#QCEModal").modal("show");
+             document.getElementById("QCEDoBtn").innerHTML = "ایجاد";
+             document.getElementById("QCEModalHead").innerHTML = "ایجاد فرم کنترل کیفیت جدید";
+             document.getElementById("qceid").value = "";
+             RadioButtonsQCE("severityRadio");
+             RadioButtonsQCE("defectRadio");
+        shamsiMiladi("shamsiDate", "miladiDate");
+            $('#qceSelectProduct').select2({
+            placeholder: 'انتخاب محصول',
+            minimumResultsForSearch: 0,
+            width: '100%',
+            dir: 'rtl'
+        });
+        $('#qceSelectBatch').select2({
+            placeholder: 'انتخاب سری ساخت محصول',
+            minimumResultsForSearch: 0,
+            width: '100%',
+            dir: 'rtl'
+        });
+        $('#qceSelectCompany').select2({
+            placeholder: 'انتخاب شرکت',
+            minimumResultsForSearch: 0,
+            width: '100%',
+            dir: 'rtl'
+        });
+        $('#qceSelectMachines').select2({
+            placeholder: 'انتخاب دستگاه',
+            minimumResultsForSearch: 0,
+            allowClear: true,
+            width: '100%',
+            dir: 'rtl'
+        });
+        $('#qceSelectPersons').select2({
+            placeholder: 'انتخاب بازرس',
+            minimumResultsForSearch: 0,
+            allowClear: true,
+            width: '100%',
+            dir: 'rtl'
+        });
+        });
+        $('#qceSelectCompany').on('change', function () {
+                    const newCompanyId = $(this).val();
+                    if (newCompanyId) {
+                        getProductsMachinesByCompany(newCompanyId);
+                    }
+                });
+        }
+        function CloseQCEModal(){
+            $("#QCEModal").modal('hide');
+        }
+        function EditQCE(id){
+            $("#QCEModalBody").load("/QualityControlEntries/EditOrCreateQCEPartial/" + id, function () {
+             $("#QCEModal").modal("show");
+             document.getElementById("QCEDoBtn").innerHTML = "اعمال تغییرات";
+             document.getElementById("QCEModalHead").innerHTML = "ویرایش فرم کنترل کیفیت";
+             document.getElementById("qceid").value = id;
+             RadioButtonsQCE("severityRadio");
+             RadioButtonsQCE("defectRadio");
+             shamsiMiladi("shamsiDate", "miladiDate");
+             let productId = $('#qceProductId').val();
+             let batchId = $('#qceBatchId').val();
+             let companyId = $('#qceCompanyId').val();
+             let machineId = $('#qceMachineId').val();
+             let personId = $('#qcePersonId').val();
+            $('#qceSelectProduct').val(productId).select2({
+            placeholder: 'انتخاب محصول',
+            minimumResultsForSearch: 0,
+            width: '100%',
+            dir: 'rtl'
+        });
+        $('#qceSelectBatch').val(batchId).select2({
+            placeholder: 'انتخاب سری ساخت محصول',
+            minimumResultsForSearch: 0,
+            width: '100%',
+            dir: 'rtl'
+        });
+        $('#qceSelectCompany').val(companyId).select2({
+            placeholder: 'انتخاب شرکت',
+            minimumResultsForSearch: 0,
+            width: '100%',
+            dir: 'rtl'
+        });
+        $('#qceSelectMachines').val(machineId).select2({
+            placeholder: 'انتخاب دستگاه',
+            minimumResultsForSearch: 0,
+            allowClear: true,
+            width: '100%',
+            dir: 'rtl'
+        });
+        $('#qceSelectPersons').val(personId).select2({
+            placeholder: 'انتخاب بازرس',
+            minimumResultsForSearch: 0,
+            allowClear: true,
+            width: '100%',
+            dir: 'rtl'
+        });
+        });
+        $('#qceSelectCompany').on('change', function () {
+                    const newCompanyId = $(this).val();
+                    if (newCompanyId) {
+                        getProductsMachinesByCompany(newCompanyId);
+                    }
+                });
+        }
+
+        function EditOrCreateQCE(){
+            const qceid = document.getElementById("qceid").value;
+            const  ProductId = $('#qceSelectProduct').val();
+            const  BatchId = $('#qceSelectBatch').val();
+            const  CompanyId = $('#qceSelectCompany').val();
+            const  PersonId = $('#qceSelectPersons').val();
+            const  MachineId = $('#qceSelectMachines').val();
+            const  DefectId = $('input[name="defectRadio"]:checked').val();
+            const  SeverityId = $('input[name="severityRadio"]:checked').val();
+            const QuantityInspected = parseInt(document.getElementById("qceQuantityinspected")?.value);
+            const QualityDefective = parseInt(document.getElementById("qceQuantitydefective")?.value);
+            const  DefectDescription = document.getElementById("qceDefectDescription").value;
+            const  RootCause = document.getElementById("qceRootCause").value;
+            const  CorrectiveAction = document.getElementById("qceCorrectiveAction").value;
+            let miladiValue = $('#miladiDate').val();
+            if (miladiValue) {
+                let parts = miladiValue.split(' ');
+                if (parts.length == 1) {
+                    let partsSlash = miladiValue.split('/');
+                    if(partsSlash.length == 3){
+                        let iso = miladiValue.replace(/\//g, '-') + 'T00:00:00';
+                        document.getElementById('miladiDate').value = iso;
+                    }
+                } else {
+                    $('#miladiDate').val(miladiValue.replace(/\//g, '-'));
+                }
+            }
+            const miladi = document.getElementById('miladiDate').value;
+            const data = {
+                InspectionDate : miladi,
+                ProductId : parseInt(ProductId),
+                BatchId : parseInt(BatchId),
+                CompanyId : parseInt(CompanyId),
+                PersonId : parseInt(PersonId),
+                MachineId : parseInt(MachineId),
+                DefectId : parseInt(DefectId),
+                SeverityId : parseInt(SeverityId),
+                QuantityInspected : parseInt(QuantityInspected),
+                QualityDefective : parseInt(QualityDefective),
+                DefectDescription :DefectDescription,
+                RootCause : RootCause,
+                CorrectiveAction : CorrectiveAction
+            }
+            // alert(JSON.stringify(data, null, 4));
+            if(!qceid){
+                // create
+                $.ajax({
+                    url : "/QualityControlEntries/AddQualityControlEntry/",
+                    type: "POST",
+                    contentType: 'application/json',
+                    data : JSON.stringify(data),
+                    success: function(result){
+                        $('#QCEModalBody').html('<div class="alert alert-success text-center" role="alert">' +
+                            '✅ عملیات با موفقیت انجام شد. ' +
+                            '</div>');
+                                    // جایگزینی محتوای فوتر مدال با فقط یک دکمه تأیید
+                        $('#qcemodalfooter').html(`
+                            <button class="btn btn-primary" id="qceConfirmSuccessBtn">تأیید</button>
+                        `);
+                        // هندل کلیک دکمه تأیید برای بستن مدال
+                        $('#qceConfirmSuccessBtn').on('click', function () {
+                            $("#qceConfirmSuccessBtn").prop("disabled", true);
+                                            window.location.reload();
+
+                        });
+                    },
+                    error: function(xhr){
+                        alert("❌ خطا: " + xhr.responseText);
+                    }
+                });
+            }
+            else{
+                //edit
+                $.ajax({
+                    url : '/QualityControlEntries/EditQualityControlEntry/' + qceid,
+                    type: 'PUT',
+                    contentType: 'application/json',
+                    data : JSON.stringify(data),
+                    success: function(result){
+                        $('#QCEModalBody').html('<div class="alert alert-success text-center" role="alert">' +
+                            '✅ عملیات با موفقیت انجام شد. ' +
+                            '</div>');
+                        $('#qcemodalfooter').html(`
+                            <button class="btn btn-primary" id="qceConfirmSuccessBtn">تأیید</button>
+                        `);
+                        $('#qceConfirmSuccessBtn').on('click', function () {
+                            $("#qceConfirmSuccessBtn").prop("disabled", true);
+                                            window.location.reload();
+
+                        });
+                    },
+                    error: function(xhr){
+                        alert("❌ خطا: " + xhr.responseText);
+                    }
+                });
+            }
+        }
+        function DeleteQCE(id){
+            if(!confirm("آیا از حذف اطمینان دارید؟")) return;
+            $.ajax({
+                url: "/QualityControlEntries/DeleteQualityControlEntry/" + id,
+                type: "DELETE",
+                success: function(result){
+                    alert("✅ " + result);
+                    $('#'+id).remove();
+                },
+                error: function(xhr){
+                    alert("❌ خطا در حذف: " + xhr.responseText);
+                }
+            });
+        }
+    </script>
+}

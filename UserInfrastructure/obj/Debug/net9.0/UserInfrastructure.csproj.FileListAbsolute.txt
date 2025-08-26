@@ -1,0 +1,12 @@
+C:\Users\Os\source\repos\msControl\UserInfrastructure\bin\Debug\net9.0\UserInfrastructure.deps.json
+C:\Users\Os\source\repos\msControl\UserInfrastructure\bin\Debug\net9.0\UserInfrastructure.dll
+C:\Users\Os\source\repos\msControl\UserInfrastructure\bin\Debug\net9.0\UserInfrastructure.pdb
+C:\Users\Os\source\repos\msControl\UserInfrastructure\obj\Debug\net9.0\UserInfrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Os\source\repos\msControl\UserInfrastructure\obj\Debug\net9.0\UserInfrastructure.AssemblyInfoInputs.cache
+C:\Users\Os\source\repos\msControl\UserInfrastructure\obj\Debug\net9.0\UserInfrastructure.AssemblyInfo.cs
+C:\Users\Os\source\repos\msControl\UserInfrastructure\obj\Debug\net9.0\UserInfrastructure.csproj.CoreCompileInputs.cache
+C:\Users\Os\source\repos\msControl\UserInfrastructure\obj\Debug\net9.0\UserInfrastructure.dll
+C:\Users\Os\source\repos\msControl\UserInfrastructure\obj\Debug\net9.0\refint\UserInfrastructure.dll
+C:\Users\Os\source\repos\msControl\UserInfrastructure\obj\Debug\net9.0\UserInfrastructure.pdb
+C:\Users\Os\source\repos\msControl\UserInfrastructure\obj\Debug\net9.0\ref\UserInfrastructure.dll
+C:\Users\Os\source\repos\msControl\UserInfrastructure\obj\Debug\net9.0\UserInfrastructure.csproj.AssemblyReference.cache
