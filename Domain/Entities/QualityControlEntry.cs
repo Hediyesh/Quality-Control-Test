@@ -7,6 +7,7 @@ namespace ControlService.ControlDomain.Entities
     {
         [Key]
         public int QCEId { get; set; }
+        public DateTime AddedDateTime { get; set; }
         public DateTime InspectionDate { get; set; }
         public int QuantityInspected { get; set; }
         public int QualityDefective { get; set; }

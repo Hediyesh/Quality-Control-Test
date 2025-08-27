@@ -15,3 +15,4 @@ C:\Users\Os\source\repos\msControl\UserApplication\obj\Debug\net9.0\UserApplicat
 C:\Users\Os\source\repos\msControl\UserApplication\obj\Debug\net9.0\ref\UserApplication.dll
 C:\Users\Os\source\repos\msControl\UserApplication\bin\Debug\net9.0\Contracts.dll
 C:\Users\Os\source\repos\msControl\UserApplication\bin\Debug\net9.0\Contracts.pdb
+C:\Users\Os\source\repos\msControl\UserApplication\obj\Debug\net9.0\UserApplication.sourcelink.json

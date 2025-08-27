@@ -13,3 +13,4 @@ C:\Users\Os\source\repos\msControl\Application\obj\Debug\net9.0\ControlApplicati
 C:\Users\Os\source\repos\msControl\Application\obj\Debug\net9.0\refint\ControlApplication.dll
 C:\Users\Os\source\repos\msControl\Application\obj\Debug\net9.0\ControlApplication.pdb
 C:\Users\Os\source\repos\msControl\Application\obj\Debug\net9.0\ref\ControlApplication.dll
+C:\Users\Os\source\repos\msControl\Application\obj\Debug\net9.0\ControlApplication.sourcelink.json

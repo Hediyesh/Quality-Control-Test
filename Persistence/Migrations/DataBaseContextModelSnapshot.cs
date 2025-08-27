@@ -301,6 +301,9 @@ namespace ControlPersistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("QCEId"));
 
+                    b.Property<DateTime>("AddedDateTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("BatchId")
                         .HasColumnType("int");
 

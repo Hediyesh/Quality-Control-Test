@@ -29,21 +29,21 @@ builder.Services.AddAuthentication("Bearer")
                 Encoding.UTF8.GetBytes("mysupersecurekeythatishardtoguess123")) // کلید همون
         };
     });
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAllOrigins",
-        builder =>
-        {
-            builder.AllowAnyOrigin()
-                   .AllowAnyMethod()
-                   .AllowAnyHeader();
-        });
-});
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy("AllowAllOrigins",
+//        builder =>
+//        {
+//            builder.AllowAnyOrigin()
+//                   .AllowAnyMethod()
+//                   .AllowAnyHeader();
+//        });
+//});
 
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
-app.UseCors("AllowAllOrigins");
+//app.UseCors("AllowAllOrigins");
 
 app.UseAuthentication();
 app.UseAuthorization();

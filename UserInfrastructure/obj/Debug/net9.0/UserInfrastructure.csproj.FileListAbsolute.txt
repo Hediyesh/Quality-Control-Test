@@ -10,3 +10,4 @@ C:\Users\Os\source\repos\msControl\UserInfrastructure\obj\Debug\net9.0\refint\Us
 C:\Users\Os\source\repos\msControl\UserInfrastructure\obj\Debug\net9.0\UserInfrastructure.pdb
 C:\Users\Os\source\repos\msControl\UserInfrastructure\obj\Debug\net9.0\ref\UserInfrastructure.dll
 C:\Users\Os\source\repos\msControl\UserInfrastructure\obj\Debug\net9.0\UserInfrastructure.csproj.AssemblyReference.cache
+C:\Users\Os\source\repos\msControl\UserInfrastructure\obj\Debug\net9.0\UserInfrastructure.sourcelink.json

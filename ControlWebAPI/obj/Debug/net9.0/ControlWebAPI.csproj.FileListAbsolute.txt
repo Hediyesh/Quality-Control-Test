@@ -187,6 +187,7 @@ C:\Users\Os\source\repos\msControl\ControlWebAPI\bin\Debug\net9.0\NewId.dll
 C:\Users\Os\source\repos\msControl\ControlWebAPI\bin\Debug\net9.0\Newtonsoft.Json.dll
 C:\Users\Os\source\repos\msControl\ControlWebAPI\bin\Debug\net9.0\Newtonsoft.Json.Bson.dll
 C:\Users\Os\source\repos\msControl\ControlWebAPI\bin\Debug\net9.0\RabbitMQ.Client.dll
+C:\Users\Os\source\repos\msControl\ControlWebAPI\obj\Debug\net9.0\ControlWebAPI.sourcelink.json
+C:\Users\Os\source\repos\msControl\ControlWebAPI\bin\Debug\net9.0\System.Net.WebSockets.WebSocketProtocol.dll
 C:\Users\Os\source\repos\msControl\ControlWebAPI\bin\Debug\net9.0\ControlInfrastructure.dll
 C:\Users\Os\source\repos\msControl\ControlWebAPI\bin\Debug\net9.0\ControlInfrastructure.pdb
-C:\Users\Os\source\repos\msControl\ControlWebAPI\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt

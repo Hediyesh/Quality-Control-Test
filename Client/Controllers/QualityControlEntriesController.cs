@@ -116,4 +116,30 @@ public class QualityControlEntriesController : Controller
         Console.WriteLine(result);
         return Json(result);
     }
+    //[HttpGet("DailyCounts")]
+    [Route("QualityControlEntries/DailyCounts")]
+    public IActionResult DailyCounts()
+    {
+        return View("DailyCounts"); // نمایش ویو DailyCounts.cshtml
+    }
+
+    [HttpGet("DailyCountsApi")]
+    public async Task<IActionResult> DailyCountsApi()
+    {
+        AttachToken();
+
+        // اینجا باید به endpoint مخصوص روزانه وصل بشیم
+        var response = await _httpClient.GetAsync("/api/control/qualitycontrolentries/DailyCounts");
+
+        if (!response.IsSuccessStatusCode)
+            return BadRequest("خطا در دریافت داده‌ها");
+
+        var json = await response.Content.ReadAsStringAsync();
+
+        // از ViewModel مناسب استفاده می‌کنیم
+        var result = JsonConvert.DeserializeObject<List<DailyCountViewModel>>(json);
+
+        return Json(result);
+    }
+
 }

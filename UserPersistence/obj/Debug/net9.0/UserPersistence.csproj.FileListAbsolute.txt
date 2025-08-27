@@ -21,3 +21,4 @@ C:\Users\Os\source\repos\msControl\UserPersistence\obj\Debug\net9.0\UserPersiste
 C:\Users\Os\source\repos\msControl\UserPersistence\obj\Debug\net9.0\ref\UserPersistence.dll
 C:\Users\Os\source\repos\msControl\UserPersistence\bin\Debug\net9.0\Contracts.dll
 C:\Users\Os\source\repos\msControl\UserPersistence\bin\Debug\net9.0\Contracts.pdb
+C:\Users\Os\source\repos\msControl\UserPersistence\obj\Debug\net9.0\UserPersistence.sourcelink.json

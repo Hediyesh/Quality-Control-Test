@@ -7,6 +7,9 @@ C:\Users\Os\source\repos\msControl\Client\bin\Debug\net9.0\Client.deps.json
 C:\Users\Os\source\repos\msControl\Client\bin\Debug\net9.0\Client.runtimeconfig.json
 C:\Users\Os\source\repos\msControl\Client\bin\Debug\net9.0\Client.dll
 C:\Users\Os\source\repos\msControl\Client\bin\Debug\net9.0\Client.pdb
+C:\Users\Os\source\repos\msControl\Client\bin\Debug\net9.0\Newtonsoft.Json.dll
+C:\Users\Os\source\repos\msControl\Client\bin\Debug\net9.0\Newtonsoft.Json.Bson.dll
+C:\Users\Os\source\repos\msControl\Client\obj\Debug\net9.0\Client.csproj.AssemblyReference.cache
 C:\Users\Os\source\repos\msControl\Client\obj\Debug\net9.0\rpswa.dswa.cache.json
 C:\Users\Os\source\repos\msControl\Client\obj\Debug\net9.0\Client.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\Os\source\repos\msControl\Client\obj\Debug\net9.0\Client.AssemblyInfoInputs.cache
@@ -15,6 +18,7 @@ C:\Users\Os\source\repos\msControl\Client\obj\Debug\net9.0\Client.csproj.CoreCom
 C:\Users\Os\source\repos\msControl\Client\obj\Debug\net9.0\Client.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Os\source\repos\msControl\Client\obj\Debug\net9.0\Client.RazorAssemblyInfo.cache
 C:\Users\Os\source\repos\msControl\Client\obj\Debug\net9.0\Client.RazorAssemblyInfo.cs
+C:\Users\Os\source\repos\msControl\Client\obj\Debug\net9.0\Client.sourcelink.json
 C:\Users\Os\source\repos\msControl\Client\obj\Debug\net9.0\rjimswa.dswa.cache.json
 C:\Users\Os\source\repos\msControl\Client\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
 C:\Users\Os\source\repos\msControl\Client\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
@@ -874,13 +878,9 @@ C:\Users\Os\source\repos\msControl\Client\obj\Debug\net9.0\staticwebassets.build
 C:\Users\Os\source\repos\msControl\Client\obj\Debug\net9.0\staticwebassets.build.json.cache
 C:\Users\Os\source\repos\msControl\Client\obj\Debug\net9.0\staticwebassets.development.json
 C:\Users\Os\source\repos\msControl\Client\obj\Debug\net9.0\staticwebassets.build.endpoints.json
+C:\Users\Os\source\repos\msControl\Client\obj\Debug\net9.0\Client.csproj.Up2Date
 C:\Users\Os\source\repos\msControl\Client\obj\Debug\net9.0\Client.dll
 C:\Users\Os\source\repos\msControl\Client\obj\Debug\net9.0\refint\Client.dll
 C:\Users\Os\source\repos\msControl\Client\obj\Debug\net9.0\Client.pdb
 C:\Users\Os\source\repos\msControl\Client\obj\Debug\net9.0\Client.genruntimeconfig.cache
 C:\Users\Os\source\repos\msControl\Client\obj\Debug\net9.0\ref\Client.dll
-C:\Users\Os\source\repos\msControl\Client\bin\Debug\net9.0\Newtonsoft.Json.dll
-C:\Users\Os\source\repos\msControl\Client\bin\Debug\net9.0\Newtonsoft.Json.Bson.dll
-C:\Users\Os\source\repos\msControl\Client\obj\Debug\net9.0\Client.csproj.AssemblyReference.cache
-C:\Users\Os\source\repos\msControl\Client\obj\Debug\net9.0\Client.csproj.Up2Date
-C:\Users\Os\source\repos\msControl\Client\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt

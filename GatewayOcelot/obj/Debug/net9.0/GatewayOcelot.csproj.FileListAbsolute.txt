@@ -49,4 +49,4 @@ C:\Users\Os\source\repos\msControl\GatewayOcelot\bin\Debug\net9.0\Microsoft.Iden
 C:\Users\Os\source\repos\msControl\GatewayOcelot\bin\Debug\net9.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Users\Os\source\repos\msControl\GatewayOcelot\bin\Debug\net9.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\Os\source\repos\msControl\GatewayOcelot\bin\Debug\net9.0\System.IdentityModel.Tokens.Jwt.dll
-C:\Users\Os\source\repos\msControl\GatewayOcelot\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
+C:\Users\Os\source\repos\msControl\GatewayOcelot\obj\Debug\net9.0\GatewayOcelot.sourcelink.json

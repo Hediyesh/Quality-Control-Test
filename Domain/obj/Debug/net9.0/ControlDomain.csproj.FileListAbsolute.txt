@@ -9,3 +9,4 @@ C:\Users\Os\source\repos\msControl\Domain\obj\Debug\net9.0\ControlDomain.dll
 C:\Users\Os\source\repos\msControl\Domain\obj\Debug\net9.0\refint\ControlDomain.dll
 C:\Users\Os\source\repos\msControl\Domain\obj\Debug\net9.0\ControlDomain.pdb
 C:\Users\Os\source\repos\msControl\Domain\obj\Debug\net9.0\ref\ControlDomain.dll
+C:\Users\Os\source\repos\msControl\Domain\obj\Debug\net9.0\ControlDomain.sourcelink.json

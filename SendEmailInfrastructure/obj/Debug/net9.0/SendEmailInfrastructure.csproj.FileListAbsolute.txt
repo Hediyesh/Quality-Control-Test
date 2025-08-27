@@ -19,3 +19,4 @@ C:\Users\Os\source\repos\msControl\SendEmailInfrastructure\bin\Debug\net9.0\Cont
 C:\Users\Os\source\repos\msControl\SendEmailInfrastructure\bin\Debug\net9.0\SendEmailPersistence.dll
 C:\Users\Os\source\repos\msControl\SendEmailInfrastructure\bin\Debug\net9.0\SendEmailPersistence.pdb
 C:\Users\Os\source\repos\msControl\SendEmailInfrastructure\bin\Debug\net9.0\Contracts.pdb
+C:\Users\Os\source\repos\msControl\SendEmailInfrastructure\obj\Debug\net9.0\SendEmailInfrastructure.sourcelink.json

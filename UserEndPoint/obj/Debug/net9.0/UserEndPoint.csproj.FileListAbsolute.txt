@@ -192,4 +192,4 @@ C:\Users\Os\source\repos\msControl\UserEndPoint\bin\Debug\net9.0\Newtonsoft.Json
 C:\Users\Os\source\repos\msControl\UserEndPoint\bin\Debug\net9.0\RabbitMQ.Client.dll
 C:\Users\Os\source\repos\msControl\UserEndPoint\bin\Debug\net9.0\Contracts.dll
 C:\Users\Os\source\repos\msControl\UserEndPoint\bin\Debug\net9.0\Contracts.pdb
-C:\Users\Os\source\repos\msControl\UserEndPoint\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
+C:\Users\Os\source\repos\msControl\UserEndPoint\obj\Debug\net9.0\UserEndPoint.sourcelink.json

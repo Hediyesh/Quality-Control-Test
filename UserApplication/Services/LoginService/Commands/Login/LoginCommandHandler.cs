@@ -43,6 +43,7 @@ namespace UserApplication.Services.LoginService.Commands.Login
                 return new LoginDto { Success = false, Message = "رمز عبور اشتباه است." };
 
             var token = _jwtTokenGenerator.GenerateToken(user);
+            // todo: make RabbitMQ work
             // ارسال ایونت به RabbitMQ
             //await _publishEndpoint.Publish(new UserLoggedInEvent
             //{

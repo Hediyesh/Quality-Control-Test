@@ -87,16 +87,16 @@ builder.Services.AddOpenApi();
 
 //var cs = builder.Configuration.GetConnectionString("msUserDb");
 //Console.WriteLine($"ConnectionString: {cs}");
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowFrontend",
-        policy =>
-        {
-            policy.WithOrigins("http://localhost:3003")
-                  .AllowAnyHeader()
-                  .AllowAnyMethod();
-        });
-});
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy("AllowFrontend",
+//        policy =>
+//        {
+//            policy.WithOrigins("http://localhost:3003")
+//                  .AllowAnyHeader()
+//                  .AllowAnyMethod();
+//        });
+//});
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAllOrigins",
@@ -118,7 +118,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors("AllowAllOrigins");
+//app.UseCors("AllowAllOrigins");
 app.UseAuthentication();
 app.UseAuthorization();
 

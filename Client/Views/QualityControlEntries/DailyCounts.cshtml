@@ -1,0 +1,67 @@
+﻿@{
+    ViewData["Title"] = "Daily Quality Control Counts";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Daily Quality Control Counts</h2>
+
+<table id="dailyCountsTable" class="table table-striped">
+    <thead>
+        <tr>
+            <th>تاریخ</th>
+            <th>تعداد رکورد</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- ردیف‌ها توسط JS اضافه می‌شوند -->
+    </tbody>
+</table>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+    <script type="text/javascript">
+                // ساخت Connection به Hub واقعی روی ControlService از طریق Gateway
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("http://localhost:5262/hubs/qualitycontrol") // Hub واقعی
+            .withAutomaticReconnect()
+            .build();
+
+        // متد برای آپدیت جدول
+        function renderDailyCounts(dailyCounts) {
+            const tbody = document.querySelector("#dailyCountsTable tbody");
+            tbody.innerHTML = "";
+            dailyCounts.forEach(item => {
+                const tr = document.createElement("tr");
+                const dateTd = document.createElement("td");
+                dateTd.textContent = new Date(item.date).toLocaleDateString('fa-IR');
+                const countTd = document.createElement("td");
+                countTd.textContent = item.count;
+                tr.appendChild(dateTd);
+                tr.appendChild(countTd);
+                tbody.appendChild(tr);
+            });
+        }
+
+        // دریافت پیام Real-time از Hub
+        connection.on("UpdateDailyCounts", (data) => {
+            console.log("Updated daily counts:", data);
+            renderDailyCounts(data);
+        });
+
+        // شروع اتصال و گرفتن اولیه داده‌ها
+        connection.start()
+            .then(() => {
+                console.log("Connected to QualityControlHub");
+
+                // درخواست لیست فعلی از API (از Gateway)
+        fetch("http://localhost:5262/api/control/QualityControlEntries/DailyCounts")
+                                    .then(response => response.json())
+                    .then(data => {
+                        console.log("Fetched daily counts:", data);
+                        renderDailyCounts(data);
+                    });
+            })
+            .catch(err => console.error(err));
+
+    </script>
+}

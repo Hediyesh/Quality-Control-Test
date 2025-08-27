@@ -20,7 +20,7 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddSession();
+//builder.Services.AddSession();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

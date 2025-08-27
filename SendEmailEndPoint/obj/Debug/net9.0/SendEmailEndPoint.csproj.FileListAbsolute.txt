@@ -194,3 +194,4 @@ C:\Users\Os\source\repos\msControl\SendEmailEndPoint\bin\Debug\net9.0\Microsoft.
 C:\Users\Os\source\repos\msControl\SendEmailEndPoint\bin\Debug\net9.0\Microsoft.Extensions.Identity.Stores.dll
 C:\Users\Os\source\repos\msControl\SendEmailEndPoint\bin\Debug\net9.0\Contracts.dll
 C:\Users\Os\source\repos\msControl\SendEmailEndPoint\bin\Debug\net9.0\Contracts.pdb
+C:\Users\Os\source\repos\msControl\SendEmailEndPoint\obj\Debug\net9.0\SendEmailEndPoint.sourcelink.json

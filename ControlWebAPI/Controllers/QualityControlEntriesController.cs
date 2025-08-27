@@ -1,14 +1,15 @@
-﻿using ControlService.ControlApplication.Services.QualityControlEntries.Commands.AddQualityControlEntry;
+﻿using ControlApplication.Services.QualityControlEntries.Queries.GetDailyCounts;
+using ControlService.ControlApplication.Services;
+using ControlService.ControlApplication.Services.QualityControlEntries.Commands.AddQualityControlEntry;
 using ControlService.ControlApplication.Services.QualityControlEntries.Commands.DeleteQualityControlEntry;
 using ControlService.ControlApplication.Services.QualityControlEntries.Commands.EditQualityControlEntry;
-using ControlService.ControlApplication.Services.QualityControlEntries.Queries.GetDropDownForEditOrAddQCE;
 using ControlService.ControlApplication.Services.QualityControlEntries.Queries.GetAllQualityControlEntries;
+using ControlService.ControlApplication.Services.QualityControlEntries.Queries.GetDropDownForEditOrAddQCE;
+using ControlService.ControlApplication.Services.QualityControlEntries.Queries.GetQCEProductsMachinesByCompany;
 using ControlService.ControlApplication.Services.QualityControlEntries.Queries.GetQualityControlEntry;
-using ControlService.ControlApplication.Services;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ControlService.ControlApplication.Services.QualityControlEntries.Queries.GetQCEProductsMachinesByCompany;
 
 namespace ControlEndPoint.Areas.Admin.Controllers
 {
@@ -102,5 +103,12 @@ namespace ControlEndPoint.Areas.Admin.Controllers
                 machines = data.Machines?.Select(m => new { machineId = m.MachineId, machineName = m.MachineName })
             });
         }
+        [HttpGet("DailyCounts")]
+        public async Task<IActionResult> GetDailyCounts()
+        {
+            var result = await _mediator.Send(new GetDailyCountsQuery());
+            return Ok(result);
+        }
+
     }
 }

@@ -17,3 +17,4 @@ C:\Users\Os\source\repos\msControl\Persistence\obj\Debug\net9.0\refint\ControlPe
 C:\Users\Os\source\repos\msControl\Persistence\obj\Debug\net9.0\ControlPersistence.pdb
 C:\Users\Os\source\repos\msControl\Persistence\obj\Debug\net9.0\ControlPersistence.genruntimeconfig.cache
 C:\Users\Os\source\repos\msControl\Persistence\obj\Debug\net9.0\ref\ControlPersistence.dll
+C:\Users\Os\source\repos\msControl\Persistence\obj\Debug\net9.0\ControlPersistence.sourcelink.json

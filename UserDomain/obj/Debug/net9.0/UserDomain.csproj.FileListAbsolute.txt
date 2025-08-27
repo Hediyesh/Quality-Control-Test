@@ -10,3 +10,4 @@ C:\Users\Os\source\repos\msControl\UserDomain\obj\Debug\net9.0\UserDomain.dll
 C:\Users\Os\source\repos\msControl\UserDomain\obj\Debug\net9.0\refint\UserDomain.dll
 C:\Users\Os\source\repos\msControl\UserDomain\obj\Debug\net9.0\UserDomain.pdb
 C:\Users\Os\source\repos\msControl\UserDomain\obj\Debug\net9.0\ref\UserDomain.dll
+C:\Users\Os\source\repos\msControl\UserDomain\obj\Debug\net9.0\UserDomain.sourcelink.json

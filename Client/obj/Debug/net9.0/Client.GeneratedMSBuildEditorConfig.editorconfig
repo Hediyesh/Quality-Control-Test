@@ -60,6 +60,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdHNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Os/source/repos/msControl/Client/Views/QualityControlEntries/DailyCounts.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUXVhbGl0eUNvbnRyb2xFbnRyaWVzXERhaWx5Q291bnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Os/source/repos/msControl/Client/Views/QualityControlEntries/EditOrCreateQCEPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUXVhbGl0eUNvbnRyb2xFbnRyaWVzXEVkaXRPckNyZWF0ZVFDRVBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

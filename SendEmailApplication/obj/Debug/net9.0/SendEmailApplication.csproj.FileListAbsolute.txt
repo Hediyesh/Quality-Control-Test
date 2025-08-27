@@ -15,3 +15,4 @@ C:\Users\Os\source\repos\msControl\SendEmailApplication\obj\Debug\net9.0\SendEma
 C:\Users\Os\source\repos\msControl\SendEmailApplication\obj\Debug\net9.0\ref\SendEmailApplication.dll
 C:\Users\Os\source\repos\msControl\SendEmailApplication\bin\Debug\net9.0\Contracts.dll
 C:\Users\Os\source\repos\msControl\SendEmailApplication\bin\Debug\net9.0\Contracts.pdb
+C:\Users\Os\source\repos\msControl\SendEmailApplication\obj\Debug\net9.0\SendEmailApplication.sourcelink.json
