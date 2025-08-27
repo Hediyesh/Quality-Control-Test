@@ -24,17 +24,17 @@ builder.Services.AddDbContext<DataBaseContext>(options =>
 builder.Services.AddScoped<IDataBaseContext, DataBaseContext>();
 //builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(AddMaintenanceLogCommand).Assembly));
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowClient",
-        policy =>
-        {
-            policy.WithOrigins("http://localhost:5248") // دامنه کلاینت
-                  .AllowAnyHeader()
-                  .AllowAnyMethod()
-                  .AllowCredentials(); // مهم برای SignalR
-        });
-});
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy("AllowClient",
+//        policy =>
+//        {
+//            policy.WithOrigins("http://localhost:5248") // دامنه کلاینت
+//                  .AllowAnyHeader()
+//                  .AllowAnyMethod()
+//                  .AllowCredentials(); // مهم برای SignalR
+//        });
+//});
 builder.Services.AddSignalR();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 //builder.Services.AddMediatR(typeof(AddQualityControlEntryHandler).Assembly);
@@ -49,16 +49,16 @@ builder.Services.AddApplicationServices();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-//builder.Services.AddCors(options =>
-//{
-//    options.AddPolicy("AllowAllOrigins",
-//        builder =>
-//        {
-//            builder.AllowAnyOrigin()
-//                   .AllowAnyMethod()
-//                   .AllowAnyHeader();
-//        });
-//});
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+                   .AllowAnyMethod()
+                   .AllowAnyHeader();
+        });
+});
 // اضافه کردن CORS
 var app = builder.Build();
 
@@ -69,14 +69,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.UseHttpsRedirection();
-//app.UseCors("AllowAllOrigins");
+app.UseCors("AllowAllOrigins");
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 //app.MapStaticAssets();
 //app.UseStaticFiles();
 app.MapControllers();
-app.UseCors("AllowClient");
+//app.UseCors("AllowClient");
 
 app.MapHub<QualityControlHub>("/hubs/qualitycontrol");
 
