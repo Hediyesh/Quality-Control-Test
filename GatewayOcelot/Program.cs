@@ -29,21 +29,42 @@ builder.Services.AddAuthentication("Bearer")
                 Encoding.UTF8.GetBytes("mysupersecurekeythatishardtoguess123")) // کلید همون
         };
     });
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy("AllowAllOrigins",
+//        builder =>
+//        {
+//            builder.AllowAnyOrigin()
+//                   .AllowAnyMethod()
+//                   .AllowAnyHeader();
+//        });
+//});
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy("AllowFrontend", policy =>
+//    {
+//        policy.WithOrigins("http://localhost:3003") // آدرس کلاینتت
+//              .AllowAnyHeader()
+//              .AllowAnyMethod()
+//              .AllowCredentials();
+//    });
+//});
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAllOrigins",
-        builder =>
-        {
-            builder.AllowAnyOrigin()
-                   .AllowAnyMethod()
-                   .AllowAnyHeader();
-        });
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:5248", "http://localhost:3003")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+    });
 });
 
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
-app.UseCors("AllowAllOrigins");
+//app.UseCors("AllowAllOrigins");
+app.UseCors("AllowFrontend");
 
 app.UseAuthentication();
 app.UseAuthorization();

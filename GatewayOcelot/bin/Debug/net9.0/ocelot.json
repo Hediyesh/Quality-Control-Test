@@ -7,16 +7,30 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "controlservice",
+          "Host": "localhost",
           "Port": 5262 //پورتو درست کن
         }
       ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
-      },
-      "RouteClaimsRequirement": {
-        "role": "admin"
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/hubs/qualitycontrol/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST" ],
+      "DownstreamPathTemplate": "/hubs/qualitycontrol/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5262
+        }
+      ],
+      "UseWebSocket": true,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
       }
     },
     {

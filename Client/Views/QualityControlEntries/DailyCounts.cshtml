@@ -16,17 +16,22 @@
         <!-- ردیف‌ها توسط JS اضافه می‌شوند -->
     </tbody>
 </table>
-
+@{
+    var accessToken = Context.Session.GetString("JWToken") ?? "";
+}
 @section Scripts {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
-    <script type="text/javascript">
-                // ساخت Connection به Hub واقعی روی ControlService از طریق Gateway
-        const connection = new signalR.HubConnectionBuilder()
-            .withUrl("http://localhost:5262/hubs/qualitycontrol") // Hub واقعی
-            .withAutomaticReconnect()
-            .build();
+    <script>
+        const accessToken = "@accessToken";
 
-        // متد برای آپدیت جدول
+                const connection = new signalR.HubConnectionBuilder()
+        .withUrl("http://localhost:5042/hubs/qualitycontrol", {
+            accessTokenFactory: () => accessToken
+        })
+        .withAutomaticReconnect()
+        .build();
+
+
         function renderDailyCounts(dailyCounts) {
             const tbody = document.querySelector("#dailyCountsTable tbody");
             tbody.innerHTML = "";
@@ -42,26 +47,26 @@
             });
         }
 
-        // دریافت پیام Real-time از Hub
-        connection.on("UpdateDailyCounts", (data) => {
+        connection.on("UpdateDailyCounts", data => {
             console.log("Updated daily counts:", data);
             renderDailyCounts(data);
         });
 
-        // شروع اتصال و گرفتن اولیه داده‌ها
         connection.start()
             .then(() => {
                 console.log("Connected to QualityControlHub");
 
-                // درخواست لیست فعلی از API (از Gateway)
-        fetch("http://localhost:5262/api/control/QualityControlEntries/DailyCounts")
-                                    .then(response => response.json())
-                    .then(data => {
-                        console.log("Fetched daily counts:", data);
-                        renderDailyCounts(data);
-                    });
+        fetch("http://localhost:5042/api/control/QualityControlEntries/DailyCounts", {
+            headers: { "Authorization": "Bearer " + accessToken }
+        })
+
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Fetched daily counts:", data);
+                    renderDailyCounts(data);
+                });
             })
             .catch(err => console.error(err));
-
     </script>
 }
+

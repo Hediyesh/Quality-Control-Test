@@ -8,58 +8,75 @@ using ControlService.ControlPersistence.Contexts;
 using ControlWebAPI.Hubs;
 using ControlWebAPI.Notifications;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
 builder.Services.AddDbContext<DataBaseContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("msControlDB")));
 
 builder.Services.AddScoped<IDataBaseContext, DataBaseContext>();
-//builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(AddMaintenanceLogCommand).Assembly));
 
-//builder.Services.AddCors(options =>
-//{
-//    options.AddPolicy("AllowClient",
-//        policy =>
-//        {
-//            policy.WithOrigins("http://localhost:5248") // دامنه کلاینت
-//                  .AllowAnyHeader()
-//                  .AllowAnyMethod()
-//                  .AllowCredentials(); // مهم برای SignalR
-//        });
-//});
 builder.Services.AddSignalR();
 builder.Services.AddScoped<INotificationService, NotificationService>();
-//builder.Services.AddMediatR(typeof(AddQualityControlEntryHandler).Assembly);
 builder.Services.AddApplicationServices();
 
-//builder.Services.AddMassTransitWithRabbitMq(builder.Configuration);
-// the 3 lines below are used for the client to not send bad request 400, instead we handle in the function in controller
-//builder.Services.Configure<ApiBehaviorOptions>(options =>
-//{
-//    options.SuppressModelStateInvalidFilter = true;
-//});
+// 🔹 JWT Authentication
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = "MyUserService",   // باید همون چیزی باشه که تو UserService تولید می‌کنی
+            ValidAudience = "MyClients",     // باید با Audience توکن یکی باشه
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes("mysupersecurekeythatishardtoguess123"))
+        };
+
+        // 🔹 مهم برای SignalR
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                var accessToken = context.Request.Query["access_token"];
+                var path = context.HttpContext.Request.Path;
+                if (!string.IsNullOrEmpty(accessToken) &&
+                    path.StartsWithSegments("/hubs/qualitycontrol"))
+                {
+                    context.Token = accessToken;
+                }
+                return Task.CompletedTask;
+            }
+        };
+    });
+
+// 🔹 CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowClient", policy =>
+    {
+        policy.WithOrigins("http://localhost:5248", "http://localhost:3003")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+    });
+});
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAllOrigins",
-        builder =>
-        {
-            builder.AllowAnyOrigin()
-                   .AllowAnyMethod()
-                   .AllowAnyHeader();
-        });
-});
-// اضافه کردن CORS
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -68,17 +85,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 app.UseHttpsRedirection();
-app.UseCors("AllowAllOrigins");
+app.UseCors("AllowClient");
+
 app.UseRouting();
-app.UseAuthentication();
+app.UseAuthentication();   // 🔹 باید قبل از Authorization بیاد
 app.UseAuthorization();
-//app.MapStaticAssets();
-//app.UseStaticFiles();
+
 app.MapControllers();
-//app.UseCors("AllowClient");
-
 app.MapHub<QualityControlHub>("/hubs/qualitycontrol");
-
 
 app.Run();

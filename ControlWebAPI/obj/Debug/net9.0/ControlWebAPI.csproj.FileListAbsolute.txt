@@ -191,3 +191,4 @@ C:\Users\Os\source\repos\msControl\ControlWebAPI\obj\Debug\net9.0\ControlWebAPI.
 C:\Users\Os\source\repos\msControl\ControlWebAPI\bin\Debug\net9.0\System.Net.WebSockets.WebSocketProtocol.dll
 C:\Users\Os\source\repos\msControl\ControlWebAPI\bin\Debug\net9.0\ControlInfrastructure.dll
 C:\Users\Os\source\repos\msControl\ControlWebAPI\bin\Debug\net9.0\ControlInfrastructure.pdb
+C:\Users\Os\source\repos\msControl\ControlWebAPI\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
