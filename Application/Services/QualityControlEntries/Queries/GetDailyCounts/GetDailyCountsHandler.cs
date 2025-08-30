@@ -17,7 +17,7 @@ namespace ControlApplication.Services.QualityControlEntries.Queries.GetDailyCoun
         public async Task<List<DailyCountDto>> Handle(GetDailyCountsQuery request, CancellationToken cancellationToken)
         {
             return await _db.QualityControlEntries
-                .GroupBy(q => q.AddedDateTime.Date) // فقط سال، ماه، روز
+                .GroupBy(q => q.InspectionDate.Date) // فقط سال، ماه، روز
                 .Select(g => new DailyCountDto
                 {
                     Date = g.Key,
