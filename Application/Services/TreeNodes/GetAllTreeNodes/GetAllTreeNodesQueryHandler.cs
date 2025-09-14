@@ -20,7 +20,8 @@ namespace ControlApplication.Services.TreeNodes.GetAllTreeNodes
         {
             var root = new TreeNodeDto()
             {
-                Id = 1,
+                NodeId = 1,
+                Id = Guid.NewGuid(),
                 Type = Types.Root,
                 Label = "Root",
             };
@@ -29,9 +30,10 @@ namespace ControlApplication.Services.TreeNodes.GetAllTreeNodes
             {
                 var companyDto = new TreeNodeDto()
                 {
-                    Id = company.CompanyId,
+                    NodeId = company.CompanyId,
                     Label = company.CompanyName,
-                    Type = Types.Company
+                    Type = Types.Company,
+                    Id = Guid.NewGuid()
                 };
                 root.Children.Add(companyDto);
 
@@ -40,9 +42,10 @@ namespace ControlApplication.Services.TreeNodes.GetAllTreeNodes
                 {
                     var machineDto = new TreeNodeDto()
                     {
-                        Id = machine.MachineId,
+                        NodeId = machine.MachineId,
                         Label = machine.MachineName,
-                        Type = Types.Machine
+                        Type = Types.Machine,
+                        Id = Guid.NewGuid()
                     };
                     companyDto.Children.Add(machineDto);
 
@@ -59,9 +62,10 @@ namespace ControlApplication.Services.TreeNodes.GetAllTreeNodes
                         {
                             var categoryDto = new TreeNodeDto()
                             {
-                                Id = category.CategoryId,
+                                NodeId = category.CategoryId,
                                 Label = category.CategoryName,
-                                Type = Types.Category
+                                Type = Types.Category,
+                                Id = Guid.NewGuid()
                             };
                             machineDto.Children.Add(categoryDto);
 
@@ -69,9 +73,10 @@ namespace ControlApplication.Services.TreeNodes.GetAllTreeNodes
                             {
                                 var productDto = new TreeNodeDto()
                                 {
-                                    Id = product.ProductId,
+                                    NodeId = product.ProductId,
                                     Label = product.ProductName,
-                                    Type = Types.Product
+                                    Type = Types.Product,
+                                    Id = Guid.NewGuid()
                                 };
                                 categoryDto.Children.Add(productDto);
                             }
