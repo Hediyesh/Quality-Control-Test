@@ -51,9 +51,10 @@ namespace ControlApplication.Services.TreeNodes.GetAllTreeNodes
                     {
                         var products = _db.Products
                         .Where(p => p.CompanyId == company.CompanyId
-                                 && p.CategoryId == category.CategoryId && p.Machines != null
-                                 && p.Machines.Select(m => m.MachineId).Contains(machine.MachineId))
+                                 && p.CategoryId == category.CategoryId
+                                 && p.Machines.Any(m => m.MachineId == machine.MachineId))
                         .ToList();
+
                         if (products.Count > 0)
                         {
                             var categoryDto = new TreeNodeDto()
