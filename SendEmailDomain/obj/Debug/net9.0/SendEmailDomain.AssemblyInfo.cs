@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SendEmailDomain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cc5d56c6b58602e5c5604d96fec1d2726f3d942e")]
 [assembly: System.Reflection.AssemblyProductAttribute("SendEmailDomain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SendEmailDomain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

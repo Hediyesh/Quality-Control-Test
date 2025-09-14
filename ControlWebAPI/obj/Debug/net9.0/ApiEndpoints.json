@@ -1,5 +1,363 @@
 [
   {
+    "ContainingType": "ControlWebAPI.Controllers.CategoriesController",
+    "Method": "GetAllCategories",
+    "RelativePath": "api/Categories",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControlWebAPI.Controllers.CategoriesController",
+    "Method": "AddCategory",
+    "RelativePath": "api/Categories",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "command",
+        "Type": "ControlApplication.Services.Categories.Commands.AddCategory.AddCategoryCommand",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControlWebAPI.Controllers.CategoriesController",
+    "Method": "EditCategory",
+    "RelativePath": "api/Categories",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "dto",
+        "Type": "ControlApplication.Services.UpdateCategoryDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControlWebAPI.Controllers.CategoriesController",
+    "Method": "DeleteCategory",
+    "RelativePath": "api/Categories",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControlWebAPI.Controllers.CategoriesController",
+    "Method": "GetCategory",
+    "RelativePath": "api/Categories/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControlWebAPI.Controllers.CompaniesController",
+    "Method": "GetAllCompanies",
+    "RelativePath": "api/Companies",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControlWebAPI.Controllers.CompaniesController",
+    "Method": "AddCompany",
+    "RelativePath": "api/Companies",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "command",
+        "Type": "ControlApplication.Services.Companies.Commands.AddCompany.AddCompanyCommand",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControlWebAPI.Controllers.CompaniesController",
+    "Method": "EditCompany",
+    "RelativePath": "api/Companies",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "dto",
+        "Type": "ControlApplication.Services.UpdateCompanyDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControlWebAPI.Controllers.CompaniesController",
+    "Method": "DeleteCompany",
+    "RelativePath": "api/Companies",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControlWebAPI.Controllers.CompaniesController",
+    "Method": "GetCompany",
+    "RelativePath": "api/Companies/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControlEndPoint.Areas.Admin.Controllers.QualityControlEntriesController",
+    "Method": "GetAllQualityControlEntries",
+    "RelativePath": "api/control/QualityControlEntries",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControlEndPoint.Areas.Admin.Controllers.QualityControlEntriesController",
+    "Method": "AddQualityControlEntry",
+    "RelativePath": "api/control/QualityControlEntries",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "command",
+        "Type": "ControlService.ControlApplication.Services.QualityControlEntries.Commands.AddQualityControlEntry.AddQualityControlEntryCommand",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControlEndPoint.Areas.Admin.Controllers.QualityControlEntriesController",
+    "Method": "EditQualityControlEntry",
+    "RelativePath": "api/control/QualityControlEntries",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "dto",
+        "Type": "ControlService.ControlApplication.Services.UpdateQualityControlEntryDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControlEndPoint.Areas.Admin.Controllers.QualityControlEntriesController",
+    "Method": "DeleteQualityControlEntry",
+    "RelativePath": "api/control/QualityControlEntries",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControlEndPoint.Areas.Admin.Controllers.QualityControlEntriesController",
+    "Method": "GetQualityControlEntry",
+    "RelativePath": "api/control/QualityControlEntries/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControlEndPoint.Areas.Admin.Controllers.QualityControlEntriesController",
+    "Method": "GetDailyCounts",
+    "RelativePath": "api/control/QualityControlEntries/DailyCounts",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControlEndPoint.Areas.Admin.Controllers.QualityControlEntriesController",
+    "Method": "EditOrCreateQCEPartial",
+    "RelativePath": "api/control/QualityControlEntries/EditOrCreateQCEPartial",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControlEndPoint.Areas.Admin.Controllers.QualityControlEntriesController",
+    "Method": "UpdateQCEMachinesCategoriesByCompany",
+    "RelativePath": "api/control/QualityControlEntries/UpdateQCEMachinesCategoriesByCompany",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControlWebAPI.Controllers.MachinesController",
+    "Method": "GetAllMachines",
+    "RelativePath": "api/Machines",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControlWebAPI.Controllers.MachinesController",
+    "Method": "AddMachine",
+    "RelativePath": "api/Machines",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "command",
+        "Type": "ControlApplication.Services.Machines.Commands.AddMachine.AddMachineCommand",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControlWebAPI.Controllers.MachinesController",
+    "Method": "EditMachine",
+    "RelativePath": "api/Machines",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "dto",
+        "Type": "ControlApplication.Services.UpdateMachineDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControlWebAPI.Controllers.MachinesController",
+    "Method": "DeleteMachine",
+    "RelativePath": "api/Machines",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControlWebAPI.Controllers.MachinesController",
+    "Method": "GetMachine",
+    "RelativePath": "api/Machines/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "ControlWebAPI.Controllers.MaintenanceLogsController",
     "Method": "GetAllMaintenanceLogs",
     "RelativePath": "api/MaintenanceLogs",
@@ -209,117 +567,6 @@
     "ContainingType": "ControlEndPoint.Areas.Admin.Controllers.ProductsController",
     "Method": "UpdateMachinesCategoriesByCompany",
     "RelativePath": "api/Products/UpdateMachinesCategoriesByCompany",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "ControlEndPoint.Areas.Admin.Controllers.QualityControlEntriesController",
-    "Method": "GetAllQualityControlEntries",
-    "RelativePath": "api/QualityControlEntries",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "ControlEndPoint.Areas.Admin.Controllers.QualityControlEntriesController",
-    "Method": "AddQualityControlEntry",
-    "RelativePath": "api/QualityControlEntries",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "command",
-        "Type": "ControlService.ControlApplication.Services.QualityControlEntries.Commands.AddQualityControlEntry.AddQualityControlEntryCommand",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "ControlEndPoint.Areas.Admin.Controllers.QualityControlEntriesController",
-    "Method": "EditQualityControlEntry",
-    "RelativePath": "api/QualityControlEntries",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "dto",
-        "Type": "ControlService.ControlApplication.Services.UpdateQualityControlEntryDto",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "ControlEndPoint.Areas.Admin.Controllers.QualityControlEntriesController",
-    "Method": "DeleteQualityControlEntry",
-    "RelativePath": "api/QualityControlEntries",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "ControlEndPoint.Areas.Admin.Controllers.QualityControlEntriesController",
-    "Method": "GetQualityControlEntry",
-    "RelativePath": "api/QualityControlEntries/{id}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "ControlEndPoint.Areas.Admin.Controllers.QualityControlEntriesController",
-    "Method": "EditOrCreateQCEPartial",
-    "RelativePath": "api/QualityControlEntries/EditOrCreateQCEPartial",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "ControlEndPoint.Areas.Admin.Controllers.QualityControlEntriesController",
-    "Method": "UpdateQCEMachinesCategoriesByCompany",
-    "RelativePath": "api/QualityControlEntries/UpdateQCEMachinesCategoriesByCompany",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

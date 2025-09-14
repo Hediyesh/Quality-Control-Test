@@ -10,6 +10,7 @@ namespace ControlService.ControlApplication.Services
     {
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
-
+        public int? CompanyId { get; set; }
+        public string? CompanyName { get; set; }
     }
 }

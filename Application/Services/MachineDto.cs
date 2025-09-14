@@ -12,6 +12,7 @@ namespace ControlService.ControlApplication.Services
         public int MachineId { get; set; }
         public string MachineName { get; set; }
         public int CompanyId { get; set; }
+        public string? CompanyName { get; set; }
 
     }
 }
