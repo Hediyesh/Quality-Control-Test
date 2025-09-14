@@ -22,7 +22,7 @@ namespace ControlApplication.Services.TreeNodes.GetAllTreeNodes
             {
                 Id = 1,
                 Type = Types.Root,
-                Name = "Root",
+                Label = "Root",
             };
             var Companies = _db.Companies.ToList();
             foreach ( var company in Companies)
@@ -30,7 +30,7 @@ namespace ControlApplication.Services.TreeNodes.GetAllTreeNodes
                 var companyDto = new TreeNodeDto()
                 {
                     Id = company.CompanyId,
-                    Name = company.CompanyName,
+                    Label = company.CompanyName,
                     Type = Types.Company
                 };
                 root.Children.Add(companyDto);
@@ -41,7 +41,7 @@ namespace ControlApplication.Services.TreeNodes.GetAllTreeNodes
                     var machineDto = new TreeNodeDto()
                     {
                         Id = machine.MachineId,
-                        Name = machine.MachineName,
+                        Label = machine.MachineName,
                         Type = Types.Machine
                     };
                     companyDto.Children.Add(machineDto);
@@ -60,7 +60,7 @@ namespace ControlApplication.Services.TreeNodes.GetAllTreeNodes
                             var categoryDto = new TreeNodeDto()
                             {
                                 Id = category.CategoryId,
-                                Name = category.CategoryName,
+                                Label = category.CategoryName,
                                 Type = Types.Category
                             };
                             machineDto.Children.Add(categoryDto);
@@ -70,7 +70,7 @@ namespace ControlApplication.Services.TreeNodes.GetAllTreeNodes
                                 var productDto = new TreeNodeDto()
                                 {
                                     Id = product.ProductId,
-                                    Name = product.ProductName,
+                                    Label = product.ProductName,
                                     Type = Types.Product
                                 };
                                 categoryDto.Children.Add(productDto);

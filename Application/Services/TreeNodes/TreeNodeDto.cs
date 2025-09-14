@@ -10,7 +10,7 @@ namespace ControlApplication.Services.TreeNodes
     {
         public int Id { get; set; }
         public Types Type { get; set; }
-        public string Name { get; set; }
+        public string Label { get; set; }
         public List<TreeNodeDto> Children { get; set; } = new List<TreeNodeDto>();
     }
 }
