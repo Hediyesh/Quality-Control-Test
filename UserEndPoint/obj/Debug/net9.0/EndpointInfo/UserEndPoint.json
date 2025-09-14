@@ -34,16 +34,6 @@
             "description": "OK"
           }
         }
-      },
-      "get": {
-        "tags": [
-          "Login"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
       }
     }
   },

@@ -193,3 +193,4 @@ C:\Users\Os\source\repos\msControl\UserEndPoint\bin\Debug\net9.0\RabbitMQ.Client
 C:\Users\Os\source\repos\msControl\UserEndPoint\bin\Debug\net9.0\Contracts.dll
 C:\Users\Os\source\repos\msControl\UserEndPoint\bin\Debug\net9.0\Contracts.pdb
 C:\Users\Os\source\repos\msControl\UserEndPoint\obj\Debug\net9.0\UserEndPoint.sourcelink.json
+C:\Users\Os\source\repos\msControl\UserEndPoint\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt

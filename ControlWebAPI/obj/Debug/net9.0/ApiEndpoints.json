@@ -578,5 +578,15 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControlWebAPI.Controllers.TreeNodesController",
+    "Method": "GetAllTreeNodes",
+    "RelativePath": "api/TreeNodes",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
   }
 ]
