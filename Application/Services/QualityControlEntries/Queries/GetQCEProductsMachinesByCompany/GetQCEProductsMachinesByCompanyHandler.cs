@@ -28,7 +28,7 @@ namespace ControlService.ControlApplication.Services.QualityControlEntries.Queri
             var machines = _db.Machines.Where(w => w.CompanyId == company.CompanyId).Select(s=> new MachineDto
             {
                 CompanyId = s.CompanyId,
-                MachineId = s.MachineId,
+                Id = s.MachineId,
                 MachineName = s.MachineName,
             }).ToList();
             return Task.FromResult(new GetQCEProductsMachinesByCompanyDto

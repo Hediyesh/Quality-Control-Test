@@ -24,7 +24,7 @@ namespace ControlService.ControlPersistence.Contexts
         public DbSet<Category> Categories { get; set; }
         public DbSet<Batch> Batchs { get; set; }
         public DbSet<MLTools> MLTools { get; set; }
-
+        public DbSet<Feature> Features { get; set; }
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
             return base.SaveChanges(acceptAllChangesOnSuccess);
@@ -48,6 +48,56 @@ namespace ControlService.ControlPersistence.Contexts
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(BatchConfig).Assembly);
+
+            // کلید اصلی Features
+            modelBuilder.Entity<Feature>()
+                .HasKey(f => f.Id);
+            modelBuilder.Entity<Feature>()
+                .Property(f => f.Label)
+                    .HasMaxLength(450)
+                    .IsRequired();
+            modelBuilder.Entity<Feature>()
+                .Property(f => f.Node)
+                    .HasColumnType("hierarchyid")
+                    .IsRequired();
+            modelBuilder.Entity<Feature>()
+                .Property(f => f.NodeId)
+                    .IsRequired(false);
+            modelBuilder.Entity<Feature>()
+            .HasIndex(f => new { f.NodeId, f.Type })
+            .IsUnique();
+            //        modelBuilder.Entity<Feature>()
+            //.HasIndex(f => new { f.NodeId, f.Type, f.ParentId }) // ParentId = Feature.Id والد
+            //.IsUnique();
+
+            //// Products → Features (nullable)
+            //modelBuilder.Entity<Product>()
+            //    .HasOne(p => p.Feature)
+            //    .WithMany()
+            //    .HasForeignKey(p => p.FeatureId)
+            //    .OnDelete(DeleteBehavior.Restrict);
+
+            //// Companies → Features (nullable)
+            //modelBuilder.Entity<Company>()
+            //    .HasOne(p => p.Feature)
+            //    .WithMany()
+            //    .HasForeignKey(p => p.FeatureId)
+            //    .OnDelete(DeleteBehavior.Restrict);
+
+            //// Categories → Features (nullable)
+            //modelBuilder.Entity<Category>()
+            //    .HasOne(p => p.Feature)
+            //    .WithMany()
+            //    .HasForeignKey(p => p.FeatureId)
+            //    .OnDelete(DeleteBehavior.Restrict);
+
+            //// Machines → Features (nullable)
+            //modelBuilder.Entity<Machine>()
+            //    .HasOne(m => m.Feature)
+            //    .WithMany()
+            //    .HasForeignKey(m => m.FeatureId)
+            //    .OnDelete(DeleteBehavior.Restrict);
+
 
             // Many-to-many Machine <-> Product
             modelBuilder.Entity<Machine>()

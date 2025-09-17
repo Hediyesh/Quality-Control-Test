@@ -8,7 +8,7 @@ namespace ControlService.ControlApplication.Services
 {
     public class CategoryDto
     {
-        public int CategoryId { get; set; }
+        public int Id { get; set; }
         public string CategoryName { get; set; }
         public int? CompanyId { get; set; }
         public string? CompanyName { get; set; }

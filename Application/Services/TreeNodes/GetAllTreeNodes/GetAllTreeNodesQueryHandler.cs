@@ -1,4 +1,5 @@
-﻿using ControlService.ControlApplication.Interfaces.Contexts;
+﻿using ControlDomain.Entities;
+using ControlService.ControlApplication.Interfaces.Contexts;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;

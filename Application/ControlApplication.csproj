@@ -20,4 +20,15 @@
     <ProjectReference Include="..\Domain\ControlDomain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\Features\Commands\AddFeature\AddCompanyFeature\" />
+    <Folder Include="Services\Features\Commands\AddFeature\AddCategoryFeature\" />
+    <Folder Include="Services\Features\Commands\AddFeature\AddProductFeature\" />
+    <Folder Include="Services\Features\Commands\AddFeature\AddMachineFeature\" />
+    <Folder Include="Services\Features\Commands\EditFeature\EditCategoryFeature\" />
+    <Folder Include="Services\Features\Commands\EditFeature\EditCompanyFeature\" />
+    <Folder Include="Services\Features\Commands\EditFeature\EditMachineFeature\" />
+    <Folder Include="Services\Features\Commands\EditFeature\EditProductFeature\" />
+  </ItemGroup>
+
 </Project>

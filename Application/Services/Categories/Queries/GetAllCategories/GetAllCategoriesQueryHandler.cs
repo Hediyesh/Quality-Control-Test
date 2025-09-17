@@ -21,11 +21,11 @@ namespace ControlApplication.Services.Categories.Queries.GetAllCategories
         {
             return Task.FromResult(_db.Categories.Select(x=> new CategoryDto()
             {
-                CategoryId = x.CategoryId,
+                Id = x.CategoryId,
                 CategoryName = x.CategoryName,
                 CompanyId = x.CompanyId,
                 CompanyName = x.Company.CompanyName,
-            }).OrderByDescending(x=> x.CategoryId).ToList());
+            }).OrderByDescending(x=> x.Id).ToList());
         }
     }
 }

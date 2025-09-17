@@ -33,7 +33,7 @@ namespace ControlService.ControlApplication.Services.Products.Queries.GetAllProd
             foreach (var product in products)
             {
                 GetProductsDto dtop = new GetProductsDto();
-                dtop.ProductId = product.ProductId;
+                dtop.Id = product.ProductId;
                 dtop.ProductName = product.ProductName;
                 dtop.CategoryName = _db.Categories.Where(w => w.CategoryId == product.CategoryId).Single().CategoryName;
                 dtop.CompanyName = _db.Companies.Where(w => w.CompanyId == product.CompanyId).Single().CompanyName;

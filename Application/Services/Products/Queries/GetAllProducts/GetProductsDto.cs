@@ -10,7 +10,7 @@ namespace ControlService.ControlApplication.Services.Products.Queries.GetAllProd
 {
     public class GetProductsDto
     {
-        public int ProductId { get; set; }
+        public int Id { get; set; }
         public string ProductName { get; set; }
         public string? CompanyName { get; set; }
         public int CompanyId { get; set; }

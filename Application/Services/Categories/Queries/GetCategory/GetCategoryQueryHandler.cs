@@ -21,7 +21,7 @@ namespace ControlApplication.Services.Categories.Queries.GetCategory
         {
             var cat = _db.Categories.Where(w => w.CategoryId == request.Id).Select(x => new CategoryDto()
             {
-                CategoryId = x.CategoryId,
+                Id = x.CategoryId,
                 CategoryName = x.CategoryName,
                 CompanyId = x.CompanyId,
                 CompanyName = x.Company.CompanyName,

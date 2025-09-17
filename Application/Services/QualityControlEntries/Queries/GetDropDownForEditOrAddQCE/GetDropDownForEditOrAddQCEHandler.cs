@@ -26,14 +26,14 @@ namespace ControlService.ControlApplication.Services.QualityControlEntries.Queri
             dto.Batches = _db.Batchs.Select(s=> new BatchDto { BatchId = s.BatchId, BatchNumber = s.BatchNumber}).ToList();
             dto.Companies = _db.Companies.Select(s=> new CompanyDto { 
                 Address = s.Address,
-                CompanyId = s.CompanyId,
+                Id = s.CompanyId,
                 CompanyName = s.CompanyName,
                 Email = s.Email,
                 PhoneNumber = s.PhoneNumber
             }).ToList();
             dto.Severities = _db.Severities.Select(s=> new SeverityDto { SeverityId = s.SeverityId, SeverityDescription = s.SeverityDescription}).ToList();
             dto.Defects = _db.Defects.Select(s=> new DefectDto { DefectId = s.DefectId, DefectType = s.DefectType}).ToList();
-            dto.Machines = _db.Machines.Select(s=> new MachineDto { CompanyId = s.CompanyId, MachineId = s.MachineId, MachineName = s.MachineName}).ToList();
+            dto.Machines = _db.Machines.Select(s=> new MachineDto { CompanyId = s.CompanyId, Id = s.MachineId, MachineName = s.MachineName}).ToList();
             dto.Persons = new List<PersonDto> { };// * _db.Persons.Select(s=> new PersonDto { FirstName = s.FirstName, LastName = s.LastName, PersonId = s.PersonId}).ToList();
             dto.Products = _db.Products.Select(s=> new ProductDto {
                 CompanyId = s.CompanyId,

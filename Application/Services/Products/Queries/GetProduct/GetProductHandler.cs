@@ -28,7 +28,7 @@ namespace ControlService.ControlApplication.Services.Products.Queries.GetProduct
             }
             return Task.FromResult(new GetProductsDto
             {
-                ProductId = product.ProductId,
+                Id = product.ProductId,
                 CategoryId = product.CategoryId,
                 CategoryName = _db.Categories.Where(w => w.CategoryId == product.CategoryId).Single().CategoryName,
                 CompanyId = product.CompanyId,

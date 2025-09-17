@@ -22,6 +22,36 @@ namespace ControlPersistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("ControlDomain.Entities.Feature", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Label")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<byte[]>("Node")
+                        .IsRequired()
+                        .HasColumnType("hierarchyid");
+
+                    b.Property<int?>("NodeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NodeId", "Type")
+                        .IsUnique()
+                        .HasFilter("[NodeId] IS NOT NULL");
+
+                    b.ToTable("Features");
+                });
+
             modelBuilder.Entity("ControlDomain.Entities.MLTools", b =>
                 {
                     b.Property<int>("Id")
@@ -80,9 +110,16 @@ namespace ControlPersistence.Migrations
                     b.Property<int>("CompanyId")
                         .HasColumnType("int");
 
+                    b.Property<Guid?>("FeatureId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("CategoryId");
 
                     b.HasIndex("CompanyId");
+
+                    b.HasIndex("FeatureId")
+                        .IsUnique()
+                        .HasFilter("[FeatureId] IS NOT NULL");
 
                     b.ToTable("Categories");
                 });
@@ -110,12 +147,19 @@ namespace ControlPersistence.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
+                    b.Property<Guid?>("FeatureId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
                     b.HasKey("CompanyId");
+
+                    b.HasIndex("FeatureId")
+                        .IsUnique()
+                        .HasFilter("[FeatureId] IS NOT NULL");
 
                     b.ToTable("Companies");
                 });
@@ -149,6 +193,9 @@ namespace ControlPersistence.Migrations
                     b.Property<int>("CompanyId")
                         .HasColumnType("int");
 
+                    b.Property<Guid?>("FeatureId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("MachineName")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -157,6 +204,10 @@ namespace ControlPersistence.Migrations
                     b.HasKey("MachineId");
 
                     b.HasIndex("CompanyId");
+
+                    b.HasIndex("FeatureId")
+                        .IsUnique()
+                        .HasFilter("[FeatureId] IS NOT NULL");
 
                     b.ToTable("Machines");
                 });
@@ -276,6 +327,9 @@ namespace ControlPersistence.Migrations
                     b.Property<int>("CompanyId")
                         .HasColumnType("int");
 
+                    b.Property<Guid?>("FeatureId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("ProductName")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -289,6 +343,10 @@ namespace ControlPersistence.Migrations
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("CompanyId");
+
+                    b.HasIndex("FeatureId")
+                        .IsUnique()
+                        .HasFilter("[FeatureId] IS NOT NULL");
 
                     b.ToTable("Products");
                 });
@@ -445,7 +503,22 @@ namespace ControlPersistence.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("ControlDomain.Entities.Feature", "Feature")
+                        .WithOne("Category")
+                        .HasForeignKey("ControlService.ControlDomain.Entities.Category", "FeatureId");
+
                     b.Navigation("Company");
+
+                    b.Navigation("Feature");
+                });
+
+            modelBuilder.Entity("ControlService.ControlDomain.Entities.Company", b =>
+                {
+                    b.HasOne("ControlDomain.Entities.Feature", "Feature")
+                        .WithOne("Company")
+                        .HasForeignKey("ControlService.ControlDomain.Entities.Company", "FeatureId");
+
+                    b.Navigation("Feature");
                 });
 
             modelBuilder.Entity("ControlService.ControlDomain.Entities.Machine", b =>
@@ -456,7 +529,13 @@ namespace ControlPersistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ControlDomain.Entities.Feature", "Feature")
+                        .WithOne("Machine")
+                        .HasForeignKey("ControlService.ControlDomain.Entities.Machine", "FeatureId");
+
                     b.Navigation("Company");
+
+                    b.Navigation("Feature");
                 });
 
             modelBuilder.Entity("ControlService.ControlDomain.Entities.MaintenanceLog", b =>
@@ -520,9 +599,15 @@ namespace ControlPersistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ControlDomain.Entities.Feature", "Feature")
+                        .WithOne("Product")
+                        .HasForeignKey("ControlService.ControlDomain.Entities.Product", "FeatureId");
+
                     b.Navigation("Category");
 
                     b.Navigation("Company");
+
+                    b.Navigation("Feature");
                 });
 
             modelBuilder.Entity("ControlService.ControlDomain.Entities.QualityControlEntry", b =>
@@ -623,6 +708,17 @@ namespace ControlPersistence.Migrations
                         .HasForeignKey("ToolId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ControlDomain.Entities.Feature", b =>
+                {
+                    b.Navigation("Category");
+
+                    b.Navigation("Company");
+
+                    b.Navigation("Machine");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("ControlService.ControlDomain.Entities.Batch", b =>

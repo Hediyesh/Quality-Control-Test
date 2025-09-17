@@ -22,7 +22,7 @@ namespace ControlApplication.Services.Machines.Queries.GetMachine
         {
             var machine = _db.Machines.Where(w => w.MachineId == request.Id).Select(x => new MachineDto()
             {
-                MachineId = x.MachineId,
+                Id = x.MachineId,
                 MachineName = x.MachineName,
                 CompanyId = x.CompanyId,
                 CompanyName = x.Company.CompanyName,

@@ -23,10 +23,10 @@ namespace ControlApplication.Services.Machines.Queries.GetAllMachines
             return Task.FromResult(_db.Machines.Select(x => new MachineDto()
             {
                 MachineName = x.MachineName,
-                MachineId = x.MachineId,
+                Id = x.MachineId,
                 CompanyId = x.CompanyId,
                 CompanyName = x.Company.CompanyName,
-            }).OrderByDescending(x => x.MachineId).ToList());
+            }).OrderByDescending(x => x.Id).ToList());
         }
     }
 }

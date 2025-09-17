@@ -9,7 +9,7 @@ namespace ControlService.ControlApplication.Services
 {
     public class MachineDto
     {
-        public int MachineId { get; set; }
+        public int Id { get; set; }
         public string MachineName { get; set; }
         public int CompanyId { get; set; }
         public string? CompanyName { get; set; }

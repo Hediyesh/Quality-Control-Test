@@ -100,7 +100,7 @@ namespace ControlEndPoint.Areas.Admin.Controllers
             return Ok(new
             {
                 products = data.Products?.Select(c => new { productId = c.ProductId, productName = c.ProductName }),
-                machines = data.Machines?.Select(m => new { machineId = m.MachineId, machineName = m.MachineName })
+                machines = data.Machines?.Select(m => new { machineId = m.Id, machineName = m.MachineName })
             });
         }
         [HttpGet("DailyCounts")]

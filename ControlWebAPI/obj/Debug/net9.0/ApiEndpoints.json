@@ -279,6 +279,68 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "ControlWebAPI.Controllers.FeatureController",
+    "Method": "GetAllFeatures",
+    "RelativePath": "api/Feature",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControlWebAPI.Controllers.FeatureController",
+    "Method": "DeleteFeature",
+    "RelativePath": "api/Feature",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "NodeId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "Type",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControlWebAPI.Controllers.FeatureController",
+    "Method": "GetFeature",
+    "RelativePath": "api/Feature/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControlWebAPI.Controllers.FeatureController",
+    "Method": "GetAllFeaturesTree",
+    "RelativePath": "api/Feature/GetAllFeaturesTree",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "ControlWebAPI.Controllers.MachinesController",
     "Method": "GetAllMachines",
     "RelativePath": "api/Machines",

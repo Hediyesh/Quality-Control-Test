@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ControlDomain.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace ControlService.ControlDomain.Entities
 {
@@ -10,5 +11,7 @@ namespace ControlService.ControlDomain.Entities
         public ICollection<Product> Products { get; set; }
         public int CompanyId { get; set; }
         public Company Company { get; set; }
+        public Guid? FeatureId { get; set; }
+        public Feature? Feature { get; set; }
     }
 }

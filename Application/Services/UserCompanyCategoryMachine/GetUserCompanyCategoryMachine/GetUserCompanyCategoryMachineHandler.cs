@@ -41,7 +41,7 @@ namespace ControlService.ControlApplication.Services.UserCompanyCategoryMachine.
                     CategoryName = product.Category.CategoryName,
                     CompanyId = product.CompanyId,
                     CompanyName = product.Company.CompanyName,
-                    ProductId = product.ProductId,
+                    Id = product.ProductId,
                     ProductName = product.ProductName,
                     Machines = product.Machines?.Select(s => new GetProductMachineDto { id = s.MachineId, Name = s.MachineName }).ToList(),
                 };
@@ -55,14 +55,14 @@ namespace ControlService.ControlApplication.Services.UserCompanyCategoryMachine.
             {
                 result.companies = _db.Companies.Select(s => new CompanyDto
                 {
-                    CompanyId = s.CompanyId,
+                    Id = s.CompanyId,
                     CompanyName = s.CompanyName,
                     Address = s.Address,
                     Email = s.Email,
                     PhoneNumber = s.PhoneNumber
                 }).ToList();
                 result.machines = _db.Machines.Select(s => new GetProductMachineDto { id = s.MachineId, Name = s.MachineName }).ToList();
-                result.categories = _db.Categories.Select(s => new CategoryDto { CategoryId = s.CategoryId, CategoryName = s.CategoryName }).ToList();
+                result.categories = _db.Categories.Select(s => new CategoryDto { Id = s.CategoryId, CategoryName = s.CategoryName }).ToList();
             }
             else
             {
@@ -73,7 +73,7 @@ namespace ControlService.ControlApplication.Services.UserCompanyCategoryMachine.
                 }).ToList();
                 result.categories = _db.Categories.Where(m => m.CompanyId == result.CompanyId).Select(s => new CategoryDto
                 {
-                    CategoryId = s.CategoryId,
+                    Id = s.CategoryId,
                     CategoryName = s.CategoryName
                 }).ToList();
                 result.companies = null;

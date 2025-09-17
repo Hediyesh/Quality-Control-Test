@@ -18,6 +18,7 @@ namespace ControlService.ControlApplication.Interfaces.Contexts
         DbSet<Category> Categories { get; set; }
         DbSet<Batch> Batchs { get; set; }
         DbSet<MLTools> MLTools { get; set; }
+        DbSet<Feature> Features { get; set; }
         int SaveChanges(bool acceptAllChangesOnSuccess);
         int SaveChanges();
         Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = new CancellationToken());

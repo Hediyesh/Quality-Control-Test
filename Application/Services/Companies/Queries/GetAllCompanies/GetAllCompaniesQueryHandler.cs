@@ -23,11 +23,11 @@ namespace ControlApplication.Services.Companies.Queries.GetAllCompanies
             var companies = _db.Companies.Select(x=> new CompanyDto
             {
                 Address = x.Address,
-                CompanyId = x.CompanyId,
+                Id = x.CompanyId,
                 CompanyName = x.CompanyName,
                 Email = x.Email,
                 PhoneNumber = x.PhoneNumber,
-            }).OrderByDescending(x => x.CompanyId).ToList();
+            }).OrderByDescending(x => x.Id).ToList();
             return Task.FromResult(companies);
         }
     }

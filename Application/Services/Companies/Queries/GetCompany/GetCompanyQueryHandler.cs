@@ -25,7 +25,7 @@ namespace ControlApplication.Services.Companies.Queries.GetCompany
                 return Task.FromResult(new CompanyDto());
             return Task.FromResult(new CompanyDto()
             {
-                CompanyId = company.CompanyId,
+                Id = company.CompanyId,
                 CompanyName = company.CompanyName,
                 Address = company.Address,
                 Email = company.Email,

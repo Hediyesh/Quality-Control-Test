@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ControlApplication.Services.TreeNodes
+namespace ControlDomain.Entities
 {
     public enum Types
     {

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ControlDomain.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace ControlService.ControlDomain.Entities
 {
@@ -20,5 +21,7 @@ namespace ControlService.ControlDomain.Entities
 
         // Navigation property
         public Category Category { get; set; }
+        public Guid? FeatureId { get; set; }
+        public Feature? Feature { get; set; }
     }
 }

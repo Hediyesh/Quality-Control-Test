@@ -12,6 +12,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{C316B2A9-68D7-48C6-9C24-3E7A87F5CB6E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{86647586-87AF-428D-AC48-39282A1C5EB7}"
+	ProjectSection(SolutionItems) = preProject
+		Application\Services\Types.cs = Application\Services\Types.cs
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{63E126A5-0D6B-43D5-B283-3D3A8D7C3FB3}"
 EndProject
