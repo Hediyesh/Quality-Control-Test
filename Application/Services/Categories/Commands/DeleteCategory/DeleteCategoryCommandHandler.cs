@@ -24,11 +24,21 @@ namespace ControlApplication.Services.Categories.Commands.DeleteCategory
             if (cat == null)
                 return ResultDto.Fail("چنین گروهی وجود ندارد");
             var products = await _db.Products.Where(w=> w.CategoryId == request.Id).ToListAsync();
-            if (products.Count > 0)
-                return ResultDto.Fail("این گروه به علت داشتن اطلاعات در جداول دیگر نمی تواند حذف شود");
+            //if (products.Count > 0)
+            //    return ResultDto.Fail("این گروه به علت داشتن اطلاعات در جداول دیگر نمی تواند حذف شود");
             _db.Categories.Remove(cat);
-            await _db.SaveChangesAsync(cancellationToken);
-            return ResultDto.Success("اطلاعات با موفقیت حذف شد");
+            try
+            {
+                await _db.SaveChangesAsync(cancellationToken);
+                return ResultDto.Success("اطلاعات با موفقیت حذف شد");
+            }
+            catch (DbUpdateException ex)
+            {
+                var message = ex.InnerException?.Message ?? ex.Message;
+                return ResultDto.Fail(message);
+            }
+            //await _db.SaveChangesAsync(cancellationToken);
+            //return ResultDto.Success("اطلاعات با موفقیت حذف شد");
         }
     }
 }

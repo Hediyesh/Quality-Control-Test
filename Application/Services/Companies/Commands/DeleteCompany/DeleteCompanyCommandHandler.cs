@@ -23,16 +23,26 @@ namespace ControlApplication.Services.Companies.Commands.DeleteCompany
             var company = await _db.Companies.Where(w => w.CompanyId == request.Id).FirstOrDefaultAsync();
             if (company == null)
                 return ResultDto.Fail("چنین شرکتی وجود ندارد");
-            var products = await _db.Products.Where(w=> w.CompanyId == request.Id).ToListAsync();
-            var logs = await _db.MaintenanceLogs.Where(w => w.CompanyId == request.Id).ToListAsync();
-            var categories = await _db.Categories.Where(w => w.CompanyId == request.Id).ToListAsync();
-            var qces = await _db.QualityControlEntries.Where(w => w.CompanyId == request.Id).ToListAsync();
-            var machines = await _db.Machines.Where(w => w.CompanyId == request.Id).ToListAsync();
-            if (products.Count > 0 || logs.Count > 0 || categories.Count > 0 || qces.Count > 0 || machines.Count > 0)
-                return ResultDto.Fail("این شرکت به علت داشتن اطلاعات در جداول دیگر نمی تواند حذف شود");
+            //var products = await _db.Products.Where(w=> w.CompanyId == request.Id).ToListAsync();
+            //var logs = await _db.MaintenanceLogs.Where(w => w.CompanyId == request.Id).ToListAsync();
+            //var categories = await _db.Categories.Where(w => w.CompanyId == request.Id).ToListAsync();
+            //var qces = await _db.QualityControlEntries.Where(w => w.CompanyId == request.Id).ToListAsync();
+            //var machines = await _db.Machines.Where(w => w.CompanyId == request.Id).ToListAsync();
+            //if (products.Count > 0 || logs.Count > 0 || categories.Count > 0 || qces.Count > 0 || machines.Count > 0)
+            //    return ResultDto.Fail("این شرکت به علت داشتن اطلاعات در جداول دیگر نمی تواند حذف شود");
             _db.Companies.Remove(company);
-            await _db.SaveChangesAsync(cancellationToken);
-            return ResultDto.Success("اطلاعات با موفقیت حذف شد");
+            try
+            {
+                await _db.SaveChangesAsync(cancellationToken);
+                return ResultDto.Success("اطلاعات با موفقیت حذف شد");
+            }
+            catch (DbUpdateException ex)
+            {
+                var message = ex.InnerException?.Message ?? ex.Message;
+                return ResultDto.Fail(message);
+            }
+            //await _db.SaveChangesAsync(cancellationToken);
+            //return ResultDto.Success("اطلاعات با موفقیت حذف شد");
         }
     }
 }

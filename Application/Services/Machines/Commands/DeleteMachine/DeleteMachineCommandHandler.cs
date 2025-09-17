@@ -24,13 +24,23 @@ namespace ControlApplication.Services.Machines.Commands.DeleteMachine
             var machine = await _db.Machines.Where(w => w.MachineId == request.Id).FirstOrDefaultAsync();
             if (machine == null)
                 return ResultDto.Fail("چنین دستگاهی وجود ندارد");
-            var logs = await _db.MaintenanceLogs.Where(w => w.MachineId == request.Id).ToListAsync();
-            var qces = await _db.QualityControlEntries.Where(w => w.MachineId == request.Id).ToListAsync();
-            if (logs.Count > 0 || qces.Count > 0)
-                return ResultDto.Fail("این دستگاه به علت داشتن اطلاعات در جداول دیگر نمی تواند حذف شود");
+            //var logs = await _db.MaintenanceLogs.Where(w => w.MachineId == request.Id).ToListAsync();
+            //var qces = await _db.QualityControlEntries.Where(w => w.MachineId == request.Id).ToListAsync();
+            //if (logs.Count > 0 || qces.Count > 0)
+            //    return ResultDto.Fail("این دستگاه به علت داشتن اطلاعات در جداول دیگر نمی تواند حذف شود");
             _db.Machines.Remove(machine);
-            await _db.SaveChangesAsync(cancellationToken);
-            return ResultDto.Success("اطلاعات با موفقیت حذف شد");
+            try
+            {
+                await _db.SaveChangesAsync(cancellationToken);
+                return ResultDto.Success("اطلاعات با موفقیت حذف شد");
+            }
+            catch (DbUpdateException ex)
+            {
+                var message = ex.InnerException?.Message ?? ex.Message;
+                return ResultDto.Fail(message);
+            }
+            //await _db.SaveChangesAsync(cancellationToken);
+            //return ResultDto.Success("اطلاعات با موفقیت حذف شد");
         }
     }
 }

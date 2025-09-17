@@ -29,10 +29,19 @@ namespace ControlService.ControlApplication.Services.Products.Commands.DeletePro
 
             product.Machines?.Clear(); // پاک کردن ارتباط‌ها
             _db.Products.Remove(product);
+            try
+            {
+                await _db.SaveChangesAsync(cancellationToken);
+                return ResultDto.Success("اطلاعات با موفقیت حذف شد");
+            }
+            catch (DbUpdateException ex)
+            {
+                var message = ex.InnerException?.Message ?? ex.Message;
+                return ResultDto.Fail(message);
+            }
+            //await _db.SaveChangesAsync(cancellationToken);
 
-            await _db.SaveChangesAsync(cancellationToken);
-
-            return ResultDto.Success("محصول با موفقیت حذف شد.");
+            //return ResultDto.Success("محصول با موفقیت حذف شد.");
         }
     }
 
