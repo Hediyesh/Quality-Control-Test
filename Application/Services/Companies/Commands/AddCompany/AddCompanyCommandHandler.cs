@@ -41,7 +41,8 @@ namespace ControlApplication.Services.Companies.Commands.AddCompany
             };
             await _db.Companies.AddAsync(company);
             await _db.SaveChangesAsync();
-            return ResultDto.Success("اطلاعات با موفقیت ثبت شد");
+            return ResultDto.Success("اطلاعات با موفقیت ثبت شد", companyDto : new CompanyDto() { PhoneNumber = company.PhoneNumber,
+            Id = company.CompanyId, Address = company.Address, CompanyName = company.CompanyName, Email = company.Email});
         }
     }
 }

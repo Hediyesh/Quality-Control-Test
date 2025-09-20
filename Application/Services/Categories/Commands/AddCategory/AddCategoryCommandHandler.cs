@@ -36,7 +36,12 @@ namespace ControlApplication.Services.Categories.Commands.AddCategory
             };
             await _db.Categories.AddAsync(cat);
             await _db.SaveChangesAsync();
-            return ResultDto.Success("اطلاعات با موفقیت ثبت شد");
+            return ResultDto.Success("اطلاعات با موفقیت ثبت شد", categoryDto: new CategoryDto
+            {
+                Id = cat.CategoryId,
+                CategoryName = cat.CategoryName,
+                CompanyId = cat.CompanyId
+            });
         }
     }
 }

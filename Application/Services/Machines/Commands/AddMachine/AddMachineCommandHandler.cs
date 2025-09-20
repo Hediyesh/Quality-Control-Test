@@ -37,7 +37,13 @@ namespace ControlApplication.Services.Machines.Commands.AddMachine
             };
             await _db.Machines.AddAsync(machine);
             await _db.SaveChangesAsync();
-            return ResultDto.Success("اطلاعات با موفقیت ثبت شد");
+            return ResultDto.Success("اطلاعات با موفقیت ثبت شد", machineDto: new MachineDto()
+            {
+                MachineName = machine.MachineName, 
+                CompanyId = machine.CompanyId,
+                Id = request.CompanyId,
+                CompanyName = company.CompanyName,
+            });
         }
     }
 }

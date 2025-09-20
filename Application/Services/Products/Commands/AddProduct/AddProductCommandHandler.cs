@@ -60,7 +60,13 @@ namespace ControlService.ControlApplication.Services.Products.Commands.AddProduc
             await _db.Products.AddAsync(product, cancellationToken);
             await _db.SaveChangesAsync(cancellationToken);
 
-            return ResultDto.Success("محصول با موفقیت افزوده شد.");
+            return ResultDto.Success("محصول با موفقیت افزوده شد.", productDto: new ProductDto()
+            {
+                CompanyId = product.CompanyId,
+                CategoryId= product.CategoryId,
+                ProductId = product.ProductId,
+                ProductName = product.ProductName,
+            });
         }
     }
 }
