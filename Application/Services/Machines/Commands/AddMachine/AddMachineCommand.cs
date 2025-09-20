@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ControlApplication.Services.Machines.Commands.AddMachine
 {
-    public class AddMachineCommand : IRequest<ResultDto>
+    public class AddMachineCommand : IRequest<MachineDto>
     {
         public string MachineName { get; set; }
         public int CompanyId { get; set; }

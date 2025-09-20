@@ -12,5 +12,6 @@ namespace ControlService.ControlApplication.Services
         public string CategoryName { get; set; }
         public int? CompanyId { get; set; }
         public string? CompanyName { get; set; }
+        public string? resultMessage { get; set; }
     }
 }

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ControlApplication.Services.Companies.Commands.AddCompany
 {
-    public class AddCompanyCommandHandler : IRequestHandler<AddCompanyCommand, ResultDto>
+    public class AddCompanyCommandHandler : IRequestHandler<AddCompanyCommand, CompanyDto>
     {
         private readonly IDataBaseContext _db;
         public AddCompanyCommandHandler(IDataBaseContext db)
@@ -19,19 +19,19 @@ namespace ControlApplication.Services.Companies.Commands.AddCompany
             _db = db;
         }
 
-        public async Task<ResultDto> Handle(AddCompanyCommand request, CancellationToken cancellationToken)
+        public async Task<CompanyDto> Handle(AddCompanyCommand request, CancellationToken cancellationToken)
         {
             if (string.IsNullOrEmpty(request.CompanyName))
-                return ResultDto.Fail("لطفا نام شرکت را وارد کنید");
+                return new CompanyDto { resultMessage = "لطفا نام شرکت را وارد کنید" };
             if (string.IsNullOrEmpty(request.PhoneNumber))
-                return ResultDto.Fail("لطفا شماره تلفن شرکت را وارد کنید");
+                return new CompanyDto { resultMessage = "لطفا شماره تلفن شرکت را وارد کنید" };
             if (string.IsNullOrEmpty(request.Email))
-                return ResultDto.Fail("لطفا ایمیل شرکت را وارد کنید");
+                return new CompanyDto { resultMessage = "لطفا ایمیل شرکت را وارد کنید" };
             if (string.IsNullOrEmpty(request.Address))
-                return ResultDto.Fail("لطفا آدرس شرکت را وارد کنید");
+                return new CompanyDto { resultMessage = "لطفا آدرس شرکت را وارد کنید" };
             var companyname = await _db.Companies.Where(w => w.CompanyName == request.CompanyName).FirstOrDefaultAsync();
             if (companyname != null)
-                return ResultDto.Fail("نام شرکت تکراری است");
+                return new CompanyDto { resultMessage = "نام شرکت تکراری است" };
             var company = new Company()
             {
                 Address = request.Address,
@@ -41,8 +41,18 @@ namespace ControlApplication.Services.Companies.Commands.AddCompany
             };
             await _db.Companies.AddAsync(company);
             await _db.SaveChangesAsync();
-            return ResultDto.Success("اطلاعات با موفقیت ثبت شد", companyDto : new CompanyDto() { PhoneNumber = company.PhoneNumber,
-            Id = company.CompanyId, Address = company.Address, CompanyName = company.CompanyName, Email = company.Email});
+            var companydto = new CompanyDto
+            {
+                resultMessage = "اطلاعات با موفقیت ثبت شد",
+                CompanyName = request.CompanyName,
+                Email = request.Email,
+                PhoneNumber = request.PhoneNumber,
+                Address = request.Address,
+                Id = company.CompanyId,
+            };
+            return companydto;
+            //return ResultDto.Success("", companyDto : new CompanyDto() { PhoneNumber = company.PhoneNumber,
+            //Id = company.CompanyId, Address = company.Address, CompanyName = company.CompanyName, Email = company.Email});
         }
     }
 }

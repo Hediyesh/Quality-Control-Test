@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ControlApplication.Services.Categories.Commands.AddCategory
 {
-    public class AddCategoryCommandHandler : IRequestHandler<AddCategoryCommand, ResultDto>
+    public class AddCategoryCommandHandler : IRequestHandler<AddCategoryCommand, CategoryDto>
     {
         private readonly IDataBaseContext _db;
         public AddCategoryCommandHandler(IDataBaseContext db)
@@ -19,16 +19,16 @@ namespace ControlApplication.Services.Categories.Commands.AddCategory
             _db = db;
         }
 
-        public async Task<ResultDto> Handle(AddCategoryCommand request, CancellationToken cancellationToken)
+        public async Task<CategoryDto> Handle(AddCategoryCommand request, CancellationToken cancellationToken)
         {
             if (string.IsNullOrEmpty(request.CategoryName))
-                return ResultDto.Fail("لطفا نام گروه را مشخص کنید");
+                return new CategoryDto() { resultMessage = "لطفا نام گروه را مشخص کنید" };
             var company = await _db.Companies.Where(w => w.CompanyId == request.CompanyId).FirstOrDefaultAsync();
             if (company == null)
-                return ResultDto.Fail("لطفا شرکت را انتخاب کنید");
+                return new CategoryDto { resultMessage = "لطفا شرکت را انتخاب کنید" };
             var oldCat = await _db.Categories.Where(w=> w.CompanyId == request.CompanyId && w.CategoryName == request.CategoryName).FirstOrDefaultAsync();
             if (oldCat != null)
-                return ResultDto.Fail("این گروه از قبل در این شرکت اضافه شده است");
+                return new CategoryDto() { resultMessage= "این گروه از قبل در این شرکت اضافه شده است" };
             var cat = new Category()
             {
                 CategoryName = request.CategoryName,
@@ -36,12 +36,20 @@ namespace ControlApplication.Services.Categories.Commands.AddCategory
             };
             await _db.Categories.AddAsync(cat);
             await _db.SaveChangesAsync();
-            return ResultDto.Success("اطلاعات با موفقیت ثبت شد", categoryDto: new CategoryDto
+            var categorydto = new CategoryDto()
             {
-                Id = cat.CategoryId,
+                resultMessage = "اطلاعات با موفقیت ثبت شد",
                 CategoryName = cat.CategoryName,
-                CompanyId = cat.CompanyId
-            });
+                CompanyId = cat.CompanyId,
+                Id = cat.CategoryId
+            };
+            return categorydto;
+            //return ResultDto.Success("اطلاعات با موفقیت ثبت شد", categoryDto: new CategoryDto
+            //{
+            //    Id = cat.CategoryId,
+            //    CategoryName = cat.CategoryName,
+            //    CompanyId = cat.CompanyId
+            //});
         }
     }
 }

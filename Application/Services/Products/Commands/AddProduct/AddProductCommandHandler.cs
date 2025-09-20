@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ControlService.ControlApplication.Services.Products.Commands.AddProduct
 {
-    public class AddProductCommandHandler : IRequestHandler<AddProductCommand, ResultDto>
+    public class AddProductCommandHandler : IRequestHandler<AddProductCommand, ProductDto>
     {
         private readonly IDataBaseContext _db;
         public AddProductCommandHandler(IDataBaseContext db)
@@ -18,25 +18,25 @@ namespace ControlService.ControlApplication.Services.Products.Commands.AddProduc
             _db = db;
         }
 
-        public async Task<ResultDto> Handle(AddProductCommand request, CancellationToken cancellationToken)
+        public async Task<ProductDto> Handle(AddProductCommand request, CancellationToken cancellationToken)
         {
             if (string.IsNullOrWhiteSpace(request.ProductName))
-                return ResultDto.Fail("لطفا نام محصول را وارد کنید.");
+                return new ProductDto { resultMessage= "لطفا نام محصول را وارد کنید." };
 
             if (request.CategoryId == 0)
-                return ResultDto.Fail("لطفا دسته‌بندی را انتخاب کنید.");
+                return new ProductDto { resultMessage= "لطفا دسته‌بندی را انتخاب کنید." };
 
             if (request.CompanyId == 0)
-                return ResultDto.Fail("لطفا شرکت را انتخاب کنید.");
+                return new ProductDto { resultMessage = "لطفا شرکت را انتخاب کنید." };
 
             if (_db.Products.Any(s => s.ProductName == request.ProductName))
-                return ResultDto.Fail("نام وارد شده تکراری می‌باشد!");
+                return new ProductDto { resultMessage = "نام وارد شده تکراری می‌باشد!" };
 
             if (!_db.Categories.Any(c => c.CategoryId == request.CategoryId))
-                return ResultDto.Fail("دسته‌بندی انتخاب‌شده وجود ندارد!");
+                return new ProductDto { resultMessage = "دسته‌بندی انتخاب‌شده وجود ندارد!" };
 
             if (!_db.Companies.Any(c => c.CompanyId == request.CompanyId))
-                return ResultDto.Fail("شرکت انتخاب‌شده وجود ندارد!");
+                return new ProductDto { resultMessage = "شرکت انتخاب‌شده وجود ندارد!" };
 
             var machines = new List<Machine>();
             if (request.Machines != null && request.Machines.Any())
@@ -46,7 +46,7 @@ namespace ControlService.ControlApplication.Services.Products.Commands.AddProduc
                     .ToListAsync();
 
                 if (request.Machines.Count != machines.Count)
-                    return ResultDto.Fail("برخی از دستگاه‌های انتخاب‌شده یافت نشدند.");
+                    return new ProductDto { resultMessage = "برخی از دستگاه‌های انتخاب‌شده یافت نشدند." };
             }
 
             var product = new Product
@@ -59,14 +59,22 @@ namespace ControlService.ControlApplication.Services.Products.Commands.AddProduc
 
             await _db.Products.AddAsync(product, cancellationToken);
             await _db.SaveChangesAsync(cancellationToken);
-
-            return ResultDto.Success("محصول با موفقیت افزوده شد.", productDto: new ProductDto()
+            var productdto = new ProductDto
             {
-                CompanyId = product.CompanyId,
-                CategoryId= product.CategoryId,
+                resultMessage = "محصول با موفقیت افزوده شد.",
+                CompanyId = request.CompanyId,
+                CategoryId = request.CategoryId,
                 ProductId = product.ProductId,
-                ProductName = product.ProductName,
-            });
+                ProductName = request.ProductName,
+            };
+            return productdto;  
+            //return ResultDto.Success(, productDto: new ProductDto()
+            //{
+            //    CompanyId = product.CompanyId,
+            //    CategoryId= product.CategoryId,
+            //    ProductId = product.ProductId,
+            //    ProductName = product.ProductName,
+            //});
         }
     }
 }

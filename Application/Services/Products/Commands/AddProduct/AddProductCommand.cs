@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ControlService.ControlApplication.Services.Products.Commands.AddProduct
 {
-    public class AddProductCommand: IRequest<ResultDto>
+    public class AddProductCommand: IRequest<ProductDto>
     {
         public string ProductName { get; set; }
         public int CategoryId {  get; set; }

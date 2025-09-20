@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ControlApplication.Services.Companies.Commands.AddCompany
 {
-    public class AddCompanyCommand : IRequest<ResultDto>
+    public class AddCompanyCommand : IRequest<CompanyDto>
     {
         public string CompanyName { get; set; }
         public string Email { get; set; }

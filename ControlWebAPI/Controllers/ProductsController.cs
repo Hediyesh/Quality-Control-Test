@@ -45,10 +45,10 @@ namespace ControlEndPoint.Areas.Admin.Controllers
             }
             var result = await _mediator.Send(command);
 
-            if (!result.IsSuccess)
-                return BadRequest(result.Message);
+            //if (!result.IsSuccess)
+            //    return BadRequest(result.Message);
 
-            return Ok(result.Message);
+            return Ok(result);
         }
         [AcceptVerbs("PUT")]
         public async Task<IActionResult> EditProduct(int id, [FromBody] UpdateProductDto dto)

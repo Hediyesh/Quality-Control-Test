@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ControlApplication.Services.Categories.Commands.AddCategory
 {
-    public class AddCategoryCommand : IRequest<ResultDto>
+    public class AddCategoryCommand : IRequest<CategoryDto>
     {
         public string CategoryName { get; set; }
         public int CompanyId { get; set; }

@@ -39,10 +39,10 @@ namespace ControlWebAPI.Controllers
             //}
             var result = await _mediator.Send(command);
 
-            if (!result.IsSuccess)
-                return BadRequest(result.Message);
+            //if (!result.IsSuccess)
+            //    return BadRequest(result.Message);
 
-            return Ok(result.Message);
+            return Ok(result);
         }
         [HttpPut]
         public async Task<IActionResult> EditCompany(int id, [FromBody] UpdateCompanyDto dto)

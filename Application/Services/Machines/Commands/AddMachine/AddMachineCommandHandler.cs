@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace ControlApplication.Services.Machines.Commands.AddMachine
 {
-    public class AddMachineCommandHandler : IRequestHandler<AddMachineCommand, ResultDto>
+    public class AddMachineCommandHandler : IRequestHandler<AddMachineCommand, MachineDto>
     {
         private readonly IDataBaseContext _db;
         public AddMachineCommandHandler(IDataBaseContext db)
@@ -20,16 +20,16 @@ namespace ControlApplication.Services.Machines.Commands.AddMachine
             _db = db;
         }
 
-        public async Task<ResultDto> Handle(AddMachineCommand request, CancellationToken cancellationToken)
+        public async Task<MachineDto> Handle(AddMachineCommand request, CancellationToken cancellationToken)
         {
             if (string.IsNullOrEmpty(request.MachineName))
-                return ResultDto.Fail("لطفا نام دستگاه را مشخص کنید");
+                return new MachineDto { resultMessage= "لطفا نام دستگاه را مشخص کنید" };
             var company = await _db.Companies.Where(w => w.CompanyId == request.CompanyId).FirstOrDefaultAsync();
             if (company == null)
-                return ResultDto.Fail("لطفا شرکت را انتخاب کنید");
+                return new MachineDto { resultMessage= "لطفا شرکت را انتخاب کنید" };
             var oldMachine = await _db.Machines.Where(w => w.CompanyId == request.CompanyId && w.MachineName == request.MachineName).FirstOrDefaultAsync();
             if (oldMachine != null)
-                return ResultDto.Fail("این دستگاه از قبل در این شرکت اضافه شده است");
+                return new MachineDto { resultMessage= "این دستگاه از قبل در این شرکت اضافه شده است" };
             var machine = new Machine()
             {
                 MachineName = request.MachineName,
@@ -37,13 +37,20 @@ namespace ControlApplication.Services.Machines.Commands.AddMachine
             };
             await _db.Machines.AddAsync(machine);
             await _db.SaveChangesAsync();
-            return ResultDto.Success("اطلاعات با موفقیت ثبت شد", machineDto: new MachineDto()
+            return new MachineDto
             {
-                MachineName = machine.MachineName, 
-                CompanyId = machine.CompanyId,
-                Id = request.CompanyId,
-                CompanyName = company.CompanyName,
-            });
+                MachineName = request.MachineName,
+                CompanyId = request.CompanyId,
+                Id = machine.MachineId,
+                resultMessage = "اطلاعات با موفقیت ثبت شد"
+            };
+            //return ResultDto.Success(, machineDto: new MachineDto()
+            //{
+            //    MachineName = machine.MachineName, 
+            //    CompanyId = machine.CompanyId,
+            //    Id = request.CompanyId,
+            //    CompanyName = company.CompanyName,
+            //});
         }
     }
 }
